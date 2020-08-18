@@ -32,9 +32,6 @@ const useStyles = makeStyles({
 });
 
 const Tweet = (props) => {
-  //   console.log(props.text);
-  console.log(props.showImage);
-  const showImage = props.showImage;
   const classes = useStyles();
 
   return (

@@ -13,11 +13,12 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: "black",
   },
   offset: theme.mixins.toolbar,
   navBar: {
     height: "120%",
-    backgroundColor: "#1F618D",
+    backgroundColor: "#d7d7d7",
   },
 }));
 

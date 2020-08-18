@@ -6,16 +6,17 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    backgroundColor: "#1F618D",
-    pointerEvents: "None",
-    height: 48,
-    padding: '0 30px',
-    color: 'white'
+    // width: "100%",
+    backgroundColor: "#d7d7d7",
+    // pointerEvents: "None",
+    // height: 48,
+    // padding: '0 30px',
+    color: 'white',
+    "&$selected": {
+      color: "white",
+    },
   },
-  selected: {
-    color: "white",
-  },
+  selected: {},
 }));
 
 // const useStyles = makeStyles({
