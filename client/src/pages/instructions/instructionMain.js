@@ -138,7 +138,7 @@ const InstructionsMain = (props) => {
       </p>
       <span className={classes.highlight}>
         {" "}
-        Use the figure below to make your decision
+        Use the interactive chart below for your decision
       </span>
       :
         <BinaryChoice
@@ -162,7 +162,7 @@ const InstructionsMain = (props) => {
         <br />
         <span className={classes.highlight}>
           {" "}
-          Use the interactive chart below to show your decision.
+          Use the interactive chart below for your decision.
         </span>
       </p>
       <BinaryChoice
