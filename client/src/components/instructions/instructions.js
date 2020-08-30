@@ -1,8 +1,13 @@
 import React from "react";
 import { Typography, Divider } from "@material-ui/core";
 import { ConnectionStates } from "mongoose";
+import Histogram from "../visualization/histogram/histogram";
 
 const Instructions = (props) => {
+  const data = [];
+  for (let i = 0; i < 500; i++) {
+    data.append({ value: Math.floor(Math.random() * 1000) });
+  }
   return (
     <div
       style={{
@@ -16,6 +21,7 @@ const Instructions = (props) => {
         <span style={{ fontWeight: "bold" }}>{props.accAlias}</span>
       </Typography>
       <div>{props.children}</div>
+      <Histogram data={data}></Histogram>
       <Divider></Divider>
     </div>
   );
