@@ -1,5 +1,5 @@
 const csv = require("csvtojson");
-const fetch = require("node-fetch");
+
 // function getReturns() {
 //   this.getReturns = async function (csvPath, columnName, n) {
 //     const getObj = async () => {

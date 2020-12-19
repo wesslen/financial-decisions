@@ -1,10 +1,18 @@
 import React from "react";
 import axios from "axios";
 import { Button, Container } from "@material-ui/core";
+import {Grid} from "@material-ui/core"
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+// import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
 import BinaryChoice from "../../components/choice/binaryChoice";
 import Histogram from "../../components/visualization/histogram/histogram";
+import Barchart from "../../components/visualization/barchart/barchart";
+// import {getReturns} from "../../pages/utility/generateDataset"
+const csv = require("csvtojson");
+// const Papa = require("papaparse");
+
 
 const useStyles = makeStyles((theme) => ({
   emph: {
@@ -25,6 +33,56 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
   },
 }));
+//
+// function getReturns() {
+//   this.getReturns = async function (csvPath, columnName, n) {
+//     const getObj = async () => {
+//       // https://github.com/Keyang/node-csvtojson/issues/285#issuecomment-728295610
+//       const res = await fetch(csvPath);
+//       const text = await res.text();
+//       const jsonArray = await csv().fromString(text);
+//       return jsonArray;
+//       // return csv().fromFile(csvPath);  // problem: can't use fs via csv in node
+//     };
+//
+//     let jsonObj = await getObj();
+//     jsonObj.forEach((obj) => {
+//       Object.keys(obj).forEach(function (key) {
+//         obj[key] = +obj[key];
+//       });
+//     });
+//
+//     const r = [];
+//     let iter = 10;
+//     for (var i = 0; i < iter; i++){
+//       let returns = this.bootstrap(columnName, n, jsonObj);
+//       // console.log(returns);
+//       let product = returns.reduce((product, value) => {
+//         return product * value;
+//       }, 1);
+//       let geomMean = Math.pow(product, 1 / returns.length);
+//       r.push(geomMean - 1)
+//
+//     }
+//
+//     return {
+//       // returns: returns,
+//       value: r.sort(),
+//     };
+//   };
+//
+//   this.bootstrap = function (columnName, n, dataObj) {
+//     let bootstrap = [];
+//     // console.log(dataObj);
+//     for (var i = 0; i < n; i++) {
+//       let randomIndex = Math.floor(Math.random() * dataObj.length);
+//       bootstrap.push(dataObj[randomIndex]);
+//     }
+//     return bootstrap.map(function (pick) {
+//       return pick[columnName] + 1;
+//     });
+//   };
+// }
 
 const InstructionsMain = (props) => {
   const history = useHistory();
@@ -37,38 +95,52 @@ const InstructionsMain = (props) => {
     // });
   };
   //DEMONSTRATING DATA VISUALIZATION, creating random data
-  const data = [];
-  for (let i = 0; i < 500; i++) {
-    data.push({ value: Math.floor(Math.random() * 1000) });
+  function getRandomArbitrary(min, max) {
+      return Math.random() * (max - min) + min;
   }
 
+  const data = [];
+  for (let i = 0; i < 21; i++) {
+    data.push({ key: i, value: getRandomArbitrary(-.05,0.1) });
+  }
+  // let gr = new getReturns();
+  // const data = gr.getReturns("../../../public/returns.csv", "treasury_10yr", 10);
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Study Instructions</h3>
       <h3>Please read carefully</h3>
       <p>
-        The goal of this study is to understand the effect of{" "}
+        This study's goal is to understand the effect of{" "}
         <b>different data visualizations </b>
-        on <b>investment financial decisions for retirement</b>.
+        on <b>investment financial decisions</b>.
       </p>
       <p>
-        You will view data visualizations of <b>investment rates of return</b>.
-        In each of the 12 tasks, you will view data visualizations of the{" "}
-        <b>rates of returns</b> for two assets. You will then decide how you
-        would <b>allocate a hypothetical investment</b> for retirement between
-        the two assets as a percentage (0% to 100%).
+        You will view data visualizations of <b>investment rates of return</b> of two assets.
+          </p>
+        <p> You will decide how to <b>allocate a hypothetical investment</b> between the two assets as a percentage (0% to 100%).
       </p>
       <p>
         Your goal is to <b>maximize</b> your <b>expected return </b>
         given your allocation decision.
       </p>
+      <p className={classes.emph}>Compensation for Study Completion:</p>
       <p>
-        For completing the study, you will receive <b>$2.50</b>. You are
+          <ul>
+              <li>
+        If you complete the study, you will receive <b>$2.50</b>.
+          </li>
+              <li>
+                  You are
         eligible for <b>optional incentives of up to $1.20</b> depending on your
-        decisions. For each task (i.e., allocation decision), a model will
-        simulate hypothetical results. Your bonus will be dependent on your
-        relative performance compared to others: top 10% receive $0.10, top
-        11-25% receive $0.05.
+        decisions.
+              </li>
+              <li>
+                  For each task (i.e., allocation decision), a model will
+        simulate hypothetical results.
+              </li>
+              <li>
+                  You will receive up to $0.10 per task for higher simulated rate of returns.</li>
+          </ul>
       </p>
       <p className={classes.emph}>Definitions:</p>
       <ul>
@@ -100,90 +172,105 @@ const InstructionsMain = (props) => {
         <li>
           <span className={classes.emph}>Evaluation Period:</span> The relative
           timeframe in which the Rate of Returns are framed. In this study, we
-          will provide returns as either 1 year or 30 year returns.
+          will provide returns between 1 to 30 year periods.
         </li>
       </ul>
-      {/*<p>*/}
-      {/*  {" "}*/}
-      {/*  Since, these subjects cannot always be rated with very high certainty,*/}
-      {/*  so we are using a method that allows you to state your beliefs about*/}
-      {/*  these concepts, while also stating how uncertain you are about your*/}
-      {/*  choice.*/}
-      {/*</p>*/}
       <hr />
       <p>Let's consider an example:</p>
       <p>
         In the animation below, a user is selecting their allocation decision
-        given the returns provided. They determine to put more of their
-        investment into Asset B than Asset A.
+        given the returns provided.
       </p>
-      <img
-        src={process.env.PUBLIC_URL + "/uncertainty1.gif"}
-        alt=""
-        className={classes.image}
-      />
       <p>
-        In the next animation, the user decides to put their allocation near an
-        even mix of 50% and 50%.
+          [INSERT GIF OF EXAMPLE]
       </p>
-      <img
-        src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
-        alt=""
-        className={classes.image}
-      />
+      {/*<img*/}
+      {/*  src={process.env.PUBLIC_URL + "/uncertainty1.gif"}*/}
+      {/*  alt=""*/}
+      {/*  className={classes.image}*/}
+      {/*/>*/}
+      {/*<p>*/}
+      {/*  In the next animation, the user decides to put their allocation near an*/}
+      {/*  even mix of 50% and 50%.*/}
+      {/*</p>*/}
+      {/*<img*/}
+      {/*  src={process.env.PUBLIC_URL + "/uncertainty2.gif"}*/}
+      {/*  alt=""*/}
+      {/*  className={classes.image}*/}
+      {/*/>*/}
       <hr />
       <h4>Let's practice:</h4>
       <p>
         {" "}
-        Imagine a scenario in which you are submiting your belief about how
-        credible a source of news on Twitter is: <br />
-        Assume you believe that{" "}
-        <span className={classes.emph}> the source is very Credible</span>, and
-        you are
-        <span className={classes.emph}> very certain</span> of your decision.
+        Consider two investments: Asset A and Asset B. The two charts provide each asset's possible annualized returns over a
+          <span className={classes.emph}> five (5) year evaluation period</span>.
       </p>
-      <p>
-        First use your mouse to hover on the chart. <br />
-        Click to select the line that best represents your belief. <br />
-        Then use the mouse to select the range of plusible alternatives that
-        represents how uncertain you are about your belief.
-      </p>
-      <span className={classes.highlight}>
-        {" "}
-        Use the interactive chart below for your decision
-      </span>
-      :
-      <BinaryChoice
-        choiceDomain={[0.0, 1.0]}
-        responseIndex={"instructions"}
-        // handleResponse={handleResponse}
-        question="What investment allocation do want between Asset A and B?"
-        tickLabels={["Asset A", "50% / 50%", "Asset B"]}
-      ></BinaryChoice>
+      {/*<p>*/}
+      {/*  First use your mouse to hover on the chart. <br />*/}
+      {/*  Click to select the line that best represents your belief. <br />*/}
+      {/*  Then use the mouse to select the range of plusible alternatives that*/}
+      {/*  represents how uncertain you are about your belief.*/}
+      {/*</p>*/}
+      {/*<span className={classes.highlight}>*/}
+      {/*  {" "}*/}
+      {/*  Use the interactive chart below for your decision*/}
+      {/*</span>*/}
+      <Grid container className={classes.root} spacing={1} >
+          <Barchart data={data}></Barchart>
+          <Barchart data={data}></Barchart>
+      </Grid>
+      {/*<BinaryChoice*/}
+      {/*  choiceDomain={[0.0, 1.0]}*/}
+      {/*  responseIndex={"instructions"}*/}
+      {/*  // handleResponse={handleResponse}*/}
+      {/*  question="What investment allocation do want between Asset A and B?"*/}
+      {/*  tickLabels={["Asset A", "50% / 50%", "Asset B"]}*/}
+      {/*></BinaryChoice>*/}
+      <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '10vh'}}>
+
+            <p>
+              Investment goal: <span className={classes.emph}> maximize annual rate of return </span> over a five (5) year evaluation period.
+            </p>
+            <p>
+              Between 0% and 100%, how much do you want to allocate to Asset A?
+          </p>
+          <form className={classes.root} noValidate autoComplete="off">
+                {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
+                <Input id="Practice1" type="number" placeholder="Asset A allocation %"></Input>
+                <Button variant="contained">Make Decision</Button>
+          </form>
+      </div>
       <hr />
       <h4>Another scenario:</h4>
       <p>
         {" "}
-        Let's imagine you are assessing the credibility of another source of
-        news on Twitter: <br />
-        you believe that{" "}
-        <span className={classes.emph}>the source is very Not Credible</span>,
-        and you are
-        <span className={classes.emph}> very uncertain</span> of your judgment.{" "}
-        <br />
-        <br />
-        <span className={classes.highlight}>
-          {" "}
-          Use the interactive chart below for your decision.
-        </span>
+        Consider two different investments (Asset C and D) with possible annual rate of returns over a
+          <span className={classes.emph}> twenty-five (25) year evaluation period</span>.
+        {/*<span className={classes.highlight}>*/}
+        {/*  {" "}*/}
+        {/*  Use the interactive chart below for your decision.*/}
+        {/*</span>*/}
       </p>
-      <BinaryChoice
-        choiceDomain={[0.0, 1.0]}
-        responseIndex={"instructions"}
-        // handleResponse={handleResponse}
-        question="What investment allocation do want between Asset A and B?"
-        tickLabels={["Asset A", "50% / 50%", "Asset B"]}
-      ></BinaryChoice>
+        <Grid container className={classes.root} spacing={1}><Barchart data={data}></Barchart><Barchart data={data}></Barchart></Grid>
+        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '10vh'}}>
+            <p>
+              Investment goal: <span className={classes.emph}> maximize annual rate of return </span>over a twenty-five (25) year evaluation period.
+            </p>
+            <p>
+              Between 0% and 100%, how much do you want to allocate to Asset C?
+            </p>
+            <form className={classes.root} noValidate autoComplete="off">
+                <Input id="Practice2" type="number" placeholder="Asset A allocation %"></Input>
+                <Button variant="contained">Make Decision</Button>
+            </form>
+        </div>
+      {/*<BinaryChoice*/}
+      {/*  choiceDomain={[0.0, 1.0]}*/}
+      {/*  responseIndex={"instructions"}*/}
+      {/*  // handleResponse={handleResponse}*/}
+      {/*  question="What investment allocation do want between Asset A and B?"*/}
+      {/*  tickLabels={["Asset A", "50% / 50%", "Asset B"]}*/}
+      {/*></BinaryChoice>*/}
       <hr />
       <h4>What you will do in this study</h4>
       <ul>
@@ -196,7 +283,7 @@ const InstructionsMain = (props) => {
       </ul>
       <h4>Round 1</h4>
       <ul>
-        <li> You'll evaluate a histogram of the assets' returns.</li>
+        <li> You'll evaluate a bar chart of the assets' returns.</li>
         <li>
           You'll have <b>two allocation decisions</b> for two assets' returns in
           either 1 year or 30 year evaluation period.
@@ -226,7 +313,6 @@ const InstructionsMain = (props) => {
           required rate of return.
         </li>
       </ul>
-      <Histogram data={data}></Histogram>
       <div
         style={{
           textAlign: "center",

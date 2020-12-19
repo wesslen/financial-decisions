@@ -3,10 +3,15 @@ import { Typography, Divider } from "@material-ui/core";
 import { ConnectionStates } from "mongoose";
 import Histogram from "../visualization/histogram/histogram";
 
+
 const Instructions = (props) => {
+  function getRandomArbitrary(min, max) {
+      return Math.random() * (max - min) + min;
+  }
+
   const data = [];
-  for (let i = 0; i < 500; i++) {
-    data.append({ value: Math.floor(Math.random() * 1000) });
+  for (let i = 0; i < 21; i++) {
+    data.push({ id: i, value: getRandomArbitrary(-.05,0.1) });
   }
   return (
     <div

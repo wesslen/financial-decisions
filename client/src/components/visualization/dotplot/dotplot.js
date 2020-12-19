@@ -1,12 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
+import quantileDotplot from "./quantiledotplot";
 
 /* Component */
-const Histogram = (props) => {
+const Dotplot = (props) => {
   const d3Container = useRef(null);
-  const width = props.width || "100%";
-  const height = props.height || "100%";
-  const numBins = props.numBins || 10;
+  const width = props.width || "50%";
+  const height = props.height || "50%";
+  // const numBins = props.numBins || 10;
 
   useEffect(
     () => {
@@ -19,7 +20,7 @@ const Histogram = (props) => {
         const height = svg.node().getBoundingClientRect().height;
 
         const leftMarginPct = 0.1;
-        const rightMarginPct = 0.08;
+        const rightMarginPct = 0.15;
         const topMarginPct = 0.15;
         const bottomMarginPct = 0.05;
 
@@ -42,54 +43,57 @@ const Histogram = (props) => {
         // get the data
         // X axis: scale and draw:
 
-        const maxData = d3.max(props.data, (d) => d.value);
+          // sort data
+        props.data.sort(function(b, a) {
+          return b.value - a.value;
+        });
 
-        const x = d3
-          .scaleLinear()
-          .domain([0, maxData]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
-          .range([0, w]);
+        // X axis
+        var x = d3.scaleBand()
+          .range([ 0, w ])
+          .domain(props.data.map(function(d) { return d.key; }))
+          .padding(0.1);
+
+        // Add Y axis
+        var y = d3.scaleLinear()
+          .domain([-0.05,0.1])
+          .range([ h, 0]);
+
+        // svg.append("g").call(d3.axisLeft(y));
+        var formatPercent = d3.format(".0%");
+
         g.append("g")
-          .attr("transform", "translate(0," + h + ")")
-          .call(d3.axisBottom(x));
+          .attr('class', 'axis')
+          .call(d3.axisLeft(y));
 
-        // set the parameters for the histogram
-        const histogram = d3
-          .histogram()
-          .value(function (d) {
-            return d.value;
-          }) // I need to give the vector of value
-          .domain(x.domain()) // then the domain of the graphic
-          .thresholds(x.ticks(numBins)); // then the numbers of bins
-
-        // And apply this function to data to get the bins
-        var bins = histogram(props.data);
-
-        // Y axis: scale and draw:
-        var y = d3.scaleLinear().range([h, 0]);
-        y.domain([
-          0,
-          d3.max(bins, function (d) {
-            return d.length;
-          }),
-        ]); // d3.hist has to be called before the Y axis obviously
-        g.append("g").call(d3.axisLeft(y));
-
-        // append the bar rectangles to the svg element
-        g.selectAll("rect")
-          .data(bins)
+        // Bars
+        g.selectAll("mybar")
+          .data(props.data)
           .enter()
           .append("rect")
-          .attr("x", 1)
-          .attr("transform", function (d) {
-            return "translate(" + x(d.x0) + "," + y(d.length) + ")";
-          })
-          .attr("width", function (d) {
-            return x(d.x1) - x(d.x0) - 1;
-          })
-          .attr("height", function (d) {
-            return h - y(d.length);
-          })
-          .style("fill", "#69b3a2");
+            .attr("x", function(d) { return x(d.key); })
+            .attr("y", function(d) { return y(Math.max(0, d.value)); })
+            .attr("width", x.bandwidth())
+            .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); })
+            .attr("fill", "#69b3a2");
+
+        g.selectAll(".label")
+          .data(props.data)
+          .enter()
+          .append("text")
+            .attr("class", "label")
+            .attr("font-size","8px")
+            .attr("text-anchor", "middle")
+            .attr("font-family", "sans-serif")
+            .text( function(d) { return formatPercent(d.value); } )
+            .attr("x", function(d) { return x(d.key) + x.bandwidth()/2; })
+            .attr("y", function(d) { return y(d.value) + 10; })
+
+        g.append("g")
+          .attr('class', 'axis')
+          .attr('transform', 'translate(0,' + y(0) + ')')
+          .call(d3.axisBottom(x));
+
       }
     },
 
@@ -125,4 +129,4 @@ const Histogram = (props) => {
 };
 
 /* App */
-export default Histogram;
+export default Dotplot;

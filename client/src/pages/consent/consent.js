@@ -83,14 +83,14 @@ const Consent = (props) => {
       <h2>Important Information You Need to Know</h2>
       <ul>
         <li>
-          - The goal of this study is to understand the effect of <b>different data visualizations </b>
+          The goal of this study is to understand the effect of <b>different data visualizations </b>
           on <b>investment financial decisions for retirement</b>. You will view data visualizations of <b>investment rates of return</b>. In each of the 12 tasks, you will view data visualizations of
           the <b>rates of returns</b> for two assets. You will then decide
           how you would <b>allocate a hypothetical investment</b> for retirement between the two
            assets as a percentage (0% to 100%).
         </li>
         <li>
-          - We are asking individuals who are age 18 or older and fluent in
+          We are asking individuals who are age 18 or older and fluent in
           English to participate. Participation will take approximately 20
           minutes in total.
         </li>
@@ -101,7 +101,7 @@ const Consent = (props) => {
             top 10% receive $0.10, top 11-25% receive $0.05.
         </li>
         <li>
-          - Please read this form in order to decide whether to participate in
+          Please read this form in order to decide whether to participate in
           this research study.
         </li>
       </ul>
