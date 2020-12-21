@@ -9,6 +9,7 @@ import Input from '@material-ui/core/Input';
 import BinaryChoice from "../../components/choice/binaryChoice";
 import Histogram from "../../components/visualization/histogram/histogram";
 import Barchart from "../../components/visualization/barchart/barchart";
+import Dotplot from "../../components/visualization/dotplot/dotplot";
 // import {getReturns} from "../../pages/utility/generateDataset"
 const csv = require("csvtojson");
 // const Papa = require("papaparse");
@@ -217,6 +218,7 @@ const InstructionsMain = (props) => {
       {/*</span>*/}
       <Grid container className={classes.root} spacing={1} >
           <Barchart data={data}></Barchart>
+          {/* <Dotplot data={data}></Dotplot> */}
           <Barchart data={data}></Barchart>
       </Grid>
       {/*<BinaryChoice*/}
