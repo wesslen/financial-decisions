@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const responseSchema = require("../models/response");
 const randomstring = require("randomstring");
+const getReturns = require('../../public/generateDataset');
+const gr = new getReturns("task1");
 // API calls
 
 const Response = mongoose.model("response", responseSchema);
@@ -16,6 +18,13 @@ router.post("/postq", (req, res) => {
   console.log(req.body);
   res.json(req.body);
 });
+
+router.get("/data",(req,res)=>{
+  let returns = gr.getReturns(1, 50);
+  returns.then((result)=>{
+    res.json(result);
+  })
+})
 
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {

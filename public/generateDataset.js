@@ -1,100 +1,59 @@
 const csv = require("csvtojson");
-const fetch = require("node-fetch");
-// function getReturns() {
-//   this.getReturns = async function (csvPath, columnName, n) {
-//     const getObj = async () => {
-//       return csv().fromFile(csvPath);
-//     };
-//     let jsonObj = await getObj();
-//     jsonObj.forEach((obj) => {
-//       Object.keys(obj).forEach(function (key) {
-//         obj[key] = +obj[key];
-//       });
-//     });
-//     // console.log(jsonObj);
-//     const r = [];
-//     let iter = 10;
-//     for (var i = 0; i < iter; i++){
-//       let returns = this.bootstrap(columnName, n, jsonObj);
-//       // console.log(returns);
-//       let product = returns.reduce((product, value) => {
-//         return product * value;
-//       }, 1);
-//       let geomMean = Math.pow(product, 1 / returns.length);
-//       r.push(geomMean - 1)
-//     }
-//
-//     return {
-//       // returns: returns,
-//       value: r.sort(),
-//     };
-//   };
-//
-//   this.bootstrap = function (columnName, n, dataObj) {
-//     let bootstrap = [];
-//     // console.log(dataObj);
-//     for (var i = 0; i < n; i++) {
-//       let randomIndex = Math.floor(Math.random() * dataObj.length);
-//       bootstrap.push(dataObj[randomIndex]);
-//     }
-//     return bootstrap.map(function (pick) {
-//       return pick[columnName] + 1;
-//     });
-//   };
-// }
+const path = require("path");
+const fs = require('fs');
+const seedrandom = require('seedrandom');
+const gmean = require("gmean");
 
-function getReturns() {
-  this.getReturns = async function (csvPath, columnName, n) {
+
+function getReturns(seed) {
+  console.log(seed);
+  var rng = seedrandom(seed);
+  this.getReturns = async function ( n_bootstrap,n_simul) {
+    
+    // make sure the csv file is in the same folder.
+    let csvPath = path.join(__dirname, "returns.csv");
     const getObj = async () => {
-      // https://github.com/Keyang/node-csvtojson/issues/285#issuecomment-728295610
-      const res = await fetch(csvPath);
-      const text = await res.text();
-      const jsonArray = await csv().fromString(text);
-      console.log(jsonArray);
-      return jsonArray;
-      // return csv().fromFile(csvPath);  // problem: can't use fs via csv in node
+      return csv().fromFile(csvPath);
     };
 
     let jsonObj = await getObj();
+
     jsonObj.forEach((obj) => {
       Object.keys(obj).forEach(function (key) {
         obj[key] = +obj[key];
       });
     });
 
-    const r = [];
-    let iter = 10;
-    for (var i = 0; i < iter; i++){
-      let returns = this.bootstrap(columnName, n, jsonObj);
-      // console.log(returns);
-      let product = returns.reduce((product, value) => {
-        return product * value;
-      }, 1);
-      let geomMean = Math.pow(product, 1 / returns.length);
-      r.push(geomMean - 1)
+    const r = {
+      equities_sp: [],
+      treasury_10yr:[]
+    };
+    let iter = n_simul;
+      for (var i = 0; i < iter; i++){
+        let returns = this.bootstrap( n_bootstrap, jsonObj);
+        Object.keys(r).forEach((returnColumn)=>{
+          let rColumn = returns.map((f)=>f[returnColumn]+1)
 
+          let geomMean = gmean(rColumn);
+          r[returnColumn].push(geomMean - 1)
+        })
     }
 
-    return {
-      // returns: returns,
-      value: r.sort(),
-    };
+    return r;
   };
 
-  this.bootstrap = function (columnName, n, dataObj) {
+  this.bootstrap = function ( n, dataObj) {
     let bootstrap = [];
-    // console.log(dataObj);
     for (var i = 0; i < n; i++) {
-      let randomIndex = Math.floor(Math.random() * dataObj.length);
+      let randomIndex = Math.floor(rng() * dataObj.length);
       bootstrap.push(dataObj[randomIndex]);
     }
-    return bootstrap.map(function (pick) {
-      return pick[columnName] + 1;
-    });
+    return bootstrap;
   };
 }
+// let gr = new getReturns();
+// let returns = gr.getReturns(path.join(__dirname,"returns.csv"), 1 , 10);
 
-let gr = new getReturns();
-let returns = gr.getReturns("./returns.csv", "treasury_10yr", 10);
-// // console.log(returns);
-returns.then(console.log);
+// returns.then(console.log);
+
+module.exports = getReturns;

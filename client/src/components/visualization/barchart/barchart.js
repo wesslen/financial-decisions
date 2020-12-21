@@ -7,7 +7,7 @@ const Barchart = (props) => {
   const width = props.width || "50%";
   const height = props.height || "100%";
   // const numBins = props.numBins || 10;
-
+  console.log(props.data);
   useEffect(
     () => {
       if (d3Container.current) {
@@ -54,9 +54,10 @@ const Barchart = (props) => {
           .padding(0.1);
 
         // Add Y axis
-        var y = d3.scaleLinear()
-          .domain([-0.06,0.1])
-          .range([ h, 0]);
+        var y = d3
+          .scaleLinear()
+          .domain([-0.36549999999999994, 0.43809999999999993])
+          .range([h, 0]);
 
         // svg.append("g").call(d3.axisLeft(y));
         var formatPercent = d3.format(".1%");
@@ -123,7 +124,7 @@ const Barchart = (props) => {
             if the variables are valid, but we do not have to compare old props
             to next props to decide whether to rerender.
         */
-    []
+    [props.data]
   );
 
   return (
