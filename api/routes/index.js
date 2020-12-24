@@ -3,9 +3,17 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const responseSchema = require("../models/response");
 const randomstring = require("randomstring");
-const getReturns = require('../../public/generateDataset');
+// const getReturns = require('../../public/generateDataset');
+const getReturns = require("../functions/generateDataset");
+
+//experiment functions ef.choose(list), ef.getRandomInt; ef.shuffle(list);
+const ef = require("../functions/experimenhtFunctions");
+// get returns
 const gr = new getReturns("task1");
-// API calls
+
+
+
+
 
 const Response = mongoose.model("response", responseSchema);
 
@@ -19,8 +27,13 @@ router.post("/postq", (req, res) => {
   res.json(req.body);
 });
 
+router.post('/response',(req,res)=>{
+
+})
+
 router.get("/data",(req,res)=>{
-  let returns = gr.getReturns(1, 50);
+  let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
+  let returns = gr.getReturns(evalPeriod, 20);
   returns.then((result)=>{
     res.json(result);
   })
@@ -29,155 +42,43 @@ router.get("/data",(req,res)=>{
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {
     let usertoken = randomstring.generate(8);
-    let [accounts, accGroup] = getAccAssignments();
-    req.session.accounts = accounts;
     req.session.usertoken = usertoken;
-    req.session.accIndex = 0;
-    req.session.accGroup = accGroup;
-
-    let [people, peopleGroup] = getPersonAssignment();
-    req.session.people = people;
-    req.session.personIndex = 0;
-    req.session.peopleGroup = peopleGroup;
+    req.session.evalPeriods = getEvaluationPeriods();
+    req.session.evalPeriodIndex = 0;
+    req.session.treatment = getTreatment();
 
     let newResponse = new Response({
       usertoken: usertoken,
-      "rq1.group": accGroup,
-      "rq1.accounts": accounts,
-      "rq2.group": peopleGroup,
-      "rq2.people": people,
+      evalPeriods: req.session.evalPeriods,
+      treatment : req.session.treatment
     });
 
     newResponse.save(function (err) {
       if (err) console.log(err);
       res.send({
         token: usertoken,
-        accGroup: accGroup,
-        peopleGroup: peopleGroup,
-        accounts: accounts,
-        people: people,
       });
     });
   } else {
     res.send({
-      token: req.session.usertoken,
-      group: req.session.group,
-      accounts: req.session.accounts,
+      token: req.session.usertoken
     });
   }
 });
 
-const getPersonAssignment = () => {
-  const groups = ["image", "noImage"];
-  const clusterNames = [
-    [129, "Donald Trump", "I"],
-    [111, "Vladimir Putin", "J"],
-    [122, "Theresa May", "K"],
-    [100, "Hillary Clinton", "L"],
-    [54, "Emanuel Macron", "M"],
-    [126, "Angela Merkel", "N"],
-    [117, "Barack Obama", "O"],
-    [132, "Kim Jong-un", "P"],
-  ];
-  let group = choose(groups);
-  let clusterNamesCopy = shuffle([...clusterNames]);
-  let personAssignments;
-  if (group === "image") {
-    personAssignments = clusterNamesCopy.map((person, index) => {
-      return index < 4
-        ? {
-            person: person[1],
-            accAlias: person[2],
-            personCluster: person[0],
-            showImage: true,
-            imageIdx: "happy_img_idx",
-          }
-        : {
-            person: person[1],
-            accAlias: person[2],
-            personCluster: person[0],
-            showImage: true,
-            imageIdx: "angry_img_idx",
-          };
-    });
-  } else {
-    personAssignments = clusterNamesCopy.map((person) => {
-      return {
-        person: person[1],
-        accAlias: person[2],
-        personCluster: person[0],
-        showImage: false,
-      };
-    });
-  }
-  return [shuffle(personAssignments), group];
+const getEvaluationPeriods = () => {
+  let first = shuffle([1, 30]);
+  let second = shuffle([5, 10, 15, 20, 25]);
+  let allYears = [...first, ...second];
+  return allYears;
 };
 
-const getAccAssignments = () => {
-  let groups = ["block", "mixed"];
-  let group = choose(groups);
-  const accGroups = {
-    suspicious_left: [
-      ["veteranstoday", "A"],
-      ["opednews", "C"],
-    ],
-    suspicious_right: [
-      ["amlookout", "B"],
-      ["InvestWatchBlog", "D"],
-    ],
-    trustworthy_left: [
-      ["MotherJones", "E"],
-      ["CNNPolitics", "G"],
-    ],
-    trustworthy_right: [
-      ["nypost", "F"],
-      ["Jerusalem_Post", "H"],
-    ],
-  };
-  let accAssignments = [];
-  if (group == "block") {
-    Object.keys(accGroups).forEach((key) => {
-      let accounts = [...accGroups[key]];
-      let angryIndex = getRandomInt(2);
-      let happyIndex = angryIndex ^ 1;
-      accAssignments.push({
-        account: accounts[angryIndex][0],
-        accAlias: accounts[angryIndex][1],
-        block: true,
-        emotionSort: "angry",
-        showImage: true,
-      });
-      accAssignments.push({
-        account: accounts[happyIndex][0],
-        accAlias: accounts[happyIndex][1],
-        block: true,
-        emotionSort: "happy",
-        showImage: true,
-      });
-    });
-  } else if (group == "mixed") {
-    Object.keys(accGroups).forEach((key) => {
-      let accounts = [...accGroups[key]];
-      let withImageIndex = getRandomInt(2);
-      let noImageIndex = withImageIndex ^ 1;
-      accAssignments.push({
-        account: accounts[withImageIndex][0],
-        accAlias: accounts[withImageIndex][1],
-        block: false,
-        emotionSort: null,
-        showImage: true,
-      });
-      accAssignments.push({
-        account: accounts[noImageIndex][0],
-        accAlias: accounts[noImageIndex][1],
-        block: false,
-        emotionSort: null,
-        showImage: false,
-      });
-    });
-  }
-  return [shuffle(accAssignments), group];
-};
+const getTreatment = () =>{
+  let treatment = choose(["quantile","hops1","hops2","gradient"]);
+  return treatment
+}
+
+
 
 function choose(choices) {
   var index = Math.floor(Math.random() * choices.length);
