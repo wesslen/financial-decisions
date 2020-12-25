@@ -66,14 +66,14 @@ const InstructionsMain = (props) => {
         fetchData();
   },[])
   //DEMONSTRATING DATA VISUALIZATION, creating random data
-  function getRandomArbitrary(min, max) {
-      return Math.random() * (max - min) + min;
-  }
-
-  const data = [];
-  for (let i = 0; i < 21; i++) {
-    data.push({ key: i, value: getRandomArbitrary(-.05,0.1) });
-  }
+  // function getRandomArbitrary(min, max) {
+  //     return Math.random() * (max - min) + min;
+  // }
+  //
+  // const data = [];
+  // for (let i = 0; i < 21; i++) {
+  //   data.push({ key: i, value: getRandomArbitrary(-.05,0.1) });
+  // }
   // let gr = new getReturns();
   // const data = gr.getReturns("../../../public/returns.csv", "treasury_10yr", 10);
   return (
@@ -87,16 +87,16 @@ const InstructionsMain = (props) => {
       </p>
       <p>
         You will view data visualizations of <b>investment rates of return</b>{" "}
-        of two assets.
+        of different assets.
       </p>
       <p>
         {" "}
         You will decide how to <b>allocate a hypothetical investment</b> between
-        the two assets as a percentage (0% to 100%).
+        two assets as a percentage (0% to 100%).
       </p>
       <p>
         Your goal is to <b>maximize</b> your <b>expected return </b>
-        given your allocation decision.
+        given your allocation decision over a thirty (30) year period.
       </p>
       <p className={classes.emph}>Compensation for Study Completion:</p>
       <p>
@@ -149,6 +149,10 @@ const InstructionsMain = (props) => {
           <span className={classes.emph}>Evaluation Period:</span> The relative
           timeframe in which the Rate of Returns are framed. In this study, we
           will provide returns between 1 to 30 year periods.
+        </li>
+        <li>
+          <span className={classes.emph}>Investment Period:</span> The expected timeframe
+            you plan to invest. In this study, your investment period will be 30 years.
         </li>
       </ul>
       <hr />
@@ -213,7 +217,7 @@ const InstructionsMain = (props) => {
         <p>
           Investment goal:{" "}
           <span className={classes.emph}> maximize annual rate of return </span>{" "}
-          over a five (5) year evaluation period.
+          over a thirty (30) year investment period.
         </p>
         <p>Between 0% and 100%, how much do you want to allocate to Asset A?</p>
         <form className={classes.root} noValidate autoComplete="off">
@@ -230,7 +234,7 @@ const InstructionsMain = (props) => {
       <h4>Another scenario:</h4>
       <p>
         {" "}
-        Consider two different investments (Asset C and D) with possible annual
+        Consider the same assets (Asset A and B) with possible annual
         rate of returns over a
         <span className={classes.emph}>
           {" "}
@@ -242,8 +246,8 @@ const InstructionsMain = (props) => {
         {/*</span>*/}
       </p>
       <Grid container className={classes.root} spacing={1}>
-        <Barchart data={data}></Barchart>
-        <Barchart data={data}></Barchart>
+        <Barchart data={bonds}></Barchart>
+        <Barchart data={stocks}></Barchart>
       </Grid>
       <div
         style={{
@@ -256,9 +260,9 @@ const InstructionsMain = (props) => {
         <p>
           Investment goal:{" "}
           <span className={classes.emph}> maximize annual rate of return </span>
-          over a twenty-five (25) year evaluation period.
+          over a thirty (30) year investment period.
         </p>
-        <p>Between 0% and 100%, how much do you want to allocate to Asset C?</p>
+        <p>Between 0% and 100%, how much do you want to allocate to Asset A?</p>
         <form className={classes.root} noValidate autoComplete="off">
           <Input
             id="Practice2"
@@ -278,21 +282,24 @@ const InstructionsMain = (props) => {
       <hr />
       <h4>What you will do in this study</h4>
       <ul>
-        <li>You will evaluate six scenarios.</li>
+        <li>In two different rounds, you will make allocation decisions between two different assets.</li>
         <li>
-          In each one, you will make two allocation decisions based on the
-          assets' returns with an evaluation period of either 1 year or 30
-          years.
+          Your goal is to maximize your expected returns over a thirty (30) year period.
         </li>
       </ul>
       <h4>Round 1</h4>
       <ul>
-        <li> You'll evaluate a bar chart of the assets' returns.</li>
+        <li> You'll evaluate a bar chart of the assets returns.</li>
         <li>
-          You'll have <b>two allocation decisions</b> for two assets' returns in
-          either 1 year or 30 year evaluation period.
+          You'll have <b>two allocation decisions</b> for two assets' returns seven
+            times.
         </li>
-        <li>For each task</li>
+        <li>
+            Each time the returns will be framed into a different evaluation
+            period (e.g., framed as one year, five year, etc.).
+        </li>
+        <li>Your goal is to maximize
+            your expected returns over a thirty (30) year period.</li>
       </ul>
       <h4>Round 2</h4>
       <ul>
@@ -302,19 +309,8 @@ const InstructionsMain = (props) => {
         </li>
         <li>
           Similar to Round 1, you'll also make <b>two allocation decisions</b>{" "}
-          on two assets' returns in either 1 year or 30 year evaluation periods.
-        </li>
-      </ul>
-      <h4>Round 3</h4>
-      <ul>
-        <li>
-          {" "}
-          You'll evaluate the same data visualization in Round 2 but under{" "}
-          <b>four different scenarios</b>.
-        </li>
-        <li>
-          In each scenario, you will be provided your goal time horizon and
-          required rate of return.
+          on two different assets seven times with each time corresponding to different
+            evaluation periods.
         </li>
       </ul>
       <div
