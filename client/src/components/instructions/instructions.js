@@ -5,14 +5,7 @@ import Histogram from "../visualization/histogram/histogram";
 
 
 const Instructions = (props) => {
-  function getRandomArbitrary(min, max) {
-      return Math.random() * (max - min) + min;
-  }
 
-  const data = [];
-  for (let i = 0; i < 21; i++) {
-    data.push({ id: i, value: getRandomArbitrary(-.05,0.1) });
-  }
   return (
     <div
       style={{
@@ -26,7 +19,6 @@ const Instructions = (props) => {
         <span style={{ fontWeight: "bold" }}>{props.accAlias}</span>
       </Typography>
       <div>{props.children}</div>
-      <Histogram data={data}></Histogram>
       <Divider></Divider>
     </div>
   );

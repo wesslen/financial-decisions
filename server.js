@@ -39,8 +39,8 @@ app.use(
 );
 
 app.use("/api", indexRouter);
-app.use("/rq1", rq1Router);
-app.use("/rq2", rq2Router);
+// app.use("/rq1", rq1Router);
+// app.use("/rq2", rq2Router);
 // app.use("/api", dataRouter);
 
 if (process.env.NODE_ENV === "production") {

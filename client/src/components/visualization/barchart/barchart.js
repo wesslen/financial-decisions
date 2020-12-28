@@ -13,6 +13,7 @@ const Barchart = (props) => {
       if (d3Container.current) {
         //svg returned by this component
         const svg = d3.select(d3Container.current);
+        svg.selectAll("g").remove();
         //width of svg
         const width = svg.node().getBoundingClientRect().width;
         //height of svg
@@ -42,15 +43,20 @@ const Barchart = (props) => {
         // get the data
         // X axis: scale and draw:
 
-          // sort data
-        props.data.sort(function(b, a) {
+        // sort data
+        props.data.sort(function (b, a) {
           return b.value - a.value;
         });
 
         // X axis
-        var x = d3.scaleBand()
-          .range([ 0, w ])
-          .domain(props.data.map(function(d) { return d.key; }))
+        var x = d3
+          .scaleBand()
+          .range([0, w])
+          .domain(
+            props.data.map(function (d) {
+              return d.key;
+            })
+          )
           .padding(0.1);
 
         // Add Y axis
@@ -67,34 +73,38 @@ const Barchart = (props) => {
         //     .attr("class", "tooltip")
         //     .style("opacity", 50);
 
-        g.append("g")
-          .attr('class', 'axis')
-          .call(d3.axisLeft(y));
+        g.append("g").attr("class", "axis").call(d3.axisLeft(y));
 
         // Bars
-        g.selectAll("mybar")
+        // g.selectAll("mybar")
+        //   .data(props.data)
+        //   .enter()
+        //   .append("rect")
+        //     .attr("x", function(d) { return x(d.key); })
+        //     .attr("y", function(d) { return y(Math.max(0, d.value)); })
+        //     .attr("width", x.bandwidth())
+        //     .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); })
+        //     .attr("fill", "#69b3a2")
+        g.selectAll("rect")
           .data(props.data)
-          .enter()
-          .append("rect")
+          .join("rect")
             .attr("x", function(d) { return x(d.key); })
             .attr("y", function(d) { return y(Math.max(0, d.value)); })
             .attr("width", x.bandwidth())
             .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); })
             .attr("fill", "#69b3a2")
-            // see https://stackoverflow.com/questions/49611148/how-to-add-tooltip-in-react-d3-v4-bar-chart
-            // .on("mousemove", function(d) {
-            //     div.transition()
-            //         .duration(200)
-            //         .style("opacity", .9);
-            //     div.html(d.value);
-            //     })
-            // .on("mouseout", function(d) {
-            //     div.transition()
-            //       .duration(500)
-            //       .style("opacity", 0);
-            // })
-        ;
-
+        // see https://stackoverflow.com/questions/49611148/how-to-add-tooltip-in-react-d3-v4-bar-chart
+        // .on("mousemove", function(d) {
+        //     div.transition()
+        //         .duration(200)
+        //         .style("opacity", .9);
+        //     div.html(d.value);
+        //     })
+        // .on("mouseout", function(d) {
+        //     div.transition()
+        //       .duration(500)
+        //       .style("opacity", 0);
+        // })
         // g.selectAll(".label")
         //   .data(props.data)
         //   .enter()
@@ -108,12 +118,11 @@ const Barchart = (props) => {
         //     .attr("y", function(d) { return y(d.value) + 10; })
 
         g.append("g")
-          .attr('class', 'axis')
-          .attr('transform', 'translate(0,' + y(0) + ')')
+          .attr("class", "axis")
+          .attr("transform", "translate(0," + y(0) + ")")
           .call(d3.axisBottom(x))
           .selectAll("text")
-            .remove();
-
+          .remove();
       }
     },
 

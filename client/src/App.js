@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./components/nav/nav";
 import Container from "@material-ui/core/Container";
 import BottomNav from "./components/bottomNav/bottomNav";
-import Task1 from "./pages/study/task1";
+import Task1 from "./pages/study/task1-new";
 import Task2 from "./pages/study/task2";
 import PreSurveyPage from "./pages/survey/pre";
 import PostSurveyPage from "./pages/survey/post";
@@ -75,10 +75,6 @@ class App extends React.Component {
               <Route path="/pre" component={PreSurveyPage}></Route>
               <Route path="/task1">
                 <Task1
-                  answerCount={this.state.answerCount}
-                  setAnswerCount={this.setAnswerCount}
-                  accIndex={this.state.accIndex}
-                  setAccIndex={this.setAccIndex}
                 ></Task1>
               </Route>
               <Route path="/task2">

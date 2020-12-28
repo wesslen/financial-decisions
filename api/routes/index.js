@@ -15,20 +15,64 @@ const gr = new getReturns("task1");
 const Response = mongoose.model("response", responseSchema);
 
 router.post("/preq", (req, res) => {
-  console.log(req.body);
-  res.json(req.body);
+  // console.log(req.body);
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { prequestionnaire: req.body },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      else res.json(req.body);
+    }
+  );
+});
+
+router.get("/debrief", (req, res) => {
+  if (req.session.completed) {
+    res.status(200).json({ token: req.session.usertoken });
+  } else {
+    res.status(200).send({
+      token: "you have skiped pages. Please complete the study first.",
+    });
+  }
 });
 
 router.post("/postq", (req, res) => {
-  console.log(req.body);
-  res.json(req.body);
+  // console.log(req.body);
+  let usertoken = req.session.usertoken;
+  req.session.completed = true;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { postquestionnaire: req.body },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      else res.status(200).json(req.body);
+    }
+  );
 });
-
 router.post('/response',(req,res)=>{
-
+  let usertoken = req.session.usertoken;
+  let resp = req.body;
+  let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
+  resp["evalPeriod"] = evalPeriod;
+  let response = {};
+  console.log(resp);
+  response[`responses.${evalPeriod}`] = resp;
+    Response.findOneAndUpdate(
+      { usertoken: usertoken },
+      response,
+      (err, doc) => {
+        if (err) req.status(404).send(err);
+        else {
+          req.session.evalPeriodIndex ++;
+          res.status(200).json(req.session.evalPeriodIndex)};
+      }
+    );
 })
 
 router.get("/data",(req,res)=>{
+  console.log(req.session.evalPeriods);
+  console.log(req.session.evalPeriodIndex);
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
   let returns = gr.getReturns(evalPeriod, 100);
   returns.then((result)=>{
