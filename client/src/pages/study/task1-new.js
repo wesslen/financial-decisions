@@ -44,6 +44,7 @@ const Task1Page = (props) => {
           // history.push("/instructions");
         });
     console.log("here we will post the user decision")
+    console.log(evalIndex)
   };
 
 
@@ -92,7 +93,12 @@ const Task1Page = (props) => {
             }, 1000);
 
       }
-      fetchData();
+      // fetchData();
+      if (evalIndex < 7) {
+        fetchData();
+      } else {
+        history.push("/post");
+    }
     }, [evalIndex]);
 
   return (
@@ -103,20 +109,17 @@ const Task1Page = (props) => {
         margin: "0 auto",
         overflow: "auto",
         paddingTop: "30px",
-        paddingBottm: "30px",
+        paddingBottom: "30px",
       }}
       ref={divContainer}
     >
       <Instructions accAlias={1}>
-        <h4>Task1: Account {props.accIndex + 1}/8</h4>
+        <h4>Task 1: Decision {evalIndex + 1}/7</h4>
         <p>
-          In this page, you can view tweets from the profile of a Twitter
-          account. We have masked the real name of the account. By clicking on
-          the See More button, you can see more tweets from this account. For
-          each tweet, we ask you to elicit your judgmenet of that individual
-          tweet. When you feel like you are ready to judge the trustworthiness
-          of the account after evaluating multiple tweets, click on Make a
-          Decision. A popup will appear with three questions about the account.
+          In this page, you will make seven allocation decisions. For each
+          one, you will be presented two Funds referenced in different
+          evaluation periods of their returns. Your goal is to decide on
+          the allocation between the two funds for a thirty (30) year investment.
         </p>
       </Instructions>
       <div>
@@ -144,14 +147,14 @@ const Task1Page = (props) => {
             a thirty (30) year investment period.
           </p>
           <p>
-            Between 0% and 100%, how much do you want to allocate to Asset A?
+            Between 0% and 100%, how much do you want to allocate to Fund A?
           </p>
           <form noValidate autoComplete="off">
             {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
             <Input
               id="Practice1"
               type="number"
-              placeholder="Asset A allocation %"
+              placeholder="Fund A allocation %"
               onChange={handleAllocation}
             ></Input>
             <Button variant="contained" onClick={handleDecision}>

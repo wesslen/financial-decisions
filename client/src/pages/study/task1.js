@@ -147,10 +147,7 @@ const Task1Page = (props) => {
     if (props.evalPeriodIndex < 7) {
       fetchData();
     } else {
-      axios.get("/rq2/init").then((res) => {
-        console.log(res);
-        history.push("/task2");
-      });
+      history.push("/post"); // I'm going straight to post-questionnaire while task 2's components are being worked
     }
   }, [props.evalPeriodIndex]);
 

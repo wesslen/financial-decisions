@@ -6,8 +6,8 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 // import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
-import BinaryChoice from "../../components/choice/binaryChoice";
-import Histogram from "../../components/visualization/histogram/histogram";
+// import BinaryChoice from "../../components/choice/binaryChoice";
+// import Histogram from "../../components/visualization/histogram/histogram";
 import Barchart from "../../components/visualization/barchart/barchart";
 import Dotplot from "../../components/visualization/dotplot/dotplot";
 import * as d3 from "d3";
@@ -87,7 +87,7 @@ const InstructionsMain = (props) => {
       </p>
       <p>
         You will view data visualizations of <b>investment rates of return</b>{" "}
-        of different assets.
+        of different asset funds.
       </p>
       <p>
         {" "}
@@ -102,10 +102,10 @@ const InstructionsMain = (props) => {
       <p>
         <ul>
           <li>
-            If you complete the study, you will receive <b>$2.50</b>.
+            If you complete the study, you will receive <b>$1.25</b>.
           </li>
           <li>
-            You are eligible for <b>optional incentives of up to $1.20</b>{" "}
+            You are eligible for <b>optional incentives of up to $1.40</b>{" "}
             depending on your decisions.
           </li>
           <li>
@@ -126,13 +126,18 @@ const InstructionsMain = (props) => {
           example, individual stocks and bonds).
         </li>
         <li>
+          <span className={classes.emph}>Fund:</span> A collection of assets held for diversification benefits.
+            Examples of funds include mutual funds or exchange-traded funds (or ETF's). In this experiment,
+            your investment options are between different funds. Each fund's name is masked.
+        </li>
+        <li>
           <span className={classes.emph}>Rate of Return:</span> Net gain or loss
           by investing in an asset over an evaluation period (for example, 1 or
-          30 years), expressed as a percentage of the investment’s initial cost.
+          30 years), expressed as an <span className={classes.emph}>annualized percentage</span> of the investment’s initial cost.
         </li>
         <li>
           <span className={classes.emph}>Allocation:</span> Decision of how to
-          apportion an investment between different assets. In this study, you
+          apportion an investment between different funds. In this study, you
           will provide you allocation percentage when presented with two
           different assets' rates of returns under different scenarios and data
           visualizations. This number will be a percentage between 0% and 100%.
@@ -180,8 +185,8 @@ const InstructionsMain = (props) => {
       <h4>Let's practice:</h4>
       <p>
         {" "}
-        Consider two investments: Asset A and Asset B. The two charts provide
-        each asset's possible annualized returns over a
+        Consider two investments: Fund A and Fund B. The two charts provide
+        each fund's possible annualized returns over a
         <span className={classes.emph}> five (5) year evaluation period</span>.
       </p>
       {/*<p>*/}
@@ -219,13 +224,13 @@ const InstructionsMain = (props) => {
           <span className={classes.emph}> maximize annual rate of return </span>{" "}
           over a thirty (30) year investment period.
         </p>
-        <p>Between 0% and 100%, how much do you want to allocate to Asset A?</p>
+        <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
         <form className={classes.root} noValidate autoComplete="off">
           {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
           <Input
             id="Practice1"
             type="number"
-            placeholder="Asset A allocation %"
+            placeholder="Fund A allocation %"
           ></Input>
           <Button variant="contained">Make Decision</Button>
         </form>
@@ -234,7 +239,7 @@ const InstructionsMain = (props) => {
       <h4>Another scenario:</h4>
       <p>
         {" "}
-        Consider the same assets (Asset A and B) with possible annual
+        Consider the same funds (Fund A and B) with possible annual
         rate of returns over a
         <span className={classes.emph}>
           {" "}
@@ -262,12 +267,12 @@ const InstructionsMain = (props) => {
           <span className={classes.emph}> maximize annual rate of return </span>
           over a thirty (30) year investment period.
         </p>
-        <p>Between 0% and 100%, how much do you want to allocate to Asset A?</p>
+        <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
         <form className={classes.root} noValidate autoComplete="off">
           <Input
             id="Practice2"
             type="number"
-            placeholder="Asset A allocation %"
+            placeholder="Fund A allocation %"
           ></Input>
           <Button variant="contained">Make Decision</Button>
         </form>
@@ -282,35 +287,34 @@ const InstructionsMain = (props) => {
       <hr />
       <h4>What you will do in this study</h4>
       <ul>
-        <li>In two different rounds, you will make allocation decisions between two different assets.</li>
+        <li>In two different rounds, you will make allocation decisions between two funds.</li>
         <li>
           Your goal is to maximize your expected returns over a thirty (30) year period.
         </li>
       </ul>
       <h4>Round 1</h4>
       <ul>
-        <li> You'll evaluate a bar chart of the assets returns.</li>
+        <li> You'll evaluate a bar chart of the funds' returns.</li>
         <li>
-          You'll have <b>two allocation decisions</b> for two assets' returns seven
+          You'll have <b>two allocation decisions</b> for two funds' returns seven
             times.
         </li>
         <li>
             Each time the returns will be framed into a different evaluation
-            period (e.g., framed as one year, five year, etc.).
+            period (e.g., framed as one year, five year, etc.) but on an annualized period.
         </li>
-        <li>Your goal is to maximize
-            your expected returns over a thirty (30) year period.</li>
+        <li>Your goal is to maximize your expected returns over a thirty (30) year period.</li>
       </ul>
       <h4>Round 2</h4>
       <ul>
         <li>
           {" "}
-          You'll evaluate a different data visualization of the assets' returns.
+          You'll evaluate a data visualizations of different funds' returns.
         </li>
         <li>
-          Similar to Round 1, you'll also make <b>two allocation decisions</b>{" "}
-          on two different assets seven times with each time corresponding to different
-            evaluation periods.
+          Similar to Round 1, you'll also make <b>allocation decisions</b>{" "}
+          on two different funds seven times with each time corresponding. However, the manner in which the returns
+            are provided may change.
         </li>
       </ul>
       <div

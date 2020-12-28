@@ -58,6 +58,14 @@ const PreSurveyPage = (props) => {
         title: "What is your age?",
         isRequired: true,
       },
+      {
+        type: "radiogroup",
+        name: "stocks",
+        title: "Do you currently own any individual stocks, bonds, or funds (mutual funds or exchange-traded funds, ETFs)",
+        isRequired: true,
+        colCount: 1,
+        choices: ["Yes", "No", "Prefer not to say"],
+      },
     ],
   };
 
