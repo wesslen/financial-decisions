@@ -14,7 +14,7 @@ function generateDotplotStacks(data, binwidth) {
     const stack = [data[i].value];
     let j = i + 1;
 
-    while (data[j] < threshold) {
+    while (data[j] < threshold) { // should there be a value on this??
       stack.push(data[j++].value);
     }
     let v = (stack[stack.length - 1] - stack[0]) / 2;
