@@ -46,7 +46,7 @@ const Task1Page = (props) => {
   };
 
   const handleCloseDialog = (value) => {
-    props.setAccIndex(props.accIndex + 1);
+    props.setevalPeriodIndex(props.evalPeriodIndex + 1);
     setOpenDialog(false);
   };
 
@@ -131,7 +131,7 @@ const Task1Page = (props) => {
   useEffect(() => {
     async function fetchData() {
       const result = await axios.post("/rq1/data", {
-        accIndex: props.accIndex,
+        evalPeriodIndex: props.evalPeriodIndex,
       });
       setChoiceContent([]);
       setLoadingOpacity(0.8);
@@ -144,7 +144,7 @@ const Task1Page = (props) => {
         setAnswerCount(0);
       }, 1000);
     }
-    if (props.accIndex < 8) {
+    if (props.evalPeriodIndex < 7) {
       fetchData();
     } else {
       axios.get("/rq2/init").then((res) => {
@@ -152,7 +152,7 @@ const Task1Page = (props) => {
         history.push("/task2");
       });
     }
-  }, [props.accIndex]);
+  }, [props.evalPeriodIndex]);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -177,12 +177,12 @@ const Task1Page = (props) => {
       ref={divContainer}
     >
       <Instructions accAlias={accAssignment.accAlias}>
-        <h4>Task1: Account {props.accIndex + 1}/8</h4>
+        <h4>Task1: Account {props.evalPeriodIndex + 1}/7</h4>
         <p>
           In this page, you can view tweets from the profile of a Twitter
           account. We have masked the real name of the account. By clicking on
           the See More button, you can see more tweets from this account. For
-          each tweet, we ask you to elicit your judgmenet of that individual
+          each tweet, we ask you to elicit your judgment of that individual
           tweet. When you feel like you are ready to judge the trustworthiness
           of the account after evaluating multiple tweets, click on Make a
           Decision. A popup will appear with three questions about the account.

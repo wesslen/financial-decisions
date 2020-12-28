@@ -30,7 +30,7 @@ router.post('/response',(req,res)=>{
 
 router.get("/data",(req,res)=>{
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
-  let returns = gr.getReturns(evalPeriod, 20);
+  let returns = gr.getReturns(evalPeriod, 100);
   returns.then((result)=>{
     res.json(result);
   })
@@ -71,11 +71,9 @@ const getEvaluationPeriods = () => {
 };
 
 const getTreatment = () =>{
-  let treatment = choose(["quantile","hops1","hops2","gradient"]);
+  let treatment = choose(["dotplot","hops1","hops2","cdf","text","barchart"]);
   return treatment
 }
-
-
 
 function choose(choices) {
   var index = Math.floor(Math.random() * choices.length);
