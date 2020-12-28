@@ -23,7 +23,8 @@ const Task1Page = (props) => {
     const [stocks, setStocks] = useState([]);
     const [allocation, setAllocation] = useState(null);
     const [evalIndex,setEvalIndex] = useState(0);
-    const [left,setLeft] = useState("stocks");
+    const [extent,setExtent] = useState([0,1]);
+     const [left,setLeft] = useState("stocks");
 
   const divContainer = useRef(null);
 
@@ -79,14 +80,15 @@ const Task1Page = (props) => {
           return { key: i, value: s };
         });
         let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
+        setExtent(extent);
         console.log(extent, "this is the extent of both datasets");
             setLoadingOpacity(0.8);
             setTimeout(() => {
               setLoadingOpacity(0);
-                      Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
-                      setAllocation(null);
-                      setStocks(stk);
-                      setBonds(bnd);
+              Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
+              setAllocation(null);
+              setStocks(stk);
+              setBonds(bnd);
             }, 1000);
 
       }
@@ -120,8 +122,14 @@ const Task1Page = (props) => {
       <div>
         {" "}
         <Grid container spacing={1}>
-          <Barchart data={left === "stocks" ? stocks : bonds}></Barchart>
-          <Barchart data={left === "stocks" ? bonds : stocks}></Barchart>
+          <Barchart
+            extent={extent}
+            data={left === "stocks" ? stocks : bonds}
+          ></Barchart>
+          <Barchart
+            extent={extent}
+            data={left === "stocks" ? bonds : stocks}
+          ></Barchart>
         </Grid>
         <div
           style={{

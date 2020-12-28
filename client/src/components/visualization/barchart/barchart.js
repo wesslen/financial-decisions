@@ -18,6 +18,7 @@ const Barchart = (props) => {
         const width = svg.node().getBoundingClientRect().width;
         //height of svg
         const height = svg.node().getBoundingClientRect().height;
+        const extent = props.extent || [0,1];
 
         const leftMarginPct = 0.1;
         const rightMarginPct = 0.1;
@@ -60,10 +61,7 @@ const Barchart = (props) => {
           .padding(0.1);
 
         // Add Y axis
-        var y = d3
-          .scaleLinear()
-          .domain([-0.36549999999999994, 0.43809999999999993])
-          .range([h, 0]);
+        var y = d3.scaleLinear().domain(extent).range([h, 0]);
 
         // svg.append("g").call(d3.axisLeft(y));
         var formatPercent = d3.format(".1%");
