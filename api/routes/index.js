@@ -12,9 +12,6 @@ const ef = require("../functions/experimenhtFunctions");
 const gr = new getReturns("task1");
 
 
-
-
-
 const Response = mongoose.model("response", responseSchema);
 
 router.post("/preq", (req, res) => {
