@@ -213,10 +213,8 @@ const InstructionsMain = (props) => {
       {/*></BinaryChoice>*/}
       <div
         style={{
-          display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "10vh",
         }}
       >
         <p>
@@ -256,10 +254,9 @@ const InstructionsMain = (props) => {
       </Grid>
       <div
         style={{
-          display: "flex",
+          flexDirection: 'column',
           justifyContent: "center",
-          alignItems: "center",
-          height: "10vh",
+          alignItems: "stretch",
         }}
       >
         <p>

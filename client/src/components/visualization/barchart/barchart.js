@@ -41,6 +41,11 @@ const Barchart = (props) => {
             "translate(" + margins.left + "," + margins.top + ")"
           );
 
+        function make_y_gridlines() {
+            return d3.axisLeft(y)
+                .ticks(4)
+        }
+
         // get the data
         // X axis: scale and draw:
 
@@ -90,7 +95,7 @@ const Barchart = (props) => {
             .attr("y", function(d) { return y(Math.max(0, d.value)); })
             .attr("width", x.bandwidth())
             .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); })
-            .attr("fill", "#69b3a2")
+            .attr("fill", "#454949")
         // see https://stackoverflow.com/questions/49611148/how-to-add-tooltip-in-react-d3-v4-bar-chart
         // .on("mousemove", function(d) {
         //     div.transition()
@@ -114,6 +119,23 @@ const Barchart = (props) => {
         //     .text( function(d) { return formatPercent(d.value); } )
         //     .attr("x", function(d) { return x(d.key) + x.bandwidth()/2; })
         //     .attr("y", function(d) { return y(d.value) + 10; })
+
+        // g.append("g")
+        //   .attr("class", "grid")
+        //   .call(make_y_gridlines()
+        //       .tickSize(-width)
+        //       .tickFormat("")
+        //   )
+
+        // var yAxis = d3.axisLeft(y)
+        //   .tickFormat(formatPercent)
+        //   .tickSizeInner(-width)
+        //   .ticks(8);
+        //
+        // g.append('g')
+        //   .attr("class", "y axis")
+        //   .call(yAxis)
+        //   .attr("transform", "translate(0," + x(0) + ")");
 
         g.append("g")
           .attr("class", "axis")

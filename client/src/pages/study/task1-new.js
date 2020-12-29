@@ -114,7 +114,7 @@ const Task1Page = (props) => {
       ref={divContainer}
     >
       <Instructions accAlias={1}>
-        <h4>Task 1: Decision {evalIndex + 1}/7</h4>
+        <h4>Round 1: Decision {evalIndex + 1}/7</h4>
         <p>
           In this page, you will make seven allocation decisions. For each
           one, you will be presented two Funds referenced in different
@@ -122,7 +122,7 @@ const Task1Page = (props) => {
           the allocation between the two funds for a thirty (30) year investment.
         </p>
       </Instructions>
-      <div>
+      <div style={{ width: "80%",paddingLeft: "240px",alignItems: "center",justifyContent: "center" }}>
         {" "}
         <Grid container spacing={1}>
           <Barchart
@@ -136,7 +136,6 @@ const Task1Page = (props) => {
         </Grid>
         <div
           style={{
-            display: "flex",
             justifyContent: "center",
             alignItems: "center",
             height: "10vh",

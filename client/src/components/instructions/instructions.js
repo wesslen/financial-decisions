@@ -15,8 +15,9 @@ const Instructions = (props) => {
       }}
     >
       <Typography variant="h5" align="center">
-        Twitter Account{" "}
-        <span style={{ fontWeight: "bold" }}>{props.accAlias}</span>
+        Evaluation Period of {" "}
+        <span style={{ fontWeight: "bold" }}>{props.evalPeriodIndex}</span>
+          Years
       </Typography>
       <div>{props.children}</div>
       <Divider></Divider>

@@ -71,7 +71,7 @@ const Consent = (props) => {
       </p>
       <p>
         <b>Co-PIs:</b> Dr. Doug Markant (Department of Psychological Science),
-        Dr. Alireza Karduni (College of Computing and Informatics)
+        Alireza Karduni (College of Computing and Informatics)
       </p>
 
       <p>
