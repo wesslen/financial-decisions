@@ -1,11 +1,11 @@
-import React , {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Container } from "@material-ui/core";
-import {Grid} from "@material-ui/core"
+import { Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 // import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
+import Input from "@material-ui/core/Input";
 // import BinaryChoice from "../../components/choice/binaryChoice";
 // import Histogram from "../../components/visualization/histogram/histogram";
 import Barchart from "../../components/visualization/barchart/barchart";
@@ -32,14 +32,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const InstructionsMain = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
   const [bonds, setBonds] = useState([]);
   const [stocks, setStocks] = useState([]);
-
+  const [extent, setExtent] = useState(null);
+  const [evalPeriod, setEvalPeriod] = useState(null);
   const handleConsent = () => {
     history.push("/task1");
     // axios.get("/consent").then((result) => {
@@ -48,23 +48,25 @@ const InstructionsMain = (props) => {
     // });
   };
 
-  useEffect(()=>{
-        async function fetchData() {
-          const result = await axios.get("/api/data");
-          let data = result.data;
-          let stk = data.equities_sp.map((s,i)=>{
-          return { key: i, value:s }
-          })
-          let bnd = data.treasury_10yr.map((s, i) => {
-            return { key: i, value: s };
-          });
-          let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
-          console.log(extent, 'this is the extent of both datasets');
-          setStocks(stk);
-          setBonds(bnd);
-        }
-        fetchData();
-  },[])
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios.get("/api/data");
+      let data = result.data.data;
+      setEvalPeriod(result.data.evalPeriod);
+      let stk = data.equities_sp.map((s, i) => {
+        return { key: i, value: s };
+      });
+      let bnd = data.treasury_10yr.map((s, i) => {
+        return { key: i, value: s };
+      });
+      let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
+      console.log(extent, "this is the extent of both datasets");
+      setExtent(extent);
+      setStocks(stk);
+      setBonds(bnd);
+    }
+    fetchData();
+  }, []);
   //DEMONSTRATING DATA VISUALIZATION, creating random data
   // function getRandomArbitrary(min, max) {
   //     return Math.random() * (max - min) + min;
@@ -126,14 +128,18 @@ const InstructionsMain = (props) => {
           example, individual stocks and bonds).
         </li>
         <li>
-          <span className={classes.emph}>Fund:</span> A collection of assets held for diversification benefits.
-            Examples of funds include mutual funds or exchange-traded funds (or ETF's). In this experiment,
-            your investment options are between different funds. Each fund's name is masked.
+          <span className={classes.emph}>Fund:</span> A collection of assets
+          held for diversification benefits. Examples of funds include mutual
+          funds or exchange-traded funds (or ETF's). In this experiment, your
+          investment options are between different funds. Each fund's name is
+          masked.
         </li>
         <li>
           <span className={classes.emph}>Rate of Return:</span> Net gain or loss
           by investing in an asset over an evaluation period (for example, 1 or
-          30 years), expressed as an <span className={classes.emph}>annualized percentage</span> of the investment’s initial cost.
+          30 years), expressed as an{" "}
+          <span className={classes.emph}>annualized percentage</span> of the
+          investment’s initial cost.
         </li>
         <li>
           <span className={classes.emph}>Allocation:</span> Decision of how to
@@ -156,8 +162,9 @@ const InstructionsMain = (props) => {
           will provide returns between 1 to 30 year periods.
         </li>
         <li>
-          <span className={classes.emph}>Investment Period:</span> The expected timeframe
-            you plan to invest. In this study, your investment period will be 30 years.
+          <span className={classes.emph}>Investment Period:</span> The expected
+          timeframe you plan to invest. In this study, your investment period
+          will be 30 years.
         </li>
       </ul>
       <hr />
@@ -185,36 +192,20 @@ const InstructionsMain = (props) => {
       <h4>Let's practice:</h4>
       <p>
         {" "}
-        Consider two investments: Fund A and Fund B. The two charts provide
-        each fund's possible annualized returns over a
+        Consider two investments: Fund A and Fund B. The two charts provide each
+        fund's possible annualized returns over a
         <span className={classes.emph}> five (5) year evaluation period</span>.
       </p>
-      {/*<p>*/}
-      {/*  First use your mouse to hover on the chart. <br />*/}
-      {/*  Click to select the line that best represents your belief. <br />*/}
-      {/*  Then use the mouse to select the range of plusible alternatives that*/}
-      {/*  represents how uncertain you are about your belief.*/}
-      {/*</p>*/}
-      {/*<span className={classes.highlight}>*/}
-      {/*  {" "}*/}
-      {/*  Use the interactive chart below for your decision*/}
-      {/*</span>*/}
       <Grid container className={classes.root} spacing={1}>
-        <Barchart data={bonds}></Barchart>
+        <Barchart extent={extent} title="A" data={bonds}></Barchart>
         {/* <Dotplot data={data}></Dotplot> */}
-        <Barchart data={stocks}></Barchart>
+        <Barchart extent={extent} title="B" data={stocks}></Barchart>
       </Grid>
-      {/*<BinaryChoice*/}
-      {/*  choiceDomain={[0.0, 1.0]}*/}
-      {/*  responseIndex={"instructions"}*/}
-      {/*  // handleResponse={handleResponse}*/}
-      {/*  question="What investment allocation do want between Asset A and B?"*/}
-      {/*  tickLabels={["Asset A", "50% / 50%", "Asset B"]}*/}
-      {/*></BinaryChoice>*/}
       <div
         style={{
           justifyContent: "center",
           alignItems: "center",
+          textAlign: "center",
         }}
       >
         <p>
@@ -237,8 +228,8 @@ const InstructionsMain = (props) => {
       <h4>Another scenario:</h4>
       <p>
         {" "}
-        Consider the same funds (Fund A and B) with possible annual
-        rate of returns over a
+        Consider the same funds (Fund A and B) with possible annual rate of
+        returns over a
         <span className={classes.emph}>
           {" "}
           twenty-five (25) year evaluation period
@@ -249,14 +240,23 @@ const InstructionsMain = (props) => {
         {/*</span>*/}
       </p>
       <Grid container className={classes.root} spacing={1}>
-        <Barchart data={bonds}></Barchart>
-        <Barchart data={stocks}></Barchart>
+        <Barchart
+          // extent={extent}
+          title="A"
+          data={bonds}
+        ></Barchart>
+        <Barchart
+          // extent={extent}
+          title="B"
+          data={stocks}
+        ></Barchart>
       </Grid>
       <div
         style={{
-          flexDirection: 'column',
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "stretch",
+          textAlign: "center",
         }}
       >
         <p>
@@ -284,23 +284,31 @@ const InstructionsMain = (props) => {
       <hr />
       <h4>What you will do in this study</h4>
       <ul>
-        <li>In two different rounds, you will make allocation decisions between two funds.</li>
         <li>
-          Your goal is to maximize your expected returns over a thirty (30) year period.
+          In two different rounds, you will make allocation decisions between
+          two funds.
+        </li>
+        <li>
+          Your goal is to maximize your expected returns over a thirty (30) year
+          period.
         </li>
       </ul>
       <h4>Round 1</h4>
       <ul>
         <li> You'll evaluate a bar chart of the funds' returns.</li>
         <li>
-          You'll have <b>two allocation decisions</b> for two funds' returns seven
-            times.
+          You'll have <b>two allocation decisions</b> for two funds' returns
+          seven times.
         </li>
         <li>
-            Each time the returns will be framed into a different evaluation
-            period (e.g., framed as one year, five year, etc.) but on an annualized period.
+          Each time the returns will be framed into a different evaluation
+          period (e.g., framed as one year, five year, etc.) but on an
+          annualized period.
         </li>
-        <li>Your goal is to maximize your expected returns over a thirty (30) year period.</li>
+        <li>
+          Your goal is to maximize your expected returns over a thirty (30) year
+          period.
+        </li>
       </ul>
       <h4>Round 2</h4>
       <ul>
@@ -309,9 +317,9 @@ const InstructionsMain = (props) => {
           You'll evaluate a data visualizations of different funds' returns.
         </li>
         <li>
-          Similar to Round 1, you'll also make <b>allocation decisions</b>{" "}
-          on two different funds seven times with each time corresponding. However, the manner in which the returns
-            are provided may change.
+          Similar to Round 1, you'll also make <b>allocation decisions</b> on
+          two different funds seven times with each time corresponding. However,
+          the manner in which the returns are provided may change.
         </li>
       </ul>
       <div

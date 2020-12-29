@@ -11,7 +11,6 @@ const ef = require("../functions/experimenhtFunctions");
 // get returns
 const gr = new getReturns("task1");
 
-
 const Response = mongoose.model("response", responseSchema);
 
 router.post("/preq", (req, res) => {
@@ -50,7 +49,7 @@ router.post("/postq", (req, res) => {
     }
   );
 });
-router.post('/response',(req,res)=>{
+router.post("/response", (req, res) => {
   let usertoken = req.session.usertoken;
   let resp = req.body;
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
@@ -58,27 +57,24 @@ router.post('/response',(req,res)=>{
   let response = {};
   console.log(resp);
   response[`responses.${evalPeriod}`] = resp;
-    Response.findOneAndUpdate(
-      { usertoken: usertoken },
-      response,
-      (err, doc) => {
-        if (err) req.status(404).send(err);
-        else {
-          req.session.evalPeriodIndex ++;
-          res.status(200).json(req.session.evalPeriodIndex)};
-      }
-    );
-})
+  Response.findOneAndUpdate({ usertoken: usertoken }, response, (err, doc) => {
+    if (err) req.status(404).send(err);
+    else {
+      req.session.evalPeriodIndex++;
+      res.status(200).json(req.session.evalPeriodIndex);
+    }
+  });
+});
 
-router.get("/data",(req,res)=>{
+router.get("/data", (req, res) => {
   console.log(req.session.evalPeriods);
   console.log(req.session.evalPeriodIndex);
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
-  let returns = gr.getReturns(evalPeriod, 20);
-  returns.then((result)=>{
-    res.json(result);
-  })
-})
+  let returns = gr.getReturns(evalPeriod, 40);
+  returns.then((result) => {
+    res.json({ data: result, evalPeriod: evalPeriod });
+  });
+});
 
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {
@@ -91,7 +87,7 @@ router.get("/consent", (req, res) => {
     let newResponse = new Response({
       usertoken: usertoken,
       evalPeriods: req.session.evalPeriods,
-      treatment : req.session.treatment
+      treatment: req.session.treatment,
     });
 
     newResponse.save(function (err) {
@@ -102,7 +98,7 @@ router.get("/consent", (req, res) => {
     });
   } else {
     res.send({
-      token: req.session.usertoken
+      token: req.session.usertoken,
     });
   }
 });
@@ -114,10 +110,17 @@ const getEvaluationPeriods = () => {
   return allYears;
 };
 
-const getTreatment = () =>{
-  let treatment = choose(["dotplot","hops1","hops2","cdf","text","barchart"]);
-  return treatment
-}
+const getTreatment = () => {
+  let treatment = choose([
+    "dotplot",
+    "hops1",
+    "hops2",
+    "cdf",
+    "text",
+    "barchart",
+  ]);
+  return treatment;
+};
 
 function choose(choices) {
   var index = Math.floor(Math.random() * choices.length);

@@ -3,9 +3,7 @@ import { Typography, Divider } from "@material-ui/core";
 import { ConnectionStates } from "mongoose";
 import Histogram from "../visualization/histogram/histogram";
 
-
 const Instructions = (props) => {
-
   return (
     <div
       style={{
@@ -15,9 +13,8 @@ const Instructions = (props) => {
       }}
     >
       <Typography variant="h5" align="center">
-        Evaluation Period of {" "}
-        <span style={{ fontWeight: "bold" }}>{props.evalPeriodIndex}</span>
-          Years
+        Evaluation Period of{" "}
+        <span style={{ fontWeight: "bold" }}>{props.evalPeriod}</span> Years
       </Typography>
       <div>{props.children}</div>
       <Divider></Divider>

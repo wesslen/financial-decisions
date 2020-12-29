@@ -18,8 +18,10 @@ const Barchart = (props) => {
         const width = svg.node().getBoundingClientRect().width;
         //height of svg
         const height = svg.node().getBoundingClientRect().height;
-        const extent = props.extent || [0,1];
-
+        console.log(props.extent);
+        const extent = props.extent || [-0.5, 0.5];
+        const allocation = props.allocation || 0;
+        const tickNumber = 5;
         const leftMarginPct = 0.1;
         const rightMarginPct = 0.1;
         const topMarginPct = 0.15;
@@ -33,6 +35,15 @@ const Barchart = (props) => {
         };
         const w = width - margins.left - margins.right;
         const h = height - margins.top - margins.bottom;
+        svg.selectAll(".charttitle").remove();
+        svg
+          .append("text")
+          .attr("x", width / 2)
+          .attr("text-anchor", "middle")
+          .attr("y", margins.top)
+          .attr("fill", "teal")
+          .attr("class", "charttitle")
+          .text(`Fund ${props.title}: ${allocation}%`);
 
         const g = svg
           .append("g")
@@ -42,8 +53,7 @@ const Barchart = (props) => {
           );
 
         function make_y_gridlines() {
-            return d3.axisLeft(y)
-                .ticks(4)
+          return d3.axisLeft(y).ticks(4);
         }
 
         // get the data
@@ -76,7 +86,11 @@ const Barchart = (props) => {
         //     .attr("class", "tooltip")
         //     .style("opacity", 50);
 
-        g.append("g").attr("class", "axis").call(d3.axisLeft(y));
+        g.append("g").attr("class", "axis").call(
+          d3.axisLeft(y)
+          // .ticks(tickNumber)
+          // .tickSize(-w)
+        );
 
         // Bars
         // g.selectAll("mybar")
@@ -91,11 +105,17 @@ const Barchart = (props) => {
         g.selectAll("rect")
           .data(props.data)
           .join("rect")
-            .attr("x", function(d) { return x(d.key); })
-            .attr("y", function(d) { return y(Math.max(0, d.value)); })
-            .attr("width", x.bandwidth())
-            .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); })
-            .attr("fill", "#454949")
+          .attr("x", function (d) {
+            return x(d.key);
+          })
+          .attr("y", function (d) {
+            return y(Math.max(0, d.value));
+          })
+          .attr("width", x.bandwidth())
+          .attr("height", function (d) {
+            return Math.abs(y(d.value) - y(0));
+          })
+          .attr("fill", "#454949");
         // see https://stackoverflow.com/questions/49611148/how-to-add-tooltip-in-react-d3-v4-bar-chart
         // .on("mousemove", function(d) {
         //     div.transition()
@@ -153,7 +173,7 @@ const Barchart = (props) => {
             if the variables are valid, but we do not have to compare old props
             to next props to decide whether to rerender.
         */
-    [props.data]
+    [props.data, props.allocation]
   );
 
   return (

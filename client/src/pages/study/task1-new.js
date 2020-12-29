@@ -19,12 +19,13 @@ const Task1Page = (props) => {
   const history = useHistory();
   const [loadingOpacity, setLoadingOpacity] = useState(0);
   // const [data, setData] = useState([]);
-    const [bonds, setBonds] = useState([]);
-    const [stocks, setStocks] = useState([]);
-    const [allocation, setAllocation] = useState(null);
-    const [evalIndex,setEvalIndex] = useState(0);
-    const [extent,setExtent] = useState([0,1]);
-     const [left,setLeft] = useState("stocks");
+  const [bonds, setBonds] = useState([]);
+  const [stocks, setStocks] = useState([]);
+  const [allocation, setAllocation] = useState(null);
+  const [evalIndex, setEvalIndex] = useState(0);
+  const [evalPeriod, setEvalPeriod] = useState(null);
+  const [extent, setExtent] = useState(null);
+  const [left, setLeft] = useState("stocks");
 
   const divContainer = useRef(null);
 
@@ -32,22 +33,19 @@ const Task1Page = (props) => {
     let newVal = event.target.value;
     console.log(event.target.value);
     setAllocation(newVal);
-  }
-
-
-  const handleDecision = () => {
-    let response = {allocation:allocation,left:left,time:Date.now()}
-    console.log(allocation);
-        axios.post("/api/response", response).then((response) => {
-          console.log(response.data);
-          setEvalIndex(response.data);
-          // history.push("/instructions");
-        });
-    console.log("here we will post the user decision")
-    console.log(evalIndex)
   };
 
-
+  const handleDecision = () => {
+    let response = { allocation: allocation, left: left, time: Date.now() };
+    console.log(allocation);
+    axios.post("/api/response", response).then((response) => {
+      console.log(response.data);
+      setEvalIndex(response.data);
+      // history.push("/instructions");
+    });
+    console.log("here we will post the user decision");
+    console.log(evalIndex);
+  };
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -70,36 +68,36 @@ const Task1Page = (props) => {
   //   }
   // }, [props.accIndex]);
 
-    useEffect(() => {
-      async function fetchData() {
-        const result = await axios.get("/api/data");
-        let data = result.data;
-        let stk = data.equities_sp.map((s, i) => {
-          return { key: i, value: s };
-        });
-        let bnd = data.treasury_10yr.map((s, i) => {
-          return { key: i, value: s };
-        });
-        let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
-        setExtent(extent);
-        console.log(extent, "this is the extent of both datasets");
-            setLoadingOpacity(0.8);
-            setTimeout(() => {
-              setLoadingOpacity(0);
-              Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
-              setAllocation(null);
-              setStocks(stk);
-              setBonds(bnd);
-            }, 1000);
-
-      }
-      // fetchData();
-      if (evalIndex < 7) {
-        fetchData();
-      } else {
-        history.push("/post");
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios.get("/api/data");
+      let data = result.data.data;
+      setEvalPeriod(result.data.evalPeriod);
+      let stk = data.equities_sp.map((s, i) => {
+        return { key: i, value: s };
+      });
+      let bnd = data.treasury_10yr.map((s, i) => {
+        return { key: i, value: s };
+      });
+      let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
+      setExtent(extent);
+      console.log(extent, "this is the extent of both datasets");
+      setLoadingOpacity(0.8);
+      setTimeout(() => {
+        setLoadingOpacity(0);
+        Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
+        setAllocation(null);
+        setStocks(stk);
+        setBonds(bnd);
+      }, 1000);
     }
-    }, [evalIndex]);
+    // fetchData();
+    if (evalIndex < 7) {
+      fetchData();
+    } else {
+      history.push("/post");
+    }
+  }, [evalIndex]);
 
   return (
     <div
@@ -113,24 +111,36 @@ const Task1Page = (props) => {
       }}
       ref={divContainer}
     >
-      <Instructions accAlias={1}>
+      <Instructions evalPeriod={evalPeriod}>
         <h4>Round 1: Decision {evalIndex + 1}/7</h4>
         <p>
-          In this page, you will make seven allocation decisions. For each
-          one, you will be presented two Funds referenced in different
-          evaluation periods of their returns. Your goal is to decide on
-          the allocation between the two funds for a thirty (30) year investment.
+          In this page, you will make seven allocation decisions. For each one,
+          you will be presented two Funds referenced in different evaluation
+          periods of their returns. Your goal is to decide on the allocation
+          between the two funds for a thirty (30) year investment.
         </p>
       </Instructions>
-      <div style={{ width: "80%",paddingLeft: "240px",alignItems: "center",justifyContent: "center" }}>
+      <div
+        style={{
+          width: "80%",
+          paddingLeft: "240px",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {" "}
         <Grid container spacing={1}>
           <Barchart
-            extent={extent}
+            // title={evalIndex < 4 ? "A" : "B"}
+            title="A"
+            // extent={extent}
+            allocation={allocation}
             data={left === "stocks" ? stocks : bonds}
           ></Barchart>
           <Barchart
-            extent={extent}
+            title="B"
+            // extent={extent}
+            allocation={100 - allocation}
             data={left === "stocks" ? bonds : stocks}
           ></Barchart>
         </Grid>
@@ -139,6 +149,7 @@ const Task1Page = (props) => {
             justifyContent: "center",
             alignItems: "center",
             height: "10vh",
+            textAlign: "center",
           }}
         >
           <p>
