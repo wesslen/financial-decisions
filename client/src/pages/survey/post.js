@@ -107,11 +107,11 @@ const PostSurveyPage = (props) => {
         isRequired: true,
         colCount: 5,
         choices: [
-          "100% certainty of $90,000",
-          "100% certainty of $80,000",
-          "100% certainty of $70,000",
-          "100% certainty of $60,000",
-          "100% certainty of $50,000",
+          "100% certainty of $70,711", // CRRA of 1; see http://karlshell.com/wp-content/uploads/2015/09/WebPage.pdf
+          "100% certainty of $66,667", // CRRA of 2
+          "100% certainty of $58,566", // CRRA of 5
+          "100% certainty of $53,991", // CRRA of 10
+          "100% certainty of $51,209", // CRRA of 30
         ],
       },
       {
