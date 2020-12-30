@@ -9,7 +9,7 @@ Survey.StylesManager.applyTheme("darkblue");
 const PreSurveyPage = (props) => {
   const history = useHistory();
   const json = {
-    elements: [
+    "questions": [
       {
         type: "radiogroup",
         name: "gender",

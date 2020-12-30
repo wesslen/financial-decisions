@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, Container } from "@material-ui/core";
+import { Button, Container, Table, TableBody, TableContainer, TableHead, TableRow, TableCell } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -83,6 +83,55 @@ const InstructionsMain = (props) => {
     bnds_sim2.push({ key: i, value: getRandomArbitrary(-.05,0.05) });
   }
 
+  function createData(term, definition, examples) {
+      return { term, definition, examples };
+    }
+
+  const terms = [
+      createData(
+          'Assets',
+          'An economic resource with\n' +
+          'the expectation that it will provide a future benefit or returns.',
+          'Stocks, Bonds, Funds (Mutual Funds, ETFs), Real Estate'
+          ),
+      createData(
+          'Fund',
+          'A collection of assets held for diversification benefits. In this study, your\n' +
+          'investment options are between different funds. Each fund\'s name is\n' +
+          'masked.',
+          'Mutual Funds and exchange-traded funds (or ETF\'s)'
+          ),
+      createData(
+          'Allocation',
+          'Decision of how to\n' +
+          'apportion an investment between different funds. In this study, you\n' +
+          'will decide an allocation percentage after viewing two\n' +
+          'different funds\' rates of returns under different scenarios and data\n' +
+          'visualizations.',
+          '0% to 100%'
+      ),
+      createData(
+          'Rate of Return',
+          'Net gain or loss\n' +
+          'by investing in an asset over an evaluation period. It will be expressed as an annualized percentage of the\n' +
+          'investment’s initial cost.',
+          '-5%, 7%, 12%'
+          ),
+      createData(
+          'Evaluation Period',
+          'The relative\n' +
+          '          timeframe in which the rate of returns are framed. In this study, we\n' +
+          '          will provide returns between 1 to 30 year periods.',
+          '1 year to 30 years'
+          ),
+      createData(
+          'Planning Horizon',
+          'The expected\n' +
+          '          timeframe you plan to invest. In this study, your planning horizon\n' +
+          '          will be 30 years.',
+          '30 years'
+          ),
+];
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
@@ -127,43 +176,28 @@ const InstructionsMain = (props) => {
         </ul>
       </p>
       <p className={classes.emph}>Definitions:</p>
-      <ul>
-        <li>
-          <span className={classes.emph}>Asset:</span> An economic resource with
-          the expectation that it will provide a future benefit or returns (for
-          example, individual stocks and bonds).
-        </li>
-        <li>
-          <span className={classes.emph}>Fund:</span> A collection of assets
-          held for diversification benefits. Examples of funds include mutual
-          funds or exchange-traded funds (or ETF's). In this experiment, your
-          investment options are between different funds. Each fund's name is
-          masked.
-        </li>
-        <li>
-          <span className={classes.emph}>Allocation:</span> Decision of how to
-          apportion an investment between different funds. In this study, you
-          will provide you allocation percentage when presented with two
-          different assets' rates of returns under different scenarios and data
-          visualizations. This number will be a percentage between 0% and 100%.
-        </li>
-        <li>
-          <span className={classes.emph}>Evaluation Period:</span> The relative
-          timeframe in which the Rate of Returns are framed. In this study, we
-          will provide returns between 1 to 30 year periods.
-        </li>
-        <li>
-          <span className={classes.emph}>Planning Horizon:</span> The expected
-          timeframe you plan to invest. In this study, your planning horizon
-          will be 30 years.
-        </li>
-        <li>
-          <span className={classes.emph}>Rate of Return:</span> Net gain or loss
-          by investing in an asset over an evaluation period (for example, 1 or
-          30 years), expressed as an annualized percentage of the
-          investment’s initial cost.
-        </li>
-      </ul>
+      <TableContainer >
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Term</TableCell>
+            <TableCell>Definition</TableCell>
+            <TableCell>Examples</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {terms.map((row) => (
+            <TableRow key={row.name}>
+              <TableCell component="th" scope="row">
+                {row.term}
+              </TableCell>
+              <TableCell>{row.definition}</TableCell>
+              <TableCell>{row.examples}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
       <hr />
       <p>Let's consider an example:</p>
       <p>
@@ -191,11 +225,20 @@ const InstructionsMain = (props) => {
         {" "}
         Consider two investments: Fund A and Fund B.
       </p>
-      <Grid container className={classes.root} spacing={1}>
-        <Barchart title="A" data={bnds_sim1}></Barchart> {/*extent={extent}*/}
-        {/* <Dotplot data={data}></Dotplot> */}
-        <Barchart title="B" data={stks_sim1}></Barchart> {/*extent={extent}*/}
-      </Grid>
+      <div
+        style={{
+          width: "80%",
+          paddingLeft: "240px",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+          <Grid container className={classes.root} spacing={1}>
+            <Barchart title="A" data={bnds_sim1}></Barchart> {/*extent={extent}*/}
+            {/* <Dotplot data={data}></Dotplot> */}
+            <Barchart title="B" data={stks_sim1}></Barchart> {/*extent={extent}*/}
+          </Grid>
+      </div>
       <div
         style={{
           justifyContent: "center",
@@ -244,18 +287,27 @@ const InstructionsMain = (props) => {
         {/*  Use the interactive chart below for your decision.*/}
         {/*</span>*/}
       </p>
-      <Grid container className={classes.root} spacing={1}>
-        <Barchart
-          // extent={extent}
-          title="A"
-          data={stks_sim2}
-        ></Barchart>
-        <Barchart
-          // extent={extent}
-          title="B"
-          data={bnds_sim2}
-        ></Barchart>
-      </Grid>
+      <div
+        style={{
+          width: "80%",
+          paddingLeft: "240px",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+          <Grid container className={classes.root} spacing={1}>
+            <Barchart
+              // extent={extent}
+              title="A"
+              data={stks_sim2}
+            ></Barchart>
+            <Barchart
+              // extent={extent}
+              title="B"
+              data={bnds_sim2}
+            ></Barchart>
+          </Grid>
+      </div>
       <div
         style={{
           flexDirection: "column",
