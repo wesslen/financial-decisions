@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import BinaryChoice from "../../components/choice/binaryChoice";
-import DecisionDialog from "../../components/dialog/decisionDialog";
-import AlertDialog from "../../components/dialog/alertDialog";
-import Tweet from "../../components/tweet/tweet";
+// import BinaryChoice from "../../components/choice/binaryChoice";
+// import DecisionDialog from "../../components/dialog/decisionDialog";
+// import AlertDialog from "../../components/dialog/alertDialog";
+// import Tweet from "../../components/tweet/tweet";
 import LoadingCircle from "../../components/loading/loading";
 import Instructions from "../../components/instructions/instructions";
 import { useHistory } from "react-router-dom";
 import Barchart from "../../components/visualization/barchart/barchart";
 import * as d3 from "d3";
-import { Button, Divider, Grid, Input } from "@material-ui/core";
-import $ from "jquery";
+import {Button, Divider, Grid, InputAdornment, TextField, Typography} from "@material-ui/core";
+// import $ from "jquery";
 
 // let index = 0;
 
@@ -29,10 +29,19 @@ const Task1Page = (props) => {
 
   const divContainer = useRef(null);
 
+  // function isInt(value) {
+  //   return !isNaN(value) &&
+  //          parseInt(Number(value)) === value &&
+  //          !isNaN(parseInt(value, 10));
+  // }
+
   const handleAllocation = (event) => {
     let newVal = event.target.value;
     console.log(event.target.value);
-    setAllocation(newVal);
+    // ryan added: to keep as values between 0 and 100
+    // doesn't work correctly for integer component yet... need to check that
+    // what this doesn't do: prompt the user. need to create a front end warning too for this.
+    if (newVal > -1 && newVal < 101) setAllocation(newVal);
   };
 
   const handleDecision = () => {
@@ -43,8 +52,8 @@ const Task1Page = (props) => {
       setEvalIndex(response.data);
       // history.push("/instructions");
     });
-    console.log("here we will post the user decision");
-    console.log(evalIndex);
+    // console.log("here we will post the user decision");
+    // console.log(evalIndex);
   };
 
   // useEffect(() => {
@@ -113,12 +122,12 @@ const Task1Page = (props) => {
     >
       <Instructions evalPeriod={evalPeriod}>
         <h4>Round 1: Decision {evalIndex + 1}/7</h4>
-        <p>
-          In this page, you will make seven allocation decisions. For each one,
-          you will be presented two Funds referenced in different evaluation
-          periods of their returns. Your goal is to decide on the allocation
-          between the two funds for a thirty (30) year investment.
-        </p>
+        {/*<p>*/}
+        {/*  For each one,*/}
+        {/*  you will be presented two Funds referenced in different evaluation*/}
+        {/*  periods of their returns. Your goal is to decide on the allocation*/}
+        {/*  between the two funds for a thirty (30) year investment.*/}
+        {/*</p>*/}
       </Instructions>
       <div
         style={{
@@ -153,20 +162,32 @@ const Task1Page = (props) => {
           }}
         >
           <p>
-            Investment goal: <span> maximize annual rate of return </span> over
-            a thirty (30) year investment period.
+            <span style={{ fontWeight: "bold" }}>Objective</span>: <span style={{textDecorationLine: "underline"}}> maximize investment rate of return </span> over
+            a <span style={{ fontWeight: "bold" }}>thirty (30) year</span> planning horizon.
           </p>
           <p>
-            Between 0% and 100%, how much do you want to allocate to Fund A?
+            <span style={{ fontWeight: "bold" }}>Evaluation Period</span>: <span> Rates of returns </span> are averaged and annualized
+            over a <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span> evaluation period.
+          </p>
+          <p>
+            Between 0% and 100%, how much of your investment do you want to allocate to Fund A?
           </p>
           <form noValidate autoComplete="off">
             {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
-            <Input
-              id="Practice1"
-              type="number"
-              placeholder="Fund A allocation %"
-              onChange={handleAllocation}
-            ></Input>
+            {/*<Input*/}
+            {/*  id="Practice1"*/}
+            {/*  type="number"*/}
+            {/*  placeholder="Fund A allocation %"*/}
+            {/*  onChange={handleAllocation}*/}
+            {/*></Input>*/}
+            <TextField
+            id="Practice1"
+            label="Fund A allocation %"
+            type="number"
+            color="secondary"
+            /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+            onChange={handleAllocation}
+          /> <p>   </p>
             <Button variant="contained" onClick={handleDecision}>
               Make Decision
             </Button>

@@ -4,8 +4,8 @@ import { Button, Container } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-// import TextField from '@material-ui/core/TextField';
-import Input from "@material-ui/core/Input";
+import TextField from '@material-ui/core/TextField';
+// import Input from "@material-ui/core/Input";
 // import BinaryChoice from "../../components/choice/binaryChoice";
 // import Histogram from "../../components/visualization/histogram/histogram";
 import Barchart from "../../components/visualization/barchart/barchart";
@@ -68,16 +68,22 @@ const InstructionsMain = (props) => {
     fetchData();
   }, []);
   //DEMONSTRATING DATA VISUALIZATION, creating random data
-  // function getRandomArbitrary(min, max) {
-  //     return Math.random() * (max - min) + min;
-  // }
-  //
-  // const data = [];
-  // for (let i = 0; i < 21; i++) {
-  //   data.push({ key: i, value: getRandomArbitrary(-.05,0.1) });
-  // }
-  // let gr = new getReturns();
-  // const data = gr.getReturns("../../../public/returns.csv", "treasury_10yr", 10);
+  function getRandomArbitrary(min, max) {
+      return Math.random() * (max - min) + min;
+  }
+
+  const stks_sim1 = [];
+  const bnds_sim1 = [];
+  const stks_sim2 = [];
+  const bnds_sim2 = [];
+  for (let i = 0; i < 41; i++) {
+    stks_sim1.push({ key: i, value: getRandomArbitrary(-.3,0.3) });
+    bnds_sim1.push({ key: i, value: getRandomArbitrary(-.08,0.08) });
+    stks_sim2.push({ key: i, value: getRandomArbitrary(-.1,0.1) });
+    bnds_sim2.push({ key: i, value: getRandomArbitrary(-.05,0.05) });
+  }
+
+
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Study Instructions</h3>
@@ -135,36 +141,27 @@ const InstructionsMain = (props) => {
           masked.
         </li>
         <li>
-          <span className={classes.emph}>Rate of Return:</span> Net gain or loss
-          by investing in an asset over an evaluation period (for example, 1 or
-          30 years), expressed as an{" "}
-          <span className={classes.emph}>annualized percentage</span> of the
-          investment’s initial cost.
-        </li>
-        <li>
           <span className={classes.emph}>Allocation:</span> Decision of how to
           apportion an investment between different funds. In this study, you
           will provide you allocation percentage when presented with two
           different assets' rates of returns under different scenarios and data
           visualizations. This number will be a percentage between 0% and 100%.
         </li>
-        {/* use for Round 3 when introduce Time Horizon*/}
-        {/*  <li>*/}
-        {/*  <span className={classes.emph}>Time Horizon:</span> The amount of time before*/}
-        {/*      you expect to retire. In this study, we may provide you with specified*/}
-        {/*      time horizons (e.g., decide an allocation with the expectation to retire*/}
-        {/*      in 1 or 30 years). You should make your decision based on this time horizon, not*/}
-        {/*      your own personal retirement decision.*/}
-        {/*</li>*/}
         <li>
           <span className={classes.emph}>Evaluation Period:</span> The relative
           timeframe in which the Rate of Returns are framed. In this study, we
           will provide returns between 1 to 30 year periods.
         </li>
         <li>
-          <span className={classes.emph}>Investment Period:</span> The expected
-          timeframe you plan to invest. In this study, your investment period
+          <span className={classes.emph}>Planning Horizon:</span> The expected
+          timeframe you plan to invest. In this study, your planning horizon
           will be 30 years.
+        </li>
+        <li>
+          <span className={classes.emph}>Rate of Return:</span> Net gain or loss
+          by investing in an asset over an evaluation period (for example, 1 or
+          30 years), expressed as an annualized percentage of the
+          investment’s initial cost.
         </li>
       </ul>
       <hr />
@@ -192,14 +189,12 @@ const InstructionsMain = (props) => {
       <h4>Let's practice:</h4>
       <p>
         {" "}
-        Consider two investments: Fund A and Fund B. The two charts provide each
-        fund's possible annualized returns over a
-        <span className={classes.emph}> five (5) year evaluation period</span>.
+        Consider two investments: Fund A and Fund B.
       </p>
       <Grid container className={classes.root} spacing={1}>
-        <Barchart extent={extent} title="A" data={bonds}></Barchart>
+        <Barchart title="A" data={bnds_sim1}></Barchart> {/*extent={extent}*/}
         {/* <Dotplot data={data}></Dotplot> */}
-        <Barchart extent={extent} title="B" data={stocks}></Barchart>
+        <Barchart title="B" data={stks_sim1}></Barchart> {/*extent={extent}*/}
       </Grid>
       <div
         style={{
@@ -209,18 +204,28 @@ const InstructionsMain = (props) => {
         }}
       >
         <p>
-          Investment goal:{" "}
+            <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
           <span className={classes.emph}> maximize annual rate of return </span>{" "}
-          over a thirty (30) year investment period.
+          over a thirty (30) year planning horizon.
+        </p>
+        <p>
+          <span style={{ fontWeight: "bold" }}>Evaluation Period</span>: <span> Rates of returns </span> are averaged and annualized
+          over a <span style={{ fontWeight: "bold" }}>five (5) year</span> evaluation period.
         </p>
         <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
         <form className={classes.root} noValidate autoComplete="off">
           {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
-          <Input
+          {/*<Input*/}
+          {/*  id="Practice1"*/}
+          {/*  type="number"*/}
+          {/*  placeholder="Fund A allocation %"*/}
+          {/*></Input>*/}
+            <TextField
             id="Practice1"
+            label="Fund A allocation %"
             type="number"
-            placeholder="Fund A allocation %"
-          ></Input>
+            color="secondary"
+          /><p>   </p>
           <Button variant="contained">Make Decision</Button>
         </form>
       </div>
@@ -243,12 +248,12 @@ const InstructionsMain = (props) => {
         <Barchart
           // extent={extent}
           title="A"
-          data={bonds}
+          data={stks_sim2}
         ></Barchart>
         <Barchart
           // extent={extent}
           title="B"
-          data={stocks}
+          data={bnds_sim2}
         ></Barchart>
       </Grid>
       <div
@@ -260,17 +265,27 @@ const InstructionsMain = (props) => {
         }}
       >
         <p>
-          Investment goal:{" "}
+          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
           <span className={classes.emph}> maximize annual rate of return </span>
-          over a thirty (30) year investment period.
+          over a thirty (30) year planning horizon.
+        </p>
+        <p>
+          <span style={{ fontWeight: "bold" }}>Evaluation Period</span>: <span> Rates of returns </span> are averaged and annualized
+          over a <span style={{ fontWeight: "bold" }}>twenty-five (25) year</span> evaluation period.
         </p>
         <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
         <form className={classes.root} noValidate autoComplete="off">
-          <Input
+          {/*<Input*/}
+          {/*  id="Practice2"*/}
+          {/*  type="number"*/}
+          {/*  placeholder="Fund A allocation %"*/}
+          {/*></Input>*/}
+          <TextField
             id="Practice2"
+            label="Fund A allocation %"
             type="number"
-            placeholder="Fund A allocation %"
-          ></Input>
+            color="secondary"
+          /><h4>   </h4>
           <Button variant="contained">Make Decision</Button>
         </form>
       </div>
@@ -295,15 +310,12 @@ const InstructionsMain = (props) => {
       </ul>
       <h4>Round 1</h4>
       <ul>
-        <li> You'll evaluate a bar chart of the funds' returns.</li>
         <li>
-          You'll have <b>two allocation decisions</b> for two funds' returns
-          seven times.
+          You'll have <b>seven</b> allocation decisions for two funds.
         </li>
         <li>
-          Each time the returns will be framed into a different evaluation
-          period (e.g., framed as one year, five year, etc.) but on an
-          annualized period.
+          Each decision will show funds' rate of returns framed as different evaluation
+          periods (e.g., one year period, thirty year period).
         </li>
         <li>
           Your goal is to maximize your expected returns over a thirty (30) year
@@ -314,12 +326,7 @@ const InstructionsMain = (props) => {
       <ul>
         <li>
           {" "}
-          You'll evaluate a data visualizations of different funds' returns.
-        </li>
-        <li>
-          Similar to Round 1, you'll also make <b>allocation decisions</b> on
-          two different funds seven times with each time corresponding. However,
-          the manner in which the returns are provided may change.
+          Repeat Round 1 but with (1) different funds and (2) a different data visualization.
         </li>
       </ul>
       <div
