@@ -9,7 +9,14 @@ import Instructions from "../../components/instructions/instructions";
 import { useHistory } from "react-router-dom";
 import Barchart from "../../components/visualization/barchart/barchart";
 import * as d3 from "d3";
-import {Button, Divider, Grid, InputAdornment, TextField, Typography} from "@material-ui/core";
+import {
+  Button,
+  Divider,
+  Grid,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 // import $ from "jquery";
 
 // let index = 0;
@@ -56,27 +63,6 @@ const Task1Page = (props) => {
     // console.log(evalIndex);
   };
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const result = await axios.post("/api/data", {
-  //       accIndex: props.accIndex,
-  //     });
-  //     setLoadingOpacity(0.8);
-  //     setTimeout(() => {
-  //       setLoadingOpacity(0);
-  //       setData(result.data.data);
-  //     }, 1000);
-  //   }
-  //   if (props.accIndex < 8) {
-  //     fetchData();
-  //   } else {
-  //     axios.get("/rq2/init").then((res) => {
-  //       console.log(res);
-  //       history.push("/task2");
-  //     });
-  //   }
-  // }, [props.accIndex]);
-
   useEffect(() => {
     async function fetchData() {
       const result = await axios.get("/api/data");
@@ -89,6 +75,8 @@ const Task1Page = (props) => {
         return { key: i, value: s };
       });
       let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
+      let maxExtent = d3.max(extent);
+      extent = [-maxExtent, maxExtent];
       setExtent(extent);
       console.log(extent, "this is the extent of both datasets");
       setLoadingOpacity(0.8);
@@ -142,13 +130,13 @@ const Task1Page = (props) => {
           <Barchart
             // title={evalIndex < 4 ? "A" : "B"}
             title="A"
-            // extent={extent}
+            extent={extent}
             allocation={allocation}
             data={left === "stocks" ? stocks : bonds}
           ></Barchart>
           <Barchart
             title="B"
-            // extent={extent}
+            extent={extent}
             allocation={100 - allocation}
             data={left === "stocks" ? bonds : stocks}
           ></Barchart>
@@ -162,15 +150,25 @@ const Task1Page = (props) => {
           }}
         >
           <p>
-            <span style={{ fontWeight: "bold" }}>Objective</span>: <span style={{textDecorationLine: "underline"}}> maximize investment rate of return </span> over
-            a <span style={{ fontWeight: "bold" }}>thirty (30) year</span> planning horizon.
+            <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
+            <span style={{ textDecorationLine: "underline" }}>
+              {" "}
+              maximize investment rate of return{" "}
+            </span>{" "}
+            over a <span style={{ fontWeight: "bold" }}>
+              thirty (30) year
+            </span>{" "}
+            planning horizon.
           </p>
           <p>
-            <span style={{ fontWeight: "bold" }}>Evaluation Period</span>: <span> Rates of returns </span> are averaged and annualized
-            over a <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span> evaluation period.
+            <span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}
+            <span> Rates of returns </span> are averaged and annualized over a{" "}
+            <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
+            evaluation period.
           </p>
           <p>
-            Between 0% and 100%, how much of your investment do you want to allocate to Fund A?
+            Between 0% and 100%, how much of your investment do you want to
+            allocate to Fund A?
           </p>
           <form noValidate autoComplete="off">
             {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
@@ -181,13 +179,14 @@ const Task1Page = (props) => {
             {/*  onChange={handleAllocation}*/}
             {/*></Input>*/}
             <TextField
-            id="Practice1"
-            label="Fund A allocation %"
-            type="number"
-            color="secondary"
-            /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
-            onChange={handleAllocation}
-          /> <p>   </p>
+              id="Practice1"
+              label="Fund A allocation %"
+              type="number"
+              color="secondary"
+              /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+              onChange={handleAllocation}
+            />{" "}
+            <p> </p>
             <Button variant="contained" onClick={handleDecision}>
               Make Decision
             </Button>

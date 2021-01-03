@@ -13,6 +13,8 @@ const Barchart = (props) => {
       if (d3Container.current) {
         //svg returned by this component
         const svg = d3.select(d3Container.current);
+        svg.selectAll(".charttitle").remove();
+        svg.selectAll(".axis").remove();
         svg.selectAll("g").remove();
         //width of svg
         const width = svg.node().getBoundingClientRect().width;
@@ -35,7 +37,6 @@ const Barchart = (props) => {
         };
         const w = width - margins.left - margins.right;
         const h = height - margins.top - margins.bottom;
-        svg.selectAll(".charttitle").remove();
         svg
           .append("text")
           .attr("x", width / 2)
@@ -86,12 +87,23 @@ const Barchart = (props) => {
         //     .attr("class", "tooltip")
         //     .style("opacity", 50);
 
-        g.append("g").attr("class", "axis").call(
+        g.append("g").attr("class", "y-axis").call(
           d3.axisLeft(y)
+          // .style("stroke", "lightgrey")
+          // .attr("stroke-opacity", "0.7")
           // .ticks(tickNumber)
           // .tickSize(-w)
         );
 
+        g.append("g")
+          .attr("class", "y-axis-grid")
+          .call(d3.axisLeft(y).tickSize(-w).tickFormat("").ticks(5));
+
+        g.selectAll(".y-axis-grid")
+          .selectAll("line")
+          .style("stroke", "lightgrey");
+
+        g.selectAll(".y-axis-grid").selectAll("path").remove();
         // Bars
         // g.selectAll("mybar")
         //   .data(props.data)
