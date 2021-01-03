@@ -72,27 +72,27 @@ function shuffle(array) {
   return array;
 }
 
-function getDataBlock(data, emotion, blockSize) {
-  let happy = data.filter((x) => x["selection"] == "happy");
-  happy = happy.sort((a, b) => {
-    return +b["dpfc_happy"] - +a["dpfc_happy"];
-  });
-  let angry = data.filter((x) => x["selection"] == "angry");
-  angry = angry.sort((a, b) => {
-    return +b["dpfc_angry"] - +a["dpfc_angry"];
-  });
-  let outputData = [];
-  for (let i = 0; i < happy.length; i = i + blockSize) {
-    if (emotion == "happy") {
-      outputData.push(...happy.slice(i, i + blockSize));
-      outputData.push(...angry.slice(i, i + blockSize));
-    } else if (emotion == "angry") {
-      outputData.push(...angry.slice(i, i + blockSize));
-      outputData.push(...happy.slice(i, i + blockSize));
-    }
-  }
-  return outputData;
-}
+// function getDataBlock(data, emotion, blockSize) {
+//   let happy = data.filter((x) => x["selection"] == "happy");
+//   happy = happy.sort((a, b) => {
+//     return +b["dpfc_happy"] - +a["dpfc_happy"];
+//   });
+//   let angry = data.filter((x) => x["selection"] == "angry");
+//   angry = angry.sort((a, b) => {
+//     return +b["dpfc_angry"] - +a["dpfc_angry"];
+//   });
+//   let outputData = [];
+//   for (let i = 0; i < happy.length; i = i + blockSize) {
+//     if (emotion == "happy") {
+//       outputData.push(...happy.slice(i, i + blockSize));
+//       outputData.push(...angry.slice(i, i + blockSize));
+//     } else if (emotion == "angry") {
+//       outputData.push(...angry.slice(i, i + blockSize));
+//       outputData.push(...happy.slice(i, i + blockSize));
+//     }
+//   }
+//   return outputData;
+// }
 
 
 
