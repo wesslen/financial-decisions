@@ -8,7 +8,7 @@ import PreSurveyPage from "./pages/survey/pre";
 import PostSurveyPage from "./pages/survey/post";
 import ConsentPage from "./pages/consent/consent";
 import InstructionsMainPage from "./pages/instructions/instructionMain";
-
+import axios from "axios";
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,7 +23,7 @@ class App extends React.Component {
   state = {
     answerCount: 0,
     accIndex: null,
-    personIndex: null,
+    evalPeriodIndex: 0,
   };
 
   // componentWillMount() {
@@ -51,7 +51,13 @@ class App extends React.Component {
     return (
       <div
         className="app"
-        style={{ height: "100%", overflow: "auto", lineHeight: "150%" }}
+        style={{
+          height: "100%",
+          overflow: "auto",
+          lineHeight: "150%",
+
+          overflow: "hidden",
+        }}
       >
         <Router>
           <NavBar height={"7%"} className="navBar"></NavBar>
@@ -74,22 +80,22 @@ class App extends React.Component {
               ></Route>
               <Route path="/pre" component={PreSurveyPage}></Route>
               <Route path="/task1">
-                <Task1
-                ></Task1>
+                <Task1></Task1>
               </Route>
-              {/*<Route path="/task2">*/}
-              {/*  <Task2*/}
-              {/*    answerCount={this.state.answerCount}*/}
-              {/*    setAnswerCount={this.setAnswerCount}*/}
-              {/*    personIndex={this.state.personIndex}*/}
-              {/*    setPersonIndex={this.setPersonIndex}*/}
-              {/*  ></Task2>*/}
-              {/*</Route>*/}
+              <Route path="/task2">
+                <Task2
+                  answerCount={this.state.answerCount}
+                  setAnswerCount={this.setAnswerCount}
+                  personIndex={this.state.personIndex}
+                  setPersonIndex={this.setPersonIndex}
+                ></Task2>
+              </Route>
               <Route path="/post" component={PostSurveyPage}></Route>
               <Route path="/debrief"></Route>
             </Switch>
           </Container>
           <BottomNav height="7%"></BottomNav>
+          <div className="tooltip"></div>
         </Router>
       </div>
     );

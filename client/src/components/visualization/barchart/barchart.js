@@ -65,6 +65,8 @@ const Barchart = (props) => {
           return b.value - a.value;
         });
 
+        let tip = d3.select(".tooltip");
+
         // X axis
         var x = d3
           .scaleBand()
@@ -127,19 +129,29 @@ const Barchart = (props) => {
           .attr("height", function (d) {
             return Math.abs(y(d.value) - y(0));
           })
-          .attr("fill", "#454949");
-        // see https://stackoverflow.com/questions/49611148/how-to-add-tooltip-in-react-d3-v4-bar-chart
-        // .on("mousemove", function(d) {
-        //     div.transition()
-        //         .duration(200)
-        //         .style("opacity", .9);
-        //     div.html(d.value);
-        //     })
-        // .on("mouseout", function(d) {
-        //     div.transition()
-        //       .duration(500)
-        //       .style("opacity", 0);
-        // })
+          .attr("fill", "#454949")
+          // see https://stackoverflow.com/questions/49611148/how-to-add-tooltip-in-react-d3-v4-bar-chart
+          .on("mousemove", function (d) {
+            tip.style("opacity", 1);
+            tip
+              .html(d.value.toFixed(2))
+              .style("left", d3.event.pageX + "px")
+              .style("top", d3.event.pageY - 28 + "px");
+          })
+          .on("mouseout", function (d) {
+            tip.style("opacity", 0);
+          });
+
+        // let annot = g.append("g");
+
+        // annot
+        //   .selectAll("text")
+        //   .data([props.data[0], props.data[props.data.length - 1]])
+        //   .enter()
+        //   .append("text")
+        //   .attr("x", (d) => x(d.key))
+        //   .attr("y", (d) => y(d.value))
+        //   .text("🠗");
         // g.selectAll(".label")
         //   .data(props.data)
         //   .enter()

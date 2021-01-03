@@ -9,10 +9,28 @@ body {
   height: 100%;
 }
 
+body {
+  overflow-y: hidden;
+}
+
 #root {
   height: 100%;
 }
 
 .test {
   margin: 0;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  /* width: 60px;					
+    height: 28px;					 */
+  padding: 5px;
+  font: 12px sans-serif;
+  background: rgba(211, 211, 211, 0.89);
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
 }

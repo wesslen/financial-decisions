@@ -25,10 +25,12 @@ const Task1Page = (props) => {
   //   console.log(props.setChoice);
   const history = useHistory();
   const [loadingOpacity, setLoadingOpacity] = useState(0);
+  const [pageOpacity, setPageOpacity] = useState(1);
   // const [data, setData] = useState([]);
   const [bonds, setBonds] = useState([]);
   const [stocks, setStocks] = useState([]);
   const [allocation, setAllocation] = useState(null);
+  const [allocationText, setAllocationText] = useState("");
   const [evalIndex, setEvalIndex] = useState(0);
   const [evalPeriod, setEvalPeriod] = useState(null);
   const [extent, setExtent] = useState(null);
@@ -44,7 +46,8 @@ const Task1Page = (props) => {
 
   const handleAllocation = (event) => {
     let newVal = event.target.value;
-    console.log(event.target.value);
+    // console.log(event.target.value);
+    setAllocationText(newVal);
     // ryan added: to keep as values between 0 and 100
     // doesn't work correctly for integer component yet... need to check that
     // what this doesn't do: prompt the user. need to create a front end warning too for this.
@@ -55,7 +58,6 @@ const Task1Page = (props) => {
     let response = { allocation: allocation, left: left, time: Date.now() };
     console.log(allocation);
     axios.post("/api/response", response).then((response) => {
-      console.log(response.data);
       setEvalIndex(response.data);
       // history.push("/instructions");
     });
@@ -67,7 +69,6 @@ const Task1Page = (props) => {
     async function fetchData() {
       const result = await axios.get("/api/data");
       let data = result.data.data;
-      setEvalPeriod(result.data.evalPeriod);
       let stk = data.equities_sp.map((s, i) => {
         return { key: i, value: s };
       });
@@ -78,14 +79,18 @@ const Task1Page = (props) => {
       let maxExtent = d3.max(extent);
       extent = [-maxExtent, maxExtent];
       setExtent(extent);
-      console.log(extent, "this is the extent of both datasets");
+      setEvalPeriod(result.data.evalPeriod);
       setLoadingOpacity(0.8);
+      setPageOpacity(0.2);
+      // Just to create an illusion of loading so users know data has changed.
       setTimeout(() => {
-        setLoadingOpacity(0);
         Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
         setAllocation(null);
+        setAllocationText("");
         setStocks(stk);
         setBonds(bnd);
+        setLoadingOpacity(0);
+        setPageOpacity(1);
       }, 1000);
     }
     // fetchData();
@@ -104,12 +109,14 @@ const Task1Page = (props) => {
         margin: "0 auto",
         overflow: "auto",
         paddingTop: "30px",
-        paddingBottom: "30px",
+        opacity: pageOpacity,
       }}
       ref={divContainer}
     >
-      <Instructions evalPeriod={evalPeriod}>
-        <h4>Round 1: Decision {evalIndex + 1}/7</h4>
+      <Instructions evalPeriod={evalPeriod} style={{ height: "20%" }}>
+        <h4 style={{ textAlign: "center" }}>
+          Round 1: Decision {evalIndex + 1}/7
+        </h4>
         {/*<p>*/}
         {/*  For each one,*/}
         {/*  you will be presented two Funds referenced in different evaluation*/}
@@ -119,14 +126,16 @@ const Task1Page = (props) => {
       </Instructions>
       <div
         style={{
-          width: "80%",
-          paddingLeft: "240px",
+          width: "90%",
+          // paddingLeft: "50",
+          height: "80%",
+          margin: "0 auto",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         {" "}
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{ height: "40%" }}>
           <Barchart
             // title={evalIndex < 4 ? "A" : "B"}
             title="A"
@@ -183,6 +192,7 @@ const Task1Page = (props) => {
               label="Fund A allocation %"
               type="number"
               color="secondary"
+              value={allocationText}
               /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
               onChange={handleAllocation}
             />{" "}
