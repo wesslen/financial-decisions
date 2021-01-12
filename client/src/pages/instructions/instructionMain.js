@@ -209,11 +209,11 @@ const InstructionsMain = (props) => {
           <TableBody>
             {terms.map((row) => (
               <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
+                <TableCell key={row.name} component="th" scope="row">
                   {row.term}
                 </TableCell>
-                <TableCell>{row.definition}</TableCell>
-                <TableCell>{row.examples}</TableCell>
+                <TableCell key={row.name}>{row.definition}</TableCell>
+                <TableCell key={row.name}>{row.examples}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -226,20 +226,7 @@ const InstructionsMain = (props) => {
         given the returns provided.
       </p>
       <p>[INSERT GIF OF EXAMPLE]</p>
-      {/*<img*/}
-      {/*  src={process.env.PUBLIC_URL + "/uncertainty1.gif"}*/}
-      {/*  alt=""*/}
-      {/*  className={classes.image}*/}
-      {/*/>*/}
-      {/*<p>*/}
-      {/*  In the next animation, the user decides to put their allocation near an*/}
-      {/*  even mix of 50% and 50%.*/}
-      {/*</p>*/}
-      {/*<img*/}
-      {/*  src={process.env.PUBLIC_URL + "/uncertainty2.gif"}*/}
-      {/*  alt=""*/}
-      {/*  className={classes.image}*/}
-      {/*/>*/}
+
       <hr />
       <h4>Let's practice:</h4>
       <p> Consider two investments: Fund A and Fund B.</p>
@@ -344,11 +331,6 @@ const InstructionsMain = (props) => {
         </p>
         <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
         <form className={classes.root} noValidate autoComplete="off">
-          {/*<Input*/}
-          {/*  id="Practice2"*/}
-          {/*  type="number"*/}
-          {/*  placeholder="Fund A allocation %"*/}
-          {/*></Input>*/}
           <TextField
             id="Practice2"
             label="Fund A allocation %"
@@ -359,13 +341,7 @@ const InstructionsMain = (props) => {
           <Button variant="contained">Make Decision</Button>
         </form>
       </div>
-      {/*<BinaryChoice*/}
-      {/*  choiceDomain={[0.0, 1.0]}*/}
-      {/*  responseIndex={"instructions"}*/}
-      {/*  // handleResponse={handleResponse}*/}
-      {/*  question="What investment allocation do want between Asset A and B?"*/}
-      {/*  tickLabels={["Asset A", "50% / 50%", "Asset B"]}*/}
-      {/*></BinaryChoice>*/}
+
       <hr />
       <h4>What you will do in this study</h4>
       <ul>

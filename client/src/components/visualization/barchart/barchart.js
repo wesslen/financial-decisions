@@ -6,6 +6,7 @@ const Barchart = (props) => {
   const d3Container = useRef(null);
   const width = props.width || "50%";
   const height = props.height || "100%";
+
   // const numBins = props.numBins || 10;
   console.log(props.data);
   useEffect(
@@ -24,10 +25,10 @@ const Barchart = (props) => {
         const extent = props.extent || [-0.5, 0.5];
         const allocation = props.allocation || 0;
         const tickNumber = 5;
-        const leftMarginPct = 0.1;
+        const leftMarginPct = 0.25;
         const rightMarginPct = 0.1;
-        const topMarginPct = 0.15;
-        const bottomMarginPct = 0.05;
+        const topMarginPct = 0.2;
+        const bottomMarginPct = 0.2;
 
         const margins = {
           left: width * leftMarginPct,
@@ -52,10 +53,6 @@ const Barchart = (props) => {
             "transform",
             "translate(" + margins.left + "," + margins.top + ")"
           );
-
-        function make_y_gridlines() {
-          return d3.axisLeft(y).ticks(4);
-        }
 
         // get the data
         // X axis: scale and draw:
@@ -89,13 +86,20 @@ const Barchart = (props) => {
         //     .attr("class", "tooltip")
         //     .style("opacity", 50);
 
-        g.append("g").attr("class", "y-axis").call(
-          d3.axisLeft(y)
-          // .style("stroke", "lightgrey")
-          // .attr("stroke-opacity", "0.7")
-          // .ticks(tickNumber)
-          // .tickSize(-w)
-        );
+        g.append("g")
+          .attr("class", "y-axis")
+          .call(
+            d3
+              .axisLeft(y)
+              // .tickFormat((d) => {
+              //   return d + "%";
+              // })
+              .tickFormat(d3.format(".0%"))
+            // .style("stroke", "lightgrey")
+            // .attr("stroke-opacity", "0.7")
+            // .ticks(tickNumber)
+            // .tickSize(-w)
+          );
 
         g.append("g")
           .attr("class", "y-axis-grid")
@@ -134,7 +138,7 @@ const Barchart = (props) => {
           .on("mousemove", function (d) {
             tip.style("opacity", 1);
             tip
-              .html(d.value.toFixed(2))
+              .html(formatPercent(d.value.toFixed(2)))
               .style("left", d3.event.pageX + "px")
               .style("top", d3.event.pageY - 28 + "px");
           })
@@ -142,16 +146,41 @@ const Barchart = (props) => {
             tip.style("opacity", 0);
           });
 
-        // let annot = g.append("g");
+        let annot = g.append("g");
+        console.log(props.data);
+        if (props.data.length > 0) {
+          annot
+            .datum(props.data[0])
+            .append("text")
+            .attr("x", (d) => x(d.key) + x.bandwidth() / 4)
+            .attr("y", (d) => y(d.value) + 30)
+            .style("font-size", 20)
+            .attr("text-anchor", "middle")
+            .text("↓");
+          annot
+            .datum(props.data[0])
+            .append("text")
+            .attr("x", (d) => x(d.key) + x.bandwidth() + 10)
+            .attr("y", (d) => y(d.value) + 30)
+            .style("font-weight", 20)
+            .text("Worst return");
+          annot
+            .datum(props.data[props.data.length - 1])
+            .append("text")
+            .attr("x", (d) => x(d.key) - x.bandwidth() / 4)
+            .attr("y", (d) => y(d.value) - 5)
+            .style("font-size", 20)
+            .text("↑");
+          annot
+            .datum(props.data[props.data.length - 1])
+            .append("text")
+            .attr("x", (d) => x(d.key) - 10)
+            .attr("y", (d) => y(d.value) - 5)
+            .attr("text-anchor", "end")
+            .style("font-weight", 20)
+            .text("Best return");
+        }
 
-        // annot
-        //   .selectAll("text")
-        //   .data([props.data[0], props.data[props.data.length - 1]])
-        //   .enter()
-        //   .append("text")
-        //   .attr("x", (d) => x(d.key))
-        //   .attr("y", (d) => y(d.value))
-        //   .text("🠗");
         // g.selectAll(".label")
         //   .data(props.data)
         //   .enter()
