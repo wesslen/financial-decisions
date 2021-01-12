@@ -70,7 +70,7 @@ router.get("/data", (req, res) => {
   console.log(req.session.evalPeriods);
   console.log(req.session.evalPeriodIndex);
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
-  let returns = gr.getReturns(evalPeriod, 40);
+  let returns = gr.getReturns(evalPeriod, 33);
   returns.then((result) => {
     res.json({ data: result, evalPeriod: evalPeriod });
   });

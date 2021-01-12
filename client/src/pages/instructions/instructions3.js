@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Instructions2 = (props) => {
+const Instructions3 = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -50,7 +50,7 @@ const Instructions2 = (props) => {
   const [extent, setExtent] = useState(null);
   const [evalPeriod, setEvalPeriod] = useState(null);
   const handleConsent = () => {
-    history.push("/instructions3");
+    history.push("/instructions4");
   };
 
   // useEffect(() => {
@@ -156,22 +156,29 @@ const Instructions2 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Compensation for Study Completion:</h3>
-      <p>
-            If you complete the study, you will receive <b>$1.25</b>.
-      </p>
-      <p>
-            You are eligible for <b>optional incentives of up to $1.40</b>{" "}
-            depending on your decisions.
-      </p>
-      <p>
-            For each task (i.e., allocation decision), a model will simulate
-            hypothetical results.
-      </p>
-      <p>
-        You will receive up to $0.10 per task for higher simulated rate of
-        returns.
-      </p>
+      <h3>Definitions:</h3>
+      <TableContainer>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Term</TableCell>
+              <TableCell>Definition</TableCell>
+              <TableCell>Examples</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {terms.map((row) => (
+              <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                  {row.term}
+                </TableCell>
+                <TableCell>{row.definition}</TableCell>
+                <TableCell>{row.examples}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <div
         style={{
           textAlign: "center",
@@ -191,4 +198,4 @@ const Instructions2 = (props) => {
   );
 };
 
-export default Instructions2;
+export default Instructions3;

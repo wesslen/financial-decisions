@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Instructions2 = (props) => {
+const Instructions4 = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -50,7 +50,7 @@ const Instructions2 = (props) => {
   const [extent, setExtent] = useState(null);
   const [evalPeriod, setEvalPeriod] = useState(null);
   const handleConsent = () => {
-    history.push("/instructions3");
+    history.push("/instructions5");
   };
 
   // useEffect(() => {
@@ -156,22 +156,27 @@ const Instructions2 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Compensation for Study Completion:</h3>
+      <h3>Let's consider an example:</h3>
       <p>
-            If you complete the study, you will receive <b>$1.25</b>.
+        In the animation below, a user is selecting their allocation decision
+        given the returns provided.
       </p>
-      <p>
-            You are eligible for <b>optional incentives of up to $1.40</b>{" "}
-            depending on your decisions.
-      </p>
-      <p>
-            For each task (i.e., allocation decision), a model will simulate
-            hypothetical results.
-      </p>
-      <p>
-        You will receive up to $0.10 per task for higher simulated rate of
-        returns.
-      </p>
+      <p>[INSERT GIF OF EXAMPLE]</p>
+      {/*<img*/}
+      {/*  src={process.env.PUBLIC_URL + "/uncertainty1.gif"}*/}
+      {/*  alt=""*/}
+      {/*  className={classes.image}*/}
+      {/*/>*/}
+      {/*<p>*/}
+      {/*  In the next animation, the user decides to put their allocation near an*/}
+      {/*  even mix of 50% and 50%.*/}
+      {/*</p>*/}
+      {/*<img*/}
+      {/*  src={process.env.PUBLIC_URL + "/uncertainty2.gif"}*/}
+      {/*  alt=""*/}
+      {/*  className={classes.image}*/}
+      {/*/>*/}
+      <hr />
       <div
         style={{
           textAlign: "center",
@@ -191,4 +196,4 @@ const Instructions2 = (props) => {
   );
 };
 
-export default Instructions2;
+export default Instructions4;

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Instructions2 = (props) => {
+const Instructions5 = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -50,7 +50,7 @@ const Instructions2 = (props) => {
   const [extent, setExtent] = useState(null);
   const [evalPeriod, setEvalPeriod] = useState(null);
   const handleConsent = () => {
-    history.push("/instructions3");
+    history.push("/instructions6");
   };
 
   // useEffect(() => {
@@ -156,22 +156,61 @@ const Instructions2 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Compensation for Study Completion:</h3>
-      <p>
-            If you complete the study, you will receive <b>$1.25</b>.
-      </p>
-      <p>
-            You are eligible for <b>optional incentives of up to $1.40</b>{" "}
-            depending on your decisions.
-      </p>
-      <p>
-            For each task (i.e., allocation decision), a model will simulate
-            hypothetical results.
-      </p>
-      <p>
-        You will receive up to $0.10 per task for higher simulated rate of
-        returns.
-      </p>
+      <hr />
+      <h3>Let's practice:</h3>
+      <p> Consider two investments: Fund A and Fund B.</p>
+      <div
+        style={{
+          width: "80%",
+          paddingLeft: "240px",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Grid container className={classes.root} spacing={1}>
+          <Barchart extent={extent1} title="A" data={bnds_sim1}></Barchart>{" "}
+          {/*extent={extent}*/}
+          {/* <Dotplot data={data}></Dotplot> */}
+          <Barchart extent={extent1} title="B" data={stks_sim1}></Barchart>{" "}
+          {/*extent={extent}*/}
+        </Grid>
+      </div>
+      <div
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <p>
+          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
+          <span className={classes.emph}> maximize annual rate of return </span>{" "}
+          over a thirty (30) year planning horizon.
+        </p>
+        <p>
+          <span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}
+          <span> Rates of returns </span> are averaged and annualized over a{" "}
+          <span style={{ fontWeight: "bold" }}>five (5) year</span> evaluation
+          period.
+        </p>
+        <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
+        <form className={classes.root} noValidate autoComplete="off">
+          {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
+          {/*<Input*/}
+          {/*  id="Practice1"*/}
+          {/*  type="number"*/}
+          {/*  placeholder="Fund A allocation %"*/}
+          {/*></Input>*/}
+          <TextField
+            id="Practice1"
+            label="Fund A allocation %"
+            type="number"
+            color="secondary"
+          />
+          <p> </p>
+          <Button variant="contained">Make Decision</Button>
+        </form>
+      </div>
       <div
         style={{
           textAlign: "center",
@@ -191,4 +230,4 @@ const Instructions2 = (props) => {
   );
 };
 
-export default Instructions2;
+export default Instructions5;

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Instructions2 = (props) => {
+const Instructions6 = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -50,7 +50,7 @@ const Instructions2 = (props) => {
   const [extent, setExtent] = useState(null);
   const [evalPeriod, setEvalPeriod] = useState(null);
   const handleConsent = () => {
-    history.push("/instructions3");
+    history.push("/instructions7");
   };
 
   // useEffect(() => {
@@ -156,22 +156,76 @@ const Instructions2 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Compensation for Study Completion:</h3>
+      <h3>Another scenario:</h3>
       <p>
-            If you complete the study, you will receive <b>$1.25</b>.
+        {" "}
+        Consider the same funds (Fund A and B) with possible annual rate of
+        returns over a
+        <span className={classes.emph}>
+          {" "}
+          twenty-five (25) year evaluation period
+        </span>
+        .{/*<span className={classes.highlight}>*/}
+        {/*  {" "}*/}
+        {/*  Use the interactive chart below for your decision.*/}
+        {/*</span>*/}
       </p>
-      <p>
-            You are eligible for <b>optional incentives of up to $1.40</b>{" "}
-            depending on your decisions.
-      </p>
-      <p>
-            For each task (i.e., allocation decision), a model will simulate
-            hypothetical results.
-      </p>
-      <p>
-        You will receive up to $0.10 per task for higher simulated rate of
-        returns.
-      </p>
+      <div
+        style={{
+          width: "80%",
+          paddingLeft: "240px",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Grid container className={classes.root} spacing={1}>
+          <Barchart extent={extent2} title="A" data={stks_sim2}></Barchart>
+          <Barchart extent={extent2} title="B" data={bnds_sim2}></Barchart>
+        </Grid>
+      </div>
+      <div
+        style={{
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "stretch",
+          textAlign: "center",
+        }}
+      >
+        <p>
+          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
+          <span className={classes.emph}> maximize annual rate of return </span>
+          over a thirty (30) year planning horizon.
+        </p>
+        <p>
+          <span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}
+          <span> Rates of returns </span> are averaged and annualized over a{" "}
+          <span style={{ fontWeight: "bold" }}>twenty-five (25) year</span>{" "}
+          evaluation period.
+        </p>
+        <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
+        <form className={classes.root} noValidate autoComplete="off">
+          {/*<Input*/}
+          {/*  id="Practice2"*/}
+          {/*  type="number"*/}
+          {/*  placeholder="Fund A allocation %"*/}
+          {/*></Input>*/}
+          <TextField
+            id="Practice2"
+            label="Fund A allocation %"
+            type="number"
+            color="secondary"
+          />
+          <h4> </h4>
+          <Button variant="contained">Make Decision</Button>
+        </form>
+      </div>
+      {/*<BinaryChoice*/}
+      {/*  choiceDomain={[0.0, 1.0]}*/}
+      {/*  responseIndex={"instructions"}*/}
+      {/*  // handleResponse={handleResponse}*/}
+      {/*  question="What investment allocation do want between Asset A and B?"*/}
+      {/*  tickLabels={["Asset A", "50% / 50%", "Asset B"]}*/}
+      {/*></BinaryChoice>*/}
       <div
         style={{
           textAlign: "center",
@@ -191,4 +245,4 @@ const Instructions2 = (props) => {
   );
 };
 
-export default Instructions2;
+export default Instructions6;

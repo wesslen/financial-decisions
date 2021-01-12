@@ -193,7 +193,7 @@ const PreSurveyPage = (props) => {
     console.log("Survey results: " + JSON.stringify(survey.data));
     axios.post("/api/preq", survey.data).then((response) => {
       console.log(response);
-      history.push("/instructions");
+      history.push("/instructions1");
     });
   };
   //   console.log(props.setChoice);

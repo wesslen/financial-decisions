@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Instructions2 = (props) => {
+const Instructions8 = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -50,7 +50,7 @@ const Instructions2 = (props) => {
   const [extent, setExtent] = useState(null);
   const [evalPeriod, setEvalPeriod] = useState(null);
   const handleConsent = () => {
-    history.push("/instructions3");
+    history.push("/task1");
   };
 
   // useEffect(() => {
@@ -156,22 +156,39 @@ const Instructions2 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Compensation for Study Completion:</h3>
-      <p>
-            If you complete the study, you will receive <b>$1.25</b>.
-      </p>
-      <p>
-            You are eligible for <b>optional incentives of up to $1.40</b>{" "}
-            depending on your decisions.
-      </p>
-      <p>
-            For each task (i.e., allocation decision), a model will simulate
-            hypothetical results.
-      </p>
-      <p>
-        You will receive up to $0.10 per task for higher simulated rate of
-        returns.
-      </p>
+      <h3>What you will do in this study</h3>
+      <ul>
+        <li>
+          In two different rounds, you will make allocation decisions between
+          two funds.
+        </li>
+        <li>
+          Your goal is to maximize your expected returns over a thirty (30) year
+          period.
+        </li>
+      </ul>
+      <h4>Round 1</h4>
+      <ul>
+        <li>
+          You'll have <b>seven</b> allocation decisions for two funds.
+        </li>
+        <li>
+          Each decision will show funds' rate of returns framed as different
+          evaluation periods (e.g., one year period, thirty year period).
+        </li>
+        <li>
+          Your goal is to maximize your expected returns over a thirty (30) year
+          period.
+        </li>
+      </ul>
+      <h4>Round 2</h4>
+      <ul>
+        <li>
+          {" "}
+          Repeat Round 1 but with (1) different funds and (2) a different data
+          visualization.
+        </li>
+      </ul>
       <div
         style={{
           textAlign: "center",
@@ -191,4 +208,4 @@ const Instructions2 = (props) => {
   );
 };
 
-export default Instructions2;
+export default Instructions8;
