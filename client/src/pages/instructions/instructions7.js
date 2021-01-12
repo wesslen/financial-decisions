@@ -13,6 +13,7 @@ import {
 import { Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import ReCAPTCHA from "react-google-recaptcha";
 import TextField from "@material-ui/core/TextField";
 // import Input from "@material-ui/core/Input";
 // import BinaryChoice from "../../components/choice/binaryChoice";
@@ -76,6 +77,10 @@ const Instructions7 = (props) => {
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
+
+  function onChange(value) {
+  console.log("Captcha value:", value)
+}
 
   const stks_sim1 = [];
   const bnds_sim1 = [];
@@ -157,6 +162,7 @@ const Instructions7 = (props) => {
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Add in a question for comprehension</h3>
+      <ReCAPTCHA sitekey="6LftACkaAAAAAB1eaaaYU9rCSnyJl8nNPpZkwUol" onChange={onChange} />
       <div
         style={{
           textAlign: "center",
