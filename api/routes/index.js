@@ -49,6 +49,19 @@ router.post("/postq", (req, res) => {
     }
   );
 });
+
+router.post("/attention1", (req, res) => {
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { attention1: req.body },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      else res.status(200).json(req.body);
+    }
+  );
+});
+
 router.post("/response", (req, res) => {
   let usertoken = req.session.usertoken;
   let resp = req.body;

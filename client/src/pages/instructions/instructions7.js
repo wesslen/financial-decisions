@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const Instructions7 = (props) => {
   const history = useHistory();
   const classes = useStyles();
-
+  const [disabled, setDisabled] = useState(true);
   const [bonds, setBonds] = useState([]);
   const [stocks, setStocks] = useState([]);
   const [extent, setExtent] = useState(null);
@@ -79,8 +79,11 @@ const Instructions7 = (props) => {
   }
 
   function onChange(value) {
-  console.log("Captcha value:", value)
-}
+    if (value !== null) {
+      setDisabled(false);
+    }
+    console.log("Captcha value:", value);
+  }
 
   const stks_sim1 = [];
   const bnds_sim1 = [];
@@ -162,7 +165,10 @@ const Instructions7 = (props) => {
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Add in a question for comprehension</h3>
-      <ReCAPTCHA sitekey="6LftACkaAAAAAB1eaaaYU9rCSnyJl8nNPpZkwUol" onChange={onChange} />
+      <ReCAPTCHA
+        sitekey="6LftACkaAAAAAB1eaaaYU9rCSnyJl8nNPpZkwUol"
+        onChange={onChange}
+      />
       <div
         style={{
           textAlign: "center",
@@ -171,7 +177,11 @@ const Instructions7 = (props) => {
         }}
       >
         <Button
-          style={{ backgroundColor: "gray", color: "black" }}
+          disabled={disabled}
+          style={{
+            backgroundColor: disabled ? "lightgrey" : "gray",
+            color: "black",
+          }}
           variant="contained"
           onClick={handleConsent}
         >

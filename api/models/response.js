@@ -11,13 +11,13 @@ const responseSchema = new Schema({
   evalPeriods: Schema.Types.Array,
   treatment: String,
   responses: Schema.Types.Mixed,
+  attention1: Schema.Types.Mixed,
   date: {
     type: Date,
     default: Date.now,
   },
   prequestionnaire: Schema.Types.Mixed,
   postquestionnaire: Schema.Types.Mixed,
- 
 });
 
 module.exports = responseSchema;

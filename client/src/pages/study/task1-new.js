@@ -30,6 +30,7 @@ const Task1Page = (props) => {
   const [bonds, setBonds] = useState([]);
   const [stocks, setStocks] = useState([]);
   const [allocation, setAllocation] = useState(null);
+  const [disabled, setDisabled] = useState(true);
   const [allocationText, setAllocationText] = useState("");
   const [evalIndex, setEvalIndex] = useState(0);
   const [evalPeriod, setEvalPeriod] = useState(null);
@@ -45,13 +46,23 @@ const Task1Page = (props) => {
   // }
 
   const handleAllocation = (event) => {
-    let newVal = event.target.value;
+    let newVal = +event.target.value;
+    // newVal = parseInt(newVal);
     // console.log(event.target.value);
+    // setAllocationText(newVal);
     setAllocationText(newVal);
     // ryan added: to keep as values between 0 and 100
     // doesn't work correctly for integer component yet... need to check that
     // what this doesn't do: prompt the user. need to create a front end warning too for this.
-    if (newVal > -1 && newVal < 101) setAllocation(newVal);
+    if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
+      setDisabled(false);
+      setAllocation(newVal);
+    } else {
+      alert(
+        "Please input a number between 0 and 100 with no decimals or percentage."
+      );
+      setDisabled(true);
+    }
   };
 
   const handleDecision = () => {
@@ -140,13 +151,15 @@ const Task1Page = (props) => {
             // title={evalIndex < 4 ? "A" : "B"}
             title="A"
             extent={extent}
-            allocation={allocation}
+            allocation={allocation !== null ? allocation : "Insert a value in "}
             data={left === "stocks" ? stocks : bonds}
           ></Barchart>
           <Barchart
             title="B"
             extent={extent}
-            allocation={100 - allocation}
+            allocation={
+              allocation !== null ? 100 - allocation : "Insert a value in "
+            }
             data={left === "stocks" ? bonds : stocks}
           ></Barchart>
         </Grid>
@@ -197,7 +210,11 @@ const Task1Page = (props) => {
               onChange={handleAllocation}
             />{" "}
             <p> </p>
-            <Button variant="contained" onClick={handleDecision}>
+            <Button
+              disabled={disabled}
+              variant="contained"
+              onClick={handleDecision}
+            >
               Make Decision
             </Button>
           </form>
