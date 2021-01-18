@@ -155,8 +155,7 @@ const PreSurveyPage = (props) => {
             "type": "radiogroup",
             "name": "Samuelson_Classic1",
             "title":
-                "We would like to ask you a hypothetical question that we would like you " +
-                "to answer as if the situation was a real one. \n You are offered the " +
+                "You are offered the " +
                 "opportunity to accept the following bet: flip a fair coin and if you guess " +
                 "correctly you win $200 but if you guess incorrectly you lose $100. " +
                 "Would you accept this bet?",
@@ -171,10 +170,8 @@ const PreSurveyPage = (props) => {
             "type": "radiogroup",
             "name": "Samuelson_Classic100",
             "title":
-                "You are offered the " +
-                "opportunity the same bet: flip a fair coin and if you guess " +
-                "correctly you win $200 but if you guess incorrectly you lose $100. " +
-                "Would you accept this bet 100 times?",
+                "You are offered the same bet from #7: " +
+                "would you accept this bet 100 times?",
             "isRequired": false,
             "colCount": 2,
             "choices": [
@@ -217,7 +214,7 @@ const PreSurveyPage = (props) => {
         margin: "0 auto",
         overflow: "auto",
         paddingTop: "30px",
-        paddingBottm: "30px",
+        paddingBottom: "30px",
       }}
     >
       <Survey.Survey model={model} onComplete={onComplete} />

@@ -11,6 +11,7 @@ const responseSchema = new Schema({
   evalPeriods: Schema.Types.Array,
   treatment: String,
   responses: Schema.Types.Mixed,
+  learning1: Schema.Types.Mixed,
   attention1: Schema.Types.Mixed,
   date: {
     type: Date,

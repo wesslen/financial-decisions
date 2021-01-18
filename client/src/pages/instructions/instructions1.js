@@ -156,25 +156,37 @@ const Instructions1 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Study Instructions: Please read carefully</h3>
+      <h3>Instructions</h3>
       <p>
-        This study's goal is to understand the effect of{" "}
-        <b>different data visualizations </b>
-        on <b>investment financial decisions</b>.
+        Imagine you are investing for retirement. Your retirement account allows you to invest in one of two funds: Fund A and Fund B.
       </p>
       <p>
         You will view data visualizations of <b>investment rates of return</b>{" "}
-        of different asset funds.
+        for each fund.
       </p>
       <p>
         {" "}
-        You will decide how to <b>allocate a hypothetical investment</b> between
-        two assets as a percentage (0% to 100%).
+        You will decide how to <b>allocate</b> your investment between
+        the two funds as a percentage from 0% to 100%.
       </p>
       <p>
-        Your goal is to <b>maximize</b> your <b>expected return </b>
-        given your allocation decision over a thirty (30) year period.
+        Your goal is to <b>maximize</b> your <b>expected return</b>
+        for <b>thirty (30) years</b>  when you plan to retire.
       </p>
+      {/*<img*/}
+      {/*  src={process.env.PUBLIC_URL + "/uncertainty1.gif"}*/}
+      {/*  alt=""*/}
+      {/*  className={classes.image}*/}
+      {/*/>*/}
+      {/*<p>*/}
+      {/*  In the next animation, the user decides to put their allocation near an*/}
+      {/*  even mix of 50% and 50%.*/}
+      {/*</p>*/}
+      {/*<img*/}
+      {/*  src={process.env.PUBLIC_URL + "/uncertainty2.gif"}*/}
+      {/*  alt=""*/}
+      {/*  className={classes.image}*/}
+      {/*/>*/}
       <div
         style={{
           textAlign: "center",

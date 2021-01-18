@@ -11,15 +11,12 @@ import {
   TableCell,
 } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-// import Input from "@material-ui/core/Input";
-// import BinaryChoice from "../../components/choice/binaryChoice";
-// import Histogram from "../../components/visualization/histogram/histogram";
-import Barchart from "../../components/visualization/barchart/barchart";
-import Dotplot from "../../components/visualization/dotplot/dotplot";
-import * as d3 from "d3";
+import { useHistory } from "react-router-dom";
+import * as Survey from "survey-react";
+import "survey-react/survey.css";
+
+Survey.StylesManager.applyTheme("darkblue");
 
 const useStyles = makeStyles((theme) => ({
   emph: {
@@ -45,154 +42,102 @@ const Instructions4 = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
-  const [bonds, setBonds] = useState([]);
-  const [stocks, setStocks] = useState([]);
-  const [extent, setExtent] = useState(null);
-  const [evalPeriod, setEvalPeriod] = useState(null);
-  const handleConsent = () => {
-    history.push("/instructions5");
+  const json = {
+    title: "Comprehension Questions",
+      "questions": [
+          {
+            "type": "radiogroup",
+            "name": "learning1",
+            "title":
+                "In this study, how many years in the future are you investing for retirement?",
+            "isRequired": true,
+            "colCount": 5,
+            "choices": [
+              "1 year",
+              "10 years",
+              "20 years",
+              "30 years",
+              "50 years"
+            ],
+            "correctAnswer": "30 years"
+          },
+          {
+            "type": "radiogroup",
+            "name": "learning2",
+            "title":
+                "For each task, your role is to choose:",
+            "isRequired": true,
+            "colCount": 1,
+            "choices": [
+              "which fund is the least risky",
+              "the amount of income to invest for retirement",
+              "how to divide your retirement investment between two funds",
+              "the interest rate to save for retirement"
+            ],
+            "correctAnswer": "how to divide your retirement investment between two funds"
+          },
+          {
+            "type": "radiogroup",
+            "name": "learning3",
+            "title": "How do you receive additional incentives in this study?",
+            "isRequired": true,
+            "colCount": 1,
+            "choices": [
+                "Your decisions lead to better simulated results",
+                "You complete the study as quickly as possible",
+                "You fail to complete the post-questionnaire",
+                "You interact more with the visualizations (e.g., click on it)"
+            ],
+            "correctAnswer": "Your decisions lead to better simulated results"
+          }
+        ]
   };
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const result = await axios.get("/api/data");
-  //     let data = result.data.data;
-  //     setEvalPeriod(result.data.evalPeriod);
-  //     let stk = data.equities_sp.map((s, i) => {
-  //       return { key: i, value: s };
-  //     });
-  //     let bnd = data.treasury_10yr.map((s, i) => {
-  //       return { key: i, value: s };
-  //     });
-  //     let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
-  //     console.log(extent, "this is the extent of both datasets");
-  //     setExtent(extent);
-  //     setStocks(stk);
-  //     setBonds(bnd);
-  //   }
-  //   fetchData();
-  // }, []);
-  //DEMONSTRATING DATA VISUALIZATION, creating random data
-  function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
-  }
 
-  const stks_sim1 = [];
-  const bnds_sim1 = [];
-  const stks_sim2 = [];
-  const bnds_sim2 = [];
-  for (let i = 0; i < 41; i++) {
-    stks_sim1.push({ key: i, value: getRandomArbitrary(-0.3, 0.3) });
-    bnds_sim1.push({ key: i, value: getRandomArbitrary(-0.08, 0.08) });
-    stks_sim2.push({ key: i, value: getRandomArbitrary(-0.1, 0.1) });
-    bnds_sim2.push({ key: i, value: getRandomArbitrary(-0.05, 0.05) });
-  }
+  const onComplete = (survey, options) => {
+    //Write survey results into database
+    let response = { learning1: {survey: survey.data, time: Date.now() }};
+    // console.log("Survey results: " + JSON.stringify(survey.data));
+    axios.post("/api/learning1", response).then((response) => {
+      console.log(response);
+      history.push("/instructions5");
+    });
+  };
 
-  let extent1 = d3.extent([
-    ...stks_sim1.map((d) => d.value),
-    ...bnds_sim1.map((d) => d.value),
-  ]);
-  let maxExtent1 = d3.max(extent1);
+  const model = new Survey.Model(json);
+  model.showCompletedPage = false;
 
-  extent1 = [-maxExtent1, maxExtent1];
-  console.log(extent1, "Asdasd");
-
-  let extent2 = d3.extent([
-    ...stks_sim2.map((d) => d.value),
-    ...bnds_sim2.map((d) => d.value),
-  ]);
-  let maxExtent2 = d3.max(extent2);
-  extent2 = [-maxExtent2, maxExtent2];
-
-  function createData(term, definition, examples) {
-    return { term, definition, examples };
-  }
-
-  const terms = [
-    createData(
-      "Assets",
-      "An economic resource with\n" +
-        "the expectation that it will provide a future benefit or returns.",
-      "Stocks, Bonds, Funds (Mutual Funds, ETFs), Real Estate"
-    ),
-    createData(
-      "Fund",
-      "A collection of assets held for diversification benefits. In this study, your\n" +
-        "investment options are between different funds. Each fund's name is\n" +
-        "masked.",
-      "Mutual Funds and exchange-traded funds (or ETF's)"
-    ),
-    createData(
-      "Allocation",
-      "Decision of how to\n" +
-        "apportion an investment between different funds. In this study, you\n" +
-        "will decide an allocation percentage after viewing two\n" +
-        "different funds' rates of returns under different scenarios and data\n" +
-        "visualizations.",
-      "0% to 100%"
-    ),
-    createData(
-      "Rate of Return",
-      "Net gain or loss\n" +
-        "by investing in an asset over an evaluation period. It will be expressed as an annualized percentage of the\n" +
-        "investment’s initial cost.",
-      "-5%, 7%, 12%"
-    ),
-    createData(
-      "Evaluation Period",
-      "The relative\n" +
-        "          timeframe in which the rate of returns are framed. In this study, we\n" +
-        "          will provide returns between 1 to 30 year periods.",
-      "1 year to 30 years"
-    ),
-    createData(
-      "Planning Horizon",
-      "The expected\n" +
-        "          timeframe you plan to invest. In this study, your planning horizon\n" +
-        "          will be 30 years.",
-      "30 years"
-    ),
-  ];
+  model.onValidateQuestion.add(function (s, options) {
+   if (options.name == 'learning1') {
+       if(options.value != '30 years') {
+            options.error = "#1 is not correct. Please give another answer";
+        }
+    }
+   else if (options.name == 'learning2') {
+       if(options.value != 'how to divide your retirement investment between two funds') {
+            options.error = "#2 is not correct. Please give another answer";
+        }
+    }
+   else if (options.name == 'learning3') {
+       if(options.value != 'Your decisions lead to better simulated results') {
+            options.error = "#3 is not correct. Please give another answer";
+        }
+    }
+});
 
   return (
-    <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Let's consider an example:</h3>
-      <p>
-        In the animation below, a user is selecting their allocation decision
-        given the returns provided.
-      </p>
-      <p>[INSERT GIF OF EXAMPLE]</p>
-      {/*<img*/}
-      {/*  src={process.env.PUBLIC_URL + "/uncertainty1.gif"}*/}
-      {/*  alt=""*/}
-      {/*  className={classes.image}*/}
-      {/*/>*/}
-      {/*<p>*/}
-      {/*  In the next animation, the user decides to put their allocation near an*/}
-      {/*  even mix of 50% and 50%.*/}
-      {/*</p>*/}
-      {/*<img*/}
-      {/*  src={process.env.PUBLIC_URL + "/uncertainty2.gif"}*/}
-      {/*  alt=""*/}
-      {/*  className={classes.image}*/}
-      {/*/>*/}
-      <hr />
-      <div
-        style={{
-          textAlign: "center",
-          paddingTop: "10px",
-          paddingBottom: "10px",
-        }}
-      >
-        <Button
-          style={{ backgroundColor: "gray", color: "black" }}
-          variant="contained"
-          onClick={handleConsent}
-        >
-          Continue
-        </Button>
-      </div>
-    </Container>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        margin: "0 auto",
+        overflow: "auto",
+        paddingTop: "30px",
+        paddingBottom: "30px",
+      }}
+    >
+      <Survey.Survey model={model} onComplete={onComplete} />
+    </div>
   );
 };
 
