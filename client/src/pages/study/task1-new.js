@@ -178,12 +178,12 @@ const Task1Page = (props) => {
               maximize investment rate of return{" "}
             </span>{" "}
             over a <span style={{ fontWeight: "bold" }}>
-              thirty (30) year
+              thirty (30) years.
             </span>{" "}
-            planning horizon.
+            {/*planning horizon.*/}
           </p>
           <p>
-            <span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}
+            {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
             <span> Rates of returns </span> are averaged and annualized over a{" "}
             <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
             evaluation period.

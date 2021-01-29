@@ -161,13 +161,15 @@ const Instructions5 = (props) => {
       <p> Consider two investments: Fund A and Fund B.</p>
       <div
         style={{
-          width: "80%",
-          paddingLeft: "240px",
+          width: "90%",
+          // paddingLeft: "50",
+          height: "40%",
+          margin: "0 auto",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Grid container className={classes.root} spacing={1}>
+        <Grid container className={classes.root} spacing={1} style={{ height: "100%" }}>
           <Barchart extent={extent1} title="A" data={bnds_sim1}></Barchart>{" "}
           {/*extent={extent}*/}
           {/* <Dotplot data={data}></Dotplot> */}
@@ -177,18 +179,19 @@ const Instructions5 = (props) => {
       </div>
       <div
         style={{
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
+            justifyContent: "center",
+            alignItems: "center",
+            // height: "10vh",
+            textAlign: "center",
         }}
       >
         <p>
           <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
           <span className={classes.emph}> maximize annual rate of return </span>{" "}
-          over a thirty (30) year planning horizon.
+          over a thirty (30) years.
         </p>
         <p>
-          <span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}
+          {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
           <span> Rates of returns </span> are averaged and annualized over a{" "}
           <span style={{ fontWeight: "bold" }}>five (5) year</span> evaluation
           period.

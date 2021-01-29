@@ -59,7 +59,7 @@ const Consent = (props) => {
       </div>
       <h1>Consent to Participate in a Research Study</h1>
       <p>
-        <b>Title of Project:</b> Retirement Decision-Making with Interactive Data Visualizations
+        <b>Title of Project:</b> Retirement Investment Decision-Making with Interactive Data Visualizations
       </p>
       <p>
         <b>Principal investigator:</b> Ryan Wesslen, College of Computing and
@@ -95,7 +95,7 @@ const Consent = (props) => {
           minutes in total.
         </li>
         <li>
-          For completing the study, you will receive <b>$1.25</b>. You are eligible for <b>optional incentives of up to $1.40</b> depending on your
+          For completing the study, you will receive <b>$1.00</b>. You are eligible for <b>optional incentives of up to $1.12</b> depending on your
             decisions. For each task (i.e., allocation decision), a model will simulate hypothetical
             results. Your bonus will be dependent on your relative performance compared to all possible scenarios using
           historical data simulations.
@@ -174,9 +174,9 @@ const Consent = (props) => {
 
       <h2>Will I receive an incentive for taking part in this study?</h2>
       <p>
-        You will receive a minimum payment of $1.25 through Amazon Mechanical
+        You will receive a minimum payment of $1.00 through Amazon Mechanical
         Turk upon completion of the study. In addition, you are eligible
-        for additional incentives between $0.14 to $1.40. If you decide to withdraw from the
+        for additional incentives between $0.14 to $1.12. If you decide to withdraw from the
         study prior to completion you will not be eligible for payment.
       </p>
 
