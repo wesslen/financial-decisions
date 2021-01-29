@@ -86,7 +86,7 @@ class App extends React.Component {
               {/*<Route path="/instructions" component={InstructionsMainPage}></Route>*/}
               <Route path="/instructions1" component={Instructions1Page}></Route>
               <Route path="/instructions2" component={Instructions2Page}></Route>
-              <Route path="/instructions3" component={Instructions3Page}></Route>
+              {/*<Route path="/instructions3" component={Instructions3Page}></Route>*/}
               <Route path="/instructions4" component={Instructions4Page}></Route>
               <Route path="/instructions5" component={Instructions5Page}></Route>
               <Route path="/instructions6" component={Instructions6Page}></Route>
