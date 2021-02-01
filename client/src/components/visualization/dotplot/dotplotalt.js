@@ -2,56 +2,6 @@ import React, { useRef, useEffect } from "react";
 import { jStat } from "jstat";
 import * as d3 from "d3";
 
-const ecdf = (data) => {
-  data = data.sort((a, b) => {
-    return a - b;
-  });
-  // let inds = [...Array(data.length).keys()];
-  // let probs = inds.map((ind) => {
-  //   return (ind + 1) / data.length;
-  // });
-  let probs = jStat.seq(
-    1 / data.length / 2,
-    1 - 1 / data.length / 2,
-    data.length
-  );
-  return data.map((d, i) => {
-    return { x: d, p_less_than_x: probs[i] };
-  });
-};
-
-const generateDotplotStacks = (data, binwidth) => {
-  data = data.sort((a, b) => a - b);
-  const stacks = [];
-  for (let i = 0; i < data.length; ) {
-    const threshold = data[i] + binwidth;
-    const stack = [data[i]];
-    let j = i + 1;
-
-    while (data[j] < threshold) {
-      stack.push(data[j++]);
-    }
-    let v = (stack[stack.length - 1] - stack[0]) / 2;
-    const diff = data[i] - data[i - 1];
-    // if (diff > binwidth || i == 0) { // X_0 = -inf in the original algorithm
-    //   v = (stack[stack.length - 1] - stack[0]) / 2;
-    // }
-
-    stacks.push({
-      values: stack,
-      // "x": jStat.median(stack),
-      // "x": (stack[0] + stack[stack.length - 1]) / 2
-      x: stack[0] + v,
-      v: v,
-      diff: diff,
-      threshold: threshold,
-    });
-    i = j;
-  }
-
-  return stacks;
-};
-
 /* Component */
 const Dotplot = (props) => {
   const d3Container = useRef(null);
@@ -69,7 +19,7 @@ const Dotplot = (props) => {
             Value: d.value,
           };
         });
-        console.log(data);
+
         //svg returned by this component
         const svg = d3.select(d3Container.current);
         //width of svg
@@ -85,7 +35,7 @@ const Dotplot = (props) => {
         const rightMarginPct = 0.15;
         const topMarginPct = 0.3;
         const bottomMarginPct = 0.1;
-
+        const allocation = props.allocation || 0;
         const margins = {
           left: width * leftMarginPct,
           right: width * rightMarginPct,
@@ -96,6 +46,14 @@ const Dotplot = (props) => {
         const h = height - margins.top - margins.bottom;
 
         // console.log(props.data);
+
+        svg
+          .append("text")
+          .attr("x", margins.left)
+          .attr("y", margins.top)
+          .attr("fill", "teal")
+          .attr("class", "charttitle")
+          .text(`Fund ${props.title}: ${allocation}%`);
 
         const dotplotContainer = svg
           .append("g")
@@ -154,8 +112,6 @@ const Dotplot = (props) => {
             return -d.idx * 2 * d.radius - d.radius;
           })
           .attr("r", 0)
-          .transition()
-          .duration(500)
           .attr("r", function (d) {
             return d.length == 0 ? 0 : d.radius;
           });
@@ -173,7 +129,7 @@ const Dotplot = (props) => {
             if the variables are valid, but we do not have to compare old props
             to next props to decide whether to rerender.
         */
-    [props.data]
+    [props.data, props.allocation]
   );
 
   return (

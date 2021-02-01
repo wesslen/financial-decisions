@@ -5,13 +5,18 @@ import * as d3 from "d3";
 const Hops = (props) => {
   const d3Container = useRef(null);
   const width = props.width || "50%";
-  const height = props.height || "18%";
+  const height = props.height || "50%";
+  const hopSpeed = props.hopSpeed | 500;
+  const showDist = props.showDist || true;
 
   useEffect(
     () => {
       if (d3Container.current) {
         //svg returned by this component
         const svg = d3.select(d3Container.current);
+        svg.selectAll(".charttitle").remove();
+        svg.selectAll(".axis").remove();
+        svg.selectAll("g").remove();
         //width of svg
         const width = svg.node().getBoundingClientRect().width;
         //height of svg
@@ -30,24 +35,13 @@ const Hops = (props) => {
         };
         const w = width - margins.left - margins.right;
         const h = height - margins.top - margins.bottom;
-
-        let choice;
-        let CI;
-        let choiceMade = false;
-        let uncertaintyMade = false;
-        let nLines = props.nLines || 100;
-        const choiceDomain = props.choiceDomain || [-1.0, 1.0];
-        let qText = props.question || "how suspicious is this tweet?";
+        const extent = props.extent || [-1.0, 1.0];
 
         const g = svg
           .append("g")
           .attr("transform", `translate(${margins.left},${margins.top})`);
 
-        const text = g.append("text").text(qText);
-
-        const xScale = d3.scaleLinear().range([0, w]).domain(choiceDomain);
-
-        let tickLabels = props.tickLabels || ["A", "", "C"];
+        const xScale = d3.scaleLinear().range([0, w]).domain(extent);
 
         let xAxis = svg
           .append("g")
@@ -56,141 +50,124 @@ const Hops = (props) => {
             `translate(${margins.left},${h / 2 + margins.top})`
           )
           .call(
-            d3
-              .axisBottom(xScale)
-              .ticks(tickLabels.length - 1)
-              .tickFormat((d, i) => tickLabels[i])
+            d3.axisBottom(xScale)
+            //   .ticks(tickLabels.length - 1)
+            //   .tickFormat((d, i) => tickLabels[i])
           )
           .attr("pointer-events", "none");
 
-        let rect = g
-          .append("rect")
-          .attr("width", w)
-          .attr("height", h)
-          .attr("fill", "rgba(0,0,0,0)");
+        // let rect = g
+        //   .append("rect")
+        //   .attr("width", w)
+        //   .attr("height", h)
+        //   .attr("fill", "rgba(0,0,0,0)");
 
-        let xs = [];
-        for (var i = 0; i < nLines; i++) {
-          xs.push(0);
-        }
+        // let xs = [];
+        // for (var i = 0; i < nLines; i++) {
+        //   xs.push(0);
+        // }
         let band = g
           .selectAll(".uncertaintyLines")
-          .data(xs)
+          .data(props.data)
           .enter()
           .append("line")
           .attr("class", "uncertaintyLines")
           .attr("pointer-events", "none");
 
-        let line = g
-          .append("line")
-          .attr("x1", 5)
-          .attr("x2", 5)
+        band
+          .attr("class", "uncertaintyLines")
+          .attr("x1", function (d) {
+            return xScale(d.value);
+          })
+          .attr("x2", function (d) {
+            return xScale(d.value);
+          })
           .attr("y1", h * topMarginPct)
           .attr("y2", h - h * topMarginPct)
-          .attr("stroke-width", 6)
           .attr("stroke", "orange")
-          .style("pointer-events", "none");
+          .attr("stroke-opacity", 0)
+          .attr("stroke-width", 6);
 
-        const reset = g
-          .append("rect")
-          .attr("width", "60px")
-          .attr("height", "30px")
-          .attr("transform", `translate(0,${h - margins.bottom / 2})`)
-          .attr("fill", "grey");
+        setInterval(function () {
+          console.log(band.size());
+          var index = Math.floor(Math.random() * band.size());
+          if (band.size() !== 0) {
+            let d = d3.select(band.nodes()[index]).data();
 
-        g.append("text")
-          .attr("text-anchor", "center")
-          .attr("font-size", "1em")
-          .attr("transform", `translate(10,${h + margins.bottom / 2})`)
-          .attr("pointer-events", "none")
-          .text("Reset");
+            band.sort(function (a, b) {
+              // console.log(a);
+              if (a.key === d[0].key) return 1;
+              else return -1;
+            });
+          }
 
-        reset
-          .on("mouseenter", function () {
-            reset.style("fill", "orange");
-          })
-          .on("mouseout", function () {
-            reset.style("fill", "gray");
-          })
-          .on("click", () => {
-            choiceMade = false;
-            uncertaintyMade = false;
-            line.attr("stroke", "orange");
-            band.attr("stroke-width", 0);
-            if (props.handleResponse)
-              props.handleResponse(null, props.responseIndex);
-          });
+          band
+            .transition()
+            .duration(hopSpeed / 2)
+            .style("z-index", function (d, i) {
+              return i === index ? 999 : 1;
+            })
+            .style("stroke-opacity", function (d, i) {
+              return showDist
+                ? i === index
+                  ? 0.8
+                  : 0.2
+                : i === index
+                ? 0.8
+                : 0;
+            })
+            .style("stroke", function (d, i) {
+              return i === index ? "orange" : "lightgrey";
+            });
+        }, hopSpeed);
 
-        rect
-          .on("mousemove", function () {
-            let coords = d3.mouse(this);
-            if (!choiceMade) {
-              line.attr("x1", coords[0]).attr("x2", coords[0]);
-              choice = xScale.invert(coords[0]);
+        // let line = g
+        //   .append("line")
+        //   .attr("x1", 5)
+        //   .attr("x2", 5)
+        //   .attr("y1", h * topMarginPct)
+        //   .attr("y2", h - h * topMarginPct)
+        //   .attr("stroke-width", 6)
+        //   .attr("stroke", "orange")
+        //   .style("pointer-events", "none");
 
-              if (props.setChoice) props.setChoice(choice);
-            } else if (choiceMade && !uncertaintyMade) {
-              let uncertaintySize = xScale.invert(coords[0]) - choice;
-              let uncertaintyPixelSize = Math.abs(coords[0] - xScale(choice));
-              CI = [choice - uncertaintySize, choice + uncertaintySize];
+        // rect.on("mousemove", function () {
+        //   let coords = d3.mouse(this);
+        //   if (!choiceMade) {
+        //     line.attr("x1", coords[0]).attr("x2", coords[0]);
+        //     choice = xScale.invert(coords[0]);
 
-              CI = [
-                d3.min(CI) > choiceDomain[0] ? d3.min(CI) : choiceDomain[0],
-                d3.max(CI) < choiceDomain[1] ? d3.max(CI) : choiceDomain[0],
-              ];
+        //     if (props.setChoice) props.setChoice(choice);
+        //   } else if (choiceMade && !uncertaintyMade) {
+        //     let uncertaintySize = xScale.invert(coords[0]) - choice;
+        //     let uncertaintyPixelSize = Math.abs(coords[0] - xScale(choice));
+        //     CI = [choice - uncertaintySize, choice + uncertaintySize];
 
-              xs = [];
-              let randomize = d3.randomNormal(
-                xScale(choice),
-                uncertaintyPixelSize / 2
-              );
-              for (var i = 0; i < nLines; i++) {
-                xs.push(randomize());
-              }
-              xs = xs.filter((r) => {
-                return (
-                  r < xScale(choice) + uncertaintyPixelSize &&
-                  r > xScale(choice) - uncertaintyPixelSize &&
-                  r <= xScale(choiceDomain[1]) &&
-                  r >= xScale(choiceDomain[0])
-                );
-              });
+        //     CI = [
+        //       d3.min(CI) > extent[0] ? d3.min(CI) : extent[0],
+        //       d3.max(CI) < extent[1] ? d3.max(CI) : extent[0],
+        //     ];
 
-              band
-                .data(xs)
-                .attr("class", "uncertaintyLines")
-                .attr("x1", function (d) {
-                  return d;
-                })
-                .attr("x2", function (d) {
-                  return d;
-                })
-                .attr("y1", h * topMarginPct)
-                .attr("y2", h - h * topMarginPct)
-                .attr("stroke", "orange")
-                .attr("stroke-opacity", 0.05)
-                .attr("stroke-width", 6);
+        //     xs = [];
+        //     let randomize = d3.randomNormal(
+        //       xScale(choice),
+        //       uncertaintyPixelSize / 2
+        //     );
+        //     for (var i = 0; i < nLines; i++) {
+        //       xs.push(randomize());
+        //     }
+        //     xs = xs.filter((r) => {
+        //       return (
+        //         r < xScale(choice) + uncertaintyPixelSize &&
+        //         r > xScale(choice) - uncertaintyPixelSize &&
+        //         r <= xScale(extent[1]) &&
+        //         r >= xScale(extent[0])
+        //       );
+        //     });
 
-              // band.exit().remove();
-            }
-          })
-          .on("click", () => {
-            if (!choiceMade) {
-              choiceMade = true;
-              line.attr("stroke", "#484848");
-            } else if (!uncertaintyMade) {
-              uncertaintyMade = true;
-              band.attr("stroke", "#484848");
-              if (props.handleResponse)
-                props.handleResponse(
-                  {
-                    CI: CI,
-                    choice: choice,
-                  },
-                  props.responseIndex
-                );
-            }
-          });
+        //     // band.exit().remove();
+        //   }
+        // });
       }
     },
 
@@ -201,7 +178,7 @@ const Hops = (props) => {
             if the variables are valid, but we do not have to compare old props
             to next props to decide whether to rerender.
         */
-    []
+    [props.data]
   );
 
   return (

@@ -5,9 +5,10 @@ import axios from "axios";
 // import AlertDialog from "../../components/dialog/alertDialog";
 // import Tweet from "../../components/tweet/tweet";
 import { jStat } from "jstat";
+import VizController from "../../components/visualization/task2vizController/task2vizcontroller";
 import LoadingCircle from "../../components/loading/loading";
 import Instructions from "../../components/instructions/instructions";
-import DotPlot from "../../components/visualization/dotplot/dontplotalt";
+import DotPlot from "../../components/visualization/dotplot/dotplotalt";
 import { useHistory } from "react-router-dom";
 import * as d3 from "d3";
 import {
@@ -23,11 +24,9 @@ import {
 // let index = 0;
 
 const Task2Page = (props) => {
-  //   console.log(props.setChoice);
   const history = useHistory();
   const [loadingOpacity, setLoadingOpacity] = useState(0);
   const [pageOpacity, setPageOpacity] = useState(1);
-  // const [data, setData] = useState([]);
   const [bonds, setBonds] = useState([]);
   const [stocks, setStocks] = useState([]);
   const [allocation, setAllocation] = useState(null);
@@ -37,6 +36,8 @@ const Task2Page = (props) => {
   const [evalPeriod, setEvalPeriod] = useState(null);
   const [extent, setExtent] = useState(null);
   const [left, setLeft] = useState("stocks");
+  //vizTypes : hops,
+  const [visType, setVisType] = useState("hops");
 
   const divContainer = useRef(null);
 
@@ -67,7 +68,12 @@ const Task2Page = (props) => {
   };
 
   const handleDecision = () => {
-    let response = { allocation: allocation, left: left, time: Date.now() };
+    let response = {
+      allocation: allocation,
+      left: left,
+      time: Date.now(),
+      task: 2,
+    };
     console.log(allocation);
     axios.post("/api/response", response).then((response) => {
       setEvalIndex(response.data);
@@ -77,50 +83,45 @@ const Task2Page = (props) => {
     // console.log(evalIndex);
   };
 
-  useEffect(
-    () => {
-      async function fetchData() {
-        const consent = await axios.get("/api/consent");
-        const result = await axios.get("/api/data" + "?numsimulations=20");
-        let data = result.data.data;
-        console.log(data);
-        let stk = data.equities_sp.map((s, i) => {
-          return { key: i, value: s };
-        });
-        let bnd = data.treasury_10yr.map((s, i) => {
-          return { key: i, value: s };
-        });
-        let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
-        let maxExtent = d3.max(extent);
-        extent = [-maxExtent, maxExtent];
-        setExtent(extent);
-        setEvalPeriod(result.data.evalPeriod);
-        setLoadingOpacity(0.8);
-        setPageOpacity(0.2);
-        // Just to create an illusion of loading so users know data has changed.
-        setTimeout(() => {
-          Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
-          setAllocation(null);
-          setAllocationText("");
-          //   console.log(stk);
-          //   console.log(bnd);
-          setStocks(stk);
-          setBonds(bnd);
-          setLoadingOpacity(0);
-          setPageOpacity(1);
-        }, 1000);
-      }
-      // fetchData();
-      if (evalIndex < 7) {
-        fetchData();
-      } else {
-        history.push("/post");
-      }
-    },
-    [
-      //   evalIndex
-    ]
-  );
+  useEffect(() => {
+    async function fetchData() {
+      const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
+      const result = await axios.get("/api/data" + "?numsimulations=20");
+      let data = result.data.data;
+      console.log(data);
+      let stk = data.equities_sp.map((s, i) => {
+        return { key: i, value: s };
+      });
+      let bnd = data.treasury_10yr.map((s, i) => {
+        return { key: i, value: s };
+      });
+      let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
+      let maxExtent = d3.max(extent);
+      extent = [-maxExtent, maxExtent];
+      setExtent(extent);
+      setEvalPeriod(result.data.evalPeriod);
+      setLoadingOpacity(0.8);
+      setPageOpacity(0.2);
+      // Just to create an illusion of loading so users know data has changed.
+      setTimeout(() => {
+        Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
+        setAllocation(null);
+        setAllocationText("");
+        //   console.log(stk);
+        //   console.log(bnd);
+        setStocks(stk);
+        setBonds(bnd);
+        setLoadingOpacity(0);
+        setPageOpacity(1);
+      }, 1000);
+    }
+    // fetchData();
+    if (evalIndex < 7) {
+      fetchData();
+    } else {
+      history.push("/post");
+    }
+  }, [evalIndex]);
 
   return (
     <div
@@ -138,12 +139,6 @@ const Task2Page = (props) => {
         <h4 style={{ textAlign: "center" }}>
           Round 2: Decision {evalIndex + 1}/7
         </h4>
-        {/*<p>*/}
-        {/*  For each one,*/}
-        {/*  you will be presented two Funds referenced in different evaluation*/}
-        {/*  periods of their returns. Your goal is to decide on the allocation*/}
-        {/*  between the two funds for a thirty (30) year investment.*/}
-        {/*</p>*/}
       </Instructions>
       <div
         style={{
@@ -157,21 +152,23 @@ const Task2Page = (props) => {
       >
         {" "}
         <Grid container spacing={1} style={{ height: "50%" }}>
-          <DotPlot
+          <VizController
             // title={evalIndex < 4 ? "A" : "B"}
+            vizType={visType}
             title="A"
             extent={extent}
             allocation={allocation !== null ? allocation : "Insert a value in "}
             data={left === "stocks" ? stocks : bonds}
-          ></DotPlot>
-          <DotPlot
+          ></VizController>
+          <VizController
+            vizType={visType}
             title="B"
             extent={extent}
             allocation={
               allocation !== null ? 100 - allocation : "Insert a value in "
             }
             data={left === "stocks" ? bonds : stocks}
-          ></DotPlot>
+          ></VizController>
         </Grid>
         <div
           style={{
