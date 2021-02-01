@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const seedrandom = require("seedrandom");
 const gmean = require("gmean");
+const jStat = require("jstat");
 
 function getReturns(seed) {
   console.log(seed);
@@ -40,6 +41,22 @@ function getReturns(seed) {
     return r;
   };
 
+  this.ecdf = (data) => {
+    data = data.sort((a, b) => {
+      return a - b;
+    });
+    // let inds = [...Array(data.length).keys()];
+    // let probs = inds.map((ind) => {
+    //   return (ind + 1) / data.length;
+    // });
+    let probs = jStat.seq(
+      1 / data.length / 2,
+      1 - 1 / data.length / 2,
+      data.length
+    );
+    return { x: data, p_less_than_x: probs };
+  };
+
   this.bootstrap = function (n, dataObj) {
     let bootstrap = [];
     for (var i = 0; i < n; i++) {
@@ -53,5 +70,14 @@ function getReturns(seed) {
 // let returns = gr.getReturns(path.join(__dirname,"returns.csv"), 1 , 10);
 
 // returns.then(console.log);
+
+const gr = new getReturns("task1");
+
+let returns = gr.getReturns(1, 20);
+returns.then((results) => {
+  let eqs = results.equities_sp;
+  ecdf = gr.ecdf(eqs);
+  console.log(ecdf);
+});
 
 module.exports = getReturns;

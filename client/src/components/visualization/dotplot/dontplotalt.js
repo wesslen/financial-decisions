@@ -63,6 +63,13 @@ const Dotplot = (props) => {
   useEffect(
     () => {
       if (d3Container.current) {
+        const data = props.data.map((d, i) => {
+          return {
+            Name: d.key,
+            Value: d.value,
+          };
+        });
+        console.log(data);
         //svg returned by this component
         const svg = d3.select(d3Container.current);
         //width of svg
@@ -73,10 +80,11 @@ const Dotplot = (props) => {
         //height of svg
         const height = svg.node().getBoundingClientRect().height;
         const extent = props.extent || [-0.5, 0.5];
+        const nbins = props.nBins || props.data.length;
         const leftMarginPct = 0.1;
         const rightMarginPct = 0.15;
-        const topMarginPct = 0.15;
-        const bottomMarginPct = 0.05;
+        const topMarginPct = 0.3;
+        const bottomMarginPct = 0.1;
 
         const margins = {
           left: width * leftMarginPct,
@@ -86,6 +94,7 @@ const Dotplot = (props) => {
         };
         const w = width - margins.left - margins.right;
         const h = height - margins.top - margins.bottom;
+
         // console.log(props.data);
 
         const dotplotContainer = svg
@@ -96,50 +105,64 @@ const Dotplot = (props) => {
             "translate(" + margins.left + "," + margins.top + ")"
           );
 
-        let quantiles = ecdf(props.data.map((d) => d.value));
+        let x = d3.scaleLinear().domain(extent).rangeRound([0, w]).nice();
 
-        let xScale = d3.scaleLinear().domain(extent).rangeRound([0, w]).nice();
-
-        // let yScale = d3
-        //   .scaleLinear()
-        //   .domain([0, d3.max(quantiles, (d) => d.p_less_than_x)])
-        //   .rangeRound([height, 0]);
-        // const qBinwidth = 1.25 * Math.sqrt(20 / quantiles.length);
-        const qVals = quantiles.map((c) => c.x);
-        const qBinwidth = (extent[1] - extent[0]) / 200;
-
-        const qfStacks = generateDotplotStacks(qVals, qBinwidth);
-        console.log(qBinwidth);
-        console.log(xScale(qBinwidth));
-        console.log(qfStacks);
         dotplotContainer
           .append("g")
-          .attr("class", "axis axis_x")
-          .attr("transform", `translate(0, ${h - margins.bottom})`)
-          .call(d3.axisBottom(xScale));
+          .attr("class", "axis axis--x")
+          .attr("transform", "translate(0," + h + ")")
+          .call(d3.axisBottom(x));
 
-        const bins = dotplotContainer.selectAll(".gBin").data(qfStacks);
+        const histogram = d3
+          .histogram()
+          .domain(x.domain())
+          .thresholds(x.ticks(nbins))
+          .value(function (d) {
+            return d.Value;
+          });
 
-        const binContainerEnter = bins
+        const bins = histogram(data).filter((d) => d.length > 0);
+
+        let binContainer = dotplotContainer.selectAll(".gBin").data(bins);
+
+        binContainer.exit().remove();
+
+        let binContainerEnter = binContainer
           .enter()
           .append("g")
           .attr("class", "gBin")
-          .attr("transform", (d) => `translate(${xScale(d.x)}, ${h})`)
-          .attr("fill", "steelblue");
+          .attr("transform", (d) => `translate(${x(d.x0)}, ${h})`);
 
+        //need to populate the bin containers with data the first time
         binContainerEnter
           .selectAll("circle")
           .data((d) =>
-            d.values.map((p, i) => {
-              return { idx: i, value: p, radius: xScale(qBinwidth) };
+            d.map((p, i) => {
+              return {
+                idx: i,
+                name: p.Name,
+                value: p.Value,
+                radius: (x(d.x1) - x(d.x0)) / 2,
+              };
             })
           )
           .enter()
           .append("circle")
-          .attr("cx", 0)
-          .attr("cy", (d) => -d.idx * 2 * d.radius - d.radius)
-          .attr("r", (d) => d.radius)
-          .attr("fill-opacity", 1);
+          .attr("class", "enter")
+          .attr("cx", 0) //g element already at correct x pos
+          .attr("cy", function (d) {
+            return -d.idx * 2 * d.radius - d.radius;
+          })
+          .attr("r", 0)
+          .transition()
+          .duration(500)
+          .attr("r", function (d) {
+            return d.length == 0 ? 0 : d.radius;
+          });
+
+        binContainerEnter
+          .merge(binContainer)
+          .attr("transform", (d) => `translate(${x(d.x0)}, ${h})`);
       }
     },
 

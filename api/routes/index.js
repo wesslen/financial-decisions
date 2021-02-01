@@ -94,8 +94,10 @@ router.post("/response", (req, res) => {
 router.get("/data", (req, res) => {
   console.log(req.session.evalPeriods);
   console.log(req.session.evalPeriodIndex);
+  console.log(req.query);
+  let numSimulations = +req.query.numsimulations || 33;
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
-  let returns = gr.getReturns(evalPeriod, 33);
+  let returns = gr.getReturns(evalPeriod, numSimulations);
   returns.then((result) => {
     res.json({ data: result, evalPeriod: evalPeriod });
   });

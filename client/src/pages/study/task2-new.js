@@ -4,10 +4,11 @@ import axios from "axios";
 // import DecisionDialog from "../../components/dialog/decisionDialog";
 // import AlertDialog from "../../components/dialog/alertDialog";
 // import Tweet from "../../components/tweet/tweet";
+import { jStat } from "jstat";
 import LoadingCircle from "../../components/loading/loading";
 import Instructions from "../../components/instructions/instructions";
+import DotPlot from "../../components/visualization/dotplot/dontplotalt";
 import { useHistory } from "react-router-dom";
-import Barchart from "../../components/visualization/barchart/barchart";
 import * as d3 from "d3";
 import {
   Button,
@@ -21,7 +22,7 @@ import {
 
 // let index = 0;
 
-const Task1Page = (props) => {
+const Task2Page = (props) => {
   //   console.log(props.setChoice);
   const history = useHistory();
   const [loadingOpacity, setLoadingOpacity] = useState(0);
@@ -69,7 +70,6 @@ const Task1Page = (props) => {
     let response = { allocation: allocation, left: left, time: Date.now() };
     console.log(allocation);
     axios.post("/api/response", response).then((response) => {
-      console.log(response.data);
       setEvalIndex(response.data);
       // history.push("/instructions");
     });
@@ -77,41 +77,50 @@ const Task1Page = (props) => {
     // console.log(evalIndex);
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      const result = await axios.get("/api/data");
-      let data = result.data.data;
-      let stk = data.equities_sp.map((s, i) => {
-        return { key: i, value: s };
-      });
-      let bnd = data.treasury_10yr.map((s, i) => {
-        return { key: i, value: s };
-      });
-      let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
-      let maxExtent = d3.max(extent);
-      extent = [-maxExtent, maxExtent];
-      setExtent(extent);
-      setEvalPeriod(result.data.evalPeriod);
-      setLoadingOpacity(0.8);
-      setPageOpacity(0.2);
-      // Just to create an illusion of loading so users know data has changed.
-      setTimeout(() => {
-        Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
-        setAllocation(null);
-        setAllocationText("");
-        setStocks(stk);
-        setBonds(bnd);
-        setLoadingOpacity(0);
-        setPageOpacity(1);
-      }, 1000);
-    }
-    // fetchData();
-    if (evalIndex < 7) {
-      fetchData();
-    } else {
-      history.push("/post");
-    }
-  }, [evalIndex]);
+  useEffect(
+    () => {
+      async function fetchData() {
+        const consent = await axios.get("/api/consent");
+        const result = await axios.get("/api/data" + "?numsimulations=20");
+        let data = result.data.data;
+        console.log(data);
+        let stk = data.equities_sp.map((s, i) => {
+          return { key: i, value: s };
+        });
+        let bnd = data.treasury_10yr.map((s, i) => {
+          return { key: i, value: s };
+        });
+        let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
+        let maxExtent = d3.max(extent);
+        extent = [-maxExtent, maxExtent];
+        setExtent(extent);
+        setEvalPeriod(result.data.evalPeriod);
+        setLoadingOpacity(0.8);
+        setPageOpacity(0.2);
+        // Just to create an illusion of loading so users know data has changed.
+        setTimeout(() => {
+          Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
+          setAllocation(null);
+          setAllocationText("");
+          //   console.log(stk);
+          //   console.log(bnd);
+          setStocks(stk);
+          setBonds(bnd);
+          setLoadingOpacity(0);
+          setPageOpacity(1);
+        }, 1000);
+      }
+      // fetchData();
+      if (evalIndex < 7) {
+        fetchData();
+      } else {
+        history.push("/post");
+      }
+    },
+    [
+      //   evalIndex
+    ]
+  );
 
   return (
     <div
@@ -127,7 +136,7 @@ const Task1Page = (props) => {
     >
       <Instructions evalPeriod={evalPeriod} style={{ height: "20%" }}>
         <h4 style={{ textAlign: "center" }}>
-          Round 1: Decision {evalIndex + 1}/7
+          Round 2: Decision {evalIndex + 1}/7
         </h4>
         {/*<p>*/}
         {/*  For each one,*/}
@@ -147,22 +156,22 @@ const Task1Page = (props) => {
         }}
       >
         {" "}
-        <Grid container spacing={1} style={{ height: "40%" }}>
-          <Barchart
+        <Grid container spacing={1} style={{ height: "50%" }}>
+          <DotPlot
             // title={evalIndex < 4 ? "A" : "B"}
             title="A"
             extent={extent}
             allocation={allocation !== null ? allocation : "Insert a value in "}
             data={left === "stocks" ? stocks : bonds}
-          ></Barchart>
-          <Barchart
+          ></DotPlot>
+          <DotPlot
             title="B"
             extent={extent}
             allocation={
               allocation !== null ? 100 - allocation : "Insert a value in "
             }
             data={left === "stocks" ? bonds : stocks}
-          ></Barchart>
+          ></DotPlot>
         </Grid>
         <div
           style={{
@@ -226,4 +235,4 @@ const Task1Page = (props) => {
   );
 };
 
-export default Task1Page;
+export default Task2Page;

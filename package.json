@@ -17,6 +17,7 @@
     "express-session": "^1.17.1",
     "file-type": "^16.0.1",
     "gmean": "^1.0.7",
+    "jstat": "^1.9.4",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.24",
     "node-fetch": "^2.6.1",

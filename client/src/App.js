@@ -3,7 +3,7 @@ import NavBar from "./components/nav/nav";
 import Container from "@material-ui/core/Container";
 import BottomNav from "./components/bottomNav/bottomNav";
 import Task1 from "./pages/study/task1-new";
-import Task2 from "./pages/study/task2";
+import Task2 from "./pages/study/task2-new";
 import PreSurveyPage from "./pages/survey/pre";
 import PostSurveyPage from "./pages/survey/post";
 import ConsentPage from "./pages/consent/consent";
@@ -84,15 +84,43 @@ class App extends React.Component {
               <Route path="/consent" component={ConsentPage}></Route>
               <Route path="/pre" component={PreSurveyPage}></Route>
               {/*<Route path="/instructions" component={InstructionsMainPage}></Route>*/}
-              <Route path="/instructions1" component={Instructions1Page}></Route>
-              <Route path="/instructions2" component={Instructions2Page}></Route>
-              <Route path="/instructions3" component={Instructions3Page}></Route>
-              <Route path="/instructions4" component={Instructions4Page}></Route>
-              <Route path="/instructions5" component={Instructions5Page}></Route>
-              <Route path="/instructions6" component={Instructions6Page}></Route>
-              <Route path="/instructions7" component={Instructions7Page}></Route>
-              <Route path="/instructions8" component={Instructions8Page}></Route>
+              <Route
+                path="/instructions1"
+                component={Instructions1Page}
+              ></Route>
+              <Route
+                path="/instructions2"
+                component={Instructions2Page}
+              ></Route>
+              <Route
+                path="/instructions3"
+                component={Instructions3Page}
+              ></Route>
+              <Route
+                path="/instructions4"
+                component={Instructions4Page}
+              ></Route>
+              <Route
+                path="/instructions5"
+                component={Instructions5Page}
+              ></Route>
+              <Route
+                path="/instructions6"
+                component={Instructions6Page}
+              ></Route>
+              <Route
+                path="/instructions7"
+                component={Instructions7Page}
+              ></Route>
+              <Route
+                path="/instructions8"
+                component={Instructions8Page}
+              ></Route>
               <Route path="/task1">
+                {/* <Task1></Task1> */}
+                <Task2></Task2>
+              </Route>
+              <Route path="/task2">
                 <Task1></Task1>
               </Route>
               <Route path="/task2">
