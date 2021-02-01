@@ -14,10 +14,42 @@ const PreSurveyPage = (props) => {
         "questions": [
           {
             "type": "radiogroup",
+            "name": "Samuelson_Classic1",
+            "title":
+                "You are offered the " +
+                "opportunity to accept the following bet: flip a fair coin and if you guess " +
+                "correctly you win $200 but if you guess incorrectly you lose $100. " +
+                "Would you accept this bet?",
+            "isRequired": false,
+            "colCount": 2,
+            "choices": [
+              "Yes, I would accept the bet.",
+              "No, I would not accept the bet.",
+            ],
+          },
+          {
+            "type": "radiogroup",
+            "name": "Samuelson_Classic100",
+            "title":
+                "You are offered the same bet from #1: " +
+                "would you accept this bet 100 times?",
+            "isRequired": false,
+            "colCount": 2,
+            "choices": [
+              "Yes, I would accept the same bet 100 times.",
+              "No, I would not accept the same bet 100 times.",
+            ],
+          },
+        ]
+      },
+      {
+        "questions": [
+          {
+            "type": "radiogroup",
             "name": "Grable2003_1",
             "title":
-                "In addition to whatever you own, you have been given $1,000. You are now\n" +
-                "asked to choose between:",
+                "In addition to whatever you own, you have been given 1,000. " +
+                "You are now asked to choose between:",
             "isRequired": false,
             "colCount": 2,
             "choices": [
@@ -38,18 +70,18 @@ const PreSurveyPage = (props) => {
               "A 50 percent chance to lose $1,000 and a 50 percent chance to gain nothing",
             ],
           },
-          {
-            "type": "radiogroup",
-            "name": "Grable1999",
-            "title": "If you had to invest $20,000, which of the following investment choices would you find most appealing?",
-            "isRequired": false,
-            "colCount": 1,
-            "choices": [
-                "60% in low-risk investments 30% in medium-risk investments 10% in high-risk investments",
-                "30% in low-risk investments 40% in medium-risk investments 30% in high-risk investments",
-                "10% in low-risk investments 40% in medium-risk investments 50% in high-risk investments",
-            ]
-          }
+          // {
+          //   "type": "radiogroup",
+          //   "name": "Grable1999",
+          //   "title": "If you had to invest $20,000, which of the following investment choices would you find most appealing?",
+          //   "isRequired": false,
+          //   "colCount": 1,
+          //   "choices": [
+          //       "60% in low-risk investments 30% in medium-risk investments 10% in high-risk investments",
+          //       "30% in low-risk investments 40% in medium-risk investments 30% in high-risk investments",
+          //       "10% in low-risk investments 40% in medium-risk investments 50% in high-risk investments",
+          //   ]
+          // }
         ]
       },
       {
@@ -114,7 +146,7 @@ const PreSurveyPage = (props) => {
             "title":
                 "Suppose you are offered to choose between two investment opportunities. " +
                 "Investment 1 you have a 50% chance of $100,000 and a 50% chance of $50,000." +
-                "Under which scenarios would you instead an Investment 2 of:",
+                "Under which scenarios would you instead choose an Investment 2 of:",
             "columns": [
               {
                 value: 1,
@@ -147,38 +179,6 @@ const PreSurveyPage = (props) => {
             ],
           },
 
-        ]
-      },
-      {
-        "questions": [
-          {
-            "type": "radiogroup",
-            "name": "Samuelson_Classic1",
-            "title":
-                "You are offered the " +
-                "opportunity to accept the following bet: flip a fair coin and if you guess " +
-                "correctly you win $200 but if you guess incorrectly you lose $100. " +
-                "Would you accept this bet?",
-            "isRequired": false,
-            "colCount": 2,
-            "choices": [
-              "Yes, I would accept the bet.",
-              "No, I would not accept the bet.",
-            ],
-          },
-          {
-            "type": "radiogroup",
-            "name": "Samuelson_Classic100",
-            "title":
-                "You are offered the same bet from #7: " +
-                "would you accept this bet 100 times?",
-            "isRequired": false,
-            "colCount": 2,
-            "choices": [
-              "Yes, I would accept the same bet 100 times.",
-              "No, I would not accept the same bet 100 times.",
-            ],
-          },
         ]
       },
     ]

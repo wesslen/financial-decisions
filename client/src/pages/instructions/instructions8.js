@@ -185,8 +185,12 @@ const Instructions8 = (props) => {
       <ul>
         <li>
           {" "}
-          Repeat Round 1 but with (1) different funds and (2) a different data
+          Repeat Round 1 but with different funds and a different data
           visualization.
+        </li>
+        <li>
+          {" "}
+          Instructions will be provided before on how to interpret the new data visualization.
         </li>
       </ul>
       <div

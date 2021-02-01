@@ -170,8 +170,7 @@ const Instructions1 = (props) => {
         the two funds as a percentage from 0% to 100%.
       </p>
       <p>
-        Your goal is to <b>maximize</b> your <b>expected return</b>
-        for <b>thirty (30) years</b>  when you plan to retire.
+        Your goal is to <b>maximize</b> your <b>expected return</b> for <b>thirty (30) years</b>  when you plan to retire.
       </p>
       {/*<img*/}
       {/*  src={process.env.PUBLIC_URL + "/uncertainty1.gif"}*/}

@@ -164,7 +164,7 @@ const Instructions7 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Add in a question for comprehension</h3>
+      <h3>Please complete the following task:</h3>
       <ReCAPTCHA
         sitekey="6LftACkaAAAAAB1eaaaYU9rCSnyJl8nNPpZkwUol"
         onChange={onChange}

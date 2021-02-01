@@ -50,7 +50,7 @@ const Instructions2 = (props) => {
   const [extent, setExtent] = useState(null);
   const [evalPeriod, setEvalPeriod] = useState(null);
   const handleConsent = () => {
-    history.push("/instructions3");
+    history.push("/instructions4");
   };
 
   // useEffect(() => {
