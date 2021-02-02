@@ -48,7 +48,7 @@ const PreSurveyPage = (props) => {
             "type": "radiogroup",
             "name": "Grable2003_1",
             "title":
-                "In addition to whatever you own, you have been given 1,000. " +
+                "In addition to whatever you own, you have been given $1,000. " +
                 "You are now asked to choose between:",
             "isRequired": false,
             "colCount": 2,
@@ -154,7 +154,7 @@ const PreSurveyPage = (props) => {
               },
               {
                 value: 2,
-                text: "Reject Investment 2 / Accept Investment 2"
+                text: "Reject Investment 2 / Accept Investment 1"
               }
             ],
             "isRequired": false,

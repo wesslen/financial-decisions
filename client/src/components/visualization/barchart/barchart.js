@@ -153,7 +153,7 @@ const Barchart = (props) => {
             .datum(props.data[0])
             .append("text")
             .attr("x", (d) => x(d.key) + x.bandwidth() / 4)
-            .attr("y", (d) => y(d.value) + 30)
+            .attr("y", (d) => y(d.value) + 15)
             .style("font-size", 20)
             .attr("text-anchor", "middle")
             .text("↑");
@@ -161,7 +161,7 @@ const Barchart = (props) => {
             .datum(props.data[0])
             .append("text")
             .attr("x", (d) => x(d.key) + x.bandwidth() + 10)
-            .attr("y", (d) => y(d.value) + 30)
+            .attr("y", (d) => y(d.value) + 15)
             .style("font-weight", 20)
             .text("Worst return");
           annot

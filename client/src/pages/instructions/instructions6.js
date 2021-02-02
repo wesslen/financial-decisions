@@ -49,6 +49,14 @@ const Instructions6 = (props) => {
   const [stocks, setStocks] = useState([]);
   const [extent, setExtent] = useState(null);
   const [evalPeriod, setEvalPeriod] = useState(null);
+  const [loadingOpacity, setLoadingOpacity] = useState(0);
+  const [pageOpacity, setPageOpacity] = useState(1);
+  // const [data, setData] = useState([]);
+  const [allocation, setAllocation] = useState(null);
+  const [disabled, setDisabled] = useState(true);
+  const [allocationText, setAllocationText] = useState("");
+  const [evalIndex, setEvalIndex] = useState(0);
+  const [left, setLeft] = useState("stocks");
   const handleConsent = () => {
     history.push("/instructions7");
   };
@@ -104,55 +112,57 @@ const Instructions6 = (props) => {
   let maxExtent2 = d3.max(extent2);
   extent2 = [-maxExtent2, maxExtent2];
 
-  function createData(term, definition, examples) {
-    return { term, definition, examples };
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios.get("/api/data");
+      let data = result.data.data;
+      let stk = data.equities_sp.map((s, i) => {
+        return { key: i, value: s };
+      });
+      let bnd = data.treasury_10yr.map((s, i) => {
+        return { key: i, value: s };
+      });
+      let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
+      let maxExtent = d3.max(extent);
+      extent = [-maxExtent, maxExtent];
+      setExtent(extent);
+      setEvalPeriod(result.data.evalPeriod);
+      setLoadingOpacity(0.8);
+      setPageOpacity(0.2);
+      // Just to create an illusion of loading so users know data has changed.
+      setTimeout(() => {
+        Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
+        setAllocation(null);
+        setAllocationText("");
+        setStocks(stk);
+        setBonds(bnd);
+        setLoadingOpacity(0);
+        setPageOpacity(1);
+      }, 1000);
+    }
+    fetchData();
+  });
 
-  const terms = [
-    createData(
-      "Assets",
-      "An economic resource with\n" +
-        "the expectation that it will provide a future benefit or returns.",
-      "Stocks, Bonds, Funds (Mutual Funds, ETFs), Real Estate"
-    ),
-    createData(
-      "Fund",
-      "A collection of assets held for diversification benefits. In this study, your\n" +
-        "investment options are between different funds. Each fund's name is\n" +
-        "masked.",
-      "Mutual Funds and exchange-traded funds (or ETF's)"
-    ),
-    createData(
-      "Allocation",
-      "Decision of how to\n" +
-        "apportion an investment between different funds. In this study, you\n" +
-        "will decide an allocation percentage after viewing two\n" +
-        "different funds' rates of returns under different scenarios and data\n" +
-        "visualizations.",
-      "0% to 100%"
-    ),
-    createData(
-      "Rate of Return",
-      "Net gain or loss\n" +
-        "by investing in an asset over an evaluation period. It will be expressed as an annualized percentage of the\n" +
-        "investment’s initial cost.",
-      "-5%, 7%, 12%"
-    ),
-    createData(
-      "Evaluation Period",
-      "The relative\n" +
-        "          timeframe in which the rate of returns are framed. In this study, we\n" +
-        "          will provide returns between 1 to 30 year periods.",
-      "1 year to 30 years"
-    ),
-    createData(
-      "Planning Horizon",
-      "The expected\n" +
-        "          timeframe you plan to invest. In this study, your planning horizon\n" +
-        "          will be 30 years.",
-      "30 years"
-    ),
-  ];
+  const handleAllocation = (event) => {
+    let newVal = +event.target.value;
+    // newVal = parseInt(newVal);
+    // console.log(event.target.value);
+    // setAllocationText(newVal);
+    setAllocationText(newVal);
+    // ryan added: to keep as values between 0 and 100
+    // doesn't work correctly for integer component yet... need to check that
+    // what this doesn't do: prompt the user. need to create a front end warning too for this.
+    if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
+      setDisabled(false);
+      setAllocation(newVal);
+    } else {
+      alert(
+        "Please input a number between 0 and 100 with no decimals or percentage."
+      );
+      setDisabled(true);
+    }
+  };
+
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
@@ -181,8 +191,8 @@ const Instructions6 = (props) => {
         }}
       >
         <Grid container className={classes.root} spacing={1} style={{ height: "100%" }}>
-          <Barchart extent={extent2} title="A" data={stks_sim2}></Barchart>
-          <Barchart extent={extent2} title="B" data={bnds_sim2}></Barchart>
+          <Barchart extent={extent2} title="A" data={stks_sim2} allocation={allocation !== null ? allocation : "Insert a value in "}>></Barchart>
+          <Barchart extent={extent2} title="B" data={bnds_sim2} allocation={allocation !== null ? allocation : "Insert a value in "}>></Barchart>
         </Grid>
       </div>
       <div
@@ -216,6 +226,9 @@ const Instructions6 = (props) => {
             label="Fund A allocation %"
             type="number"
             color="secondary"
+            value={allocationText}
+              /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+            onChange={handleAllocation}
           />
           <h4> </h4>
           <Button variant="contained">Make Decision</Button>
