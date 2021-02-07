@@ -45,8 +45,110 @@ const Debrief = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
+  function createData(trial, user_allocation, simulated_returns, simulated_percentile, incentive) {
+    return { trial, user_allocation, simulated_returns, simulated_percentile, incentive };
+  }
 
-
+  const terms = [
+    createData(
+      "1",
+      "34%",
+      "24.4%",
+      "78%",
+      "$0.01"
+    ),
+    createData(
+      "2",
+      "54%",
+      "29.4%",
+      "50%",
+      "$0.02"
+    ),
+    createData(
+      "3",
+      "23%",
+      "25.4%",
+      "84%",
+      "$0.00"
+    ),
+    createData(
+      "4",
+      "95%",
+      "50.6%",
+      "5%",
+      "$0.04"
+    ),
+    createData(
+      "5",
+      "78%",
+      "47.4%",
+      "23%",
+      "$0.03"
+    ),
+    createData(
+      "6",
+      "28%",
+      "24.4%",
+      "74%",
+      "$0.03"
+    ),
+    createData(
+      "7",
+      "50%",
+      "24.4%",
+      "74%",
+      "$0.03"
+    ),
+    createData(
+      "8",
+      "29%",
+      "24.4%",
+      "74%",
+      "$0.03"
+    ),
+    createData(
+      "9",
+      "45%",
+      "24.4%",
+      "74%",
+      "$0.03"
+    ),
+    createData(
+      "10",
+      "49%",
+      "24.4%",
+      "74%",
+      "$0.03"
+    ),
+    createData(
+      "11",
+      "57%",
+      "24.4%",
+      "74%",
+      "$0.03"
+    ),
+    createData(
+      "12",
+      "86%",
+      "24.4%",
+      "74%",
+      "$0.03"
+    ),
+    createData(
+      "13",
+      "15%",
+      "24.4%",
+      "74%",
+      "$0.03"
+    ),
+    createData(
+      "14",
+      "12%",
+      "24.4%",
+      "74%",
+      "$0.03"
+    ),
+  ];
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
@@ -55,24 +157,38 @@ const Debrief = (props) => {
         You have completed the study. Your MTurk code is:
       </p>
       <p>
-        [insert in table that shows results. 14 rows x 5 columns. each row is a trial.
-        column 1 = trial number (1 to 14). column 2 = allocation decision. column 3 = simulated return for allocation decision.
-        column 4 = percentile of simulated (e.g., 0.12 = 12th percentile, 0.88 = 88th percentile]. column 5 = resulted incentive (top 20% = $0.04, 21-40th% percentile = $0.03, ...)
+        Your total compensation will be $1.25 (Base) + $[sum of trial incentive column].
       </p>
-      {/*<img*/}
-      {/*  src={process.env.PUBLIC_URL + "/uncertainty1.gif"}*/}
-      {/*  alt=""*/}
-      {/*  className={classes.image}*/}
-      {/*/>*/}
-      {/*<p>*/}
-      {/*  In the next animation, the user decides to put their allocation near an*/}
-      {/*  even mix of 50% and 50%.*/}
-      {/*</p>*/}
-      {/*<img*/}
-      {/*  src={process.env.PUBLIC_URL + "/uncertainty2.gif"}*/}
-      {/*  alt=""*/}
-      {/*  className={classes.image}*/}
-      {/*/>*/}
+      <p>
+      <TableContainer>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Trial</TableCell>
+              <TableCell>User Allocation</TableCell>
+              <TableCell>Simulated Returns</TableCell>
+              <TableCell>Simulated Percentiles</TableCell>
+              <TableCell>Trial Incentive</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {terms.map((row) => (
+              <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                  {row.trial}
+                </TableCell>
+                <TableCell>{row.user_allocation}</TableCell>
+                <TableCell>{row.simulated_returns}</TableCell>
+                <TableCell>{row.simulated_percentile}</TableCell>
+                <TableCell>{row.incentive}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      </p>
+
+
       <div
         style={{
           textAlign: "center",
