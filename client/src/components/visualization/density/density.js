@@ -8,8 +8,9 @@ import {
 /* Component */
 const Density = (props) => {
   const d3Container = useRef(null);
-  const width = props.width || "50%";
-  const height = props.height || "100%";
+  const width = props.width || "75%";
+  const height = props.height || "60%";
+
   const densityExtent = props.densityExtent || [0, 0.5];
   // const numBins = props.numBins || 10;
 

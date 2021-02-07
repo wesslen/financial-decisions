@@ -24,6 +24,7 @@ const VizController = (props) => {
     case "hops":
       return (
         <Hops
+          showDist={false}
           title={props.title}
           extent={props.extent}
           allocation={props.allocation}
@@ -34,7 +35,7 @@ const VizController = (props) => {
     case "hopsdist":
       return (
         <Hops
-          showDist={false}
+          showDist={true}
           title={props.title}
           extent={props.extent}
           allocation={props.allocation}

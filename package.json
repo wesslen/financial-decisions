@@ -26,8 +26,8 @@
     "randomstring": "^1.1.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "seedrandom": "^3.0.5",
     "react-showdown": "^2.1.0",
+    "seedrandom": "^3.0.5",
     "showdown": "^1.9.1",
     "survey-react": "^1.8.17"
   },

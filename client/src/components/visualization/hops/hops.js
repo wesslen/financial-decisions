@@ -4,10 +4,10 @@ import * as d3 from "d3";
 /* Component */
 const Hops = (props) => {
   const d3Container = useRef(null);
-  const width = props.width || "50%";
-  const height = props.height || "50%";
-  const hopSpeed = props.hopSpeed | 500;
-  const showDist = props.showDist || true;
+  const width = props.width || "75%";
+  const height = props.height || "60%";
+  const hopSpeed = props.hopSpeed | 350;
+  const showDist = props.showDist;
 
   useEffect(
     () => {
@@ -36,6 +36,15 @@ const Hops = (props) => {
         const w = width - margins.left - margins.right;
         const h = height - margins.top - margins.bottom;
         const extent = props.extent || [-1.0, 1.0];
+
+        const allocation = props.allocation || 0;
+        svg
+          .append("text")
+          .attr("x", margins.left)
+          .attr("y", margins.top)
+          .attr("fill", "teal")
+          .attr("class", "charttitle")
+          .text(`Fund ${props.title}: ${allocation}%`);
 
         const g = svg
           .append("g")
@@ -178,7 +187,7 @@ const Hops = (props) => {
             if the variables are valid, but we do not have to compare old props
             to next props to decide whether to rerender.
         */
-    [props.data]
+    [props.data, props.allocation]
   );
 
   return (

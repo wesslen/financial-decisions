@@ -5,8 +5,8 @@ import * as d3 from "d3";
 /* Component */
 const Dotplot = (props) => {
   const d3Container = useRef(null);
-  const width = props.width || "50%";
-  const height = props.height || "100%";
+  const width = props.width || "75%";
+  const height = props.height || "60%";
 
   // const numBins = props.numBins || 10;
 

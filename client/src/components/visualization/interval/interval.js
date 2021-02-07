@@ -4,8 +4,8 @@ import { jStat } from "jstat";
 /* Component */
 const Interval = (props) => {
   const d3Container = useRef(null);
-  const width = props.width || "50%";
-  const height = props.height || "50%";
+  const width = props.width || "75%";
+  const height = props.height || "60%";
   const hopSpeed = props.hopSpeed | 500;
   const showDist = props.showDist || true;
 

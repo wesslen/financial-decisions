@@ -38,7 +38,7 @@ const Task2Page = (props) => {
   const [densityExtent, setDensityExtent] = useState([0, 0.5]);
   const [left, setLeft] = useState("stocks");
   //vizTypes : hops,
-  const [visType, setVisType] = useState("point");
+  const [visType, setVisType] = useState("density");
 
   const divContainer = useRef(null);
 
@@ -167,14 +167,14 @@ const Task2Page = (props) => {
         style={{
           width: "90%",
           // paddingLeft: "50",
-          height: "80%",
+          height: "45%",
           margin: "0 auto",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         {" "}
-        <Grid container spacing={1} style={{ height: "50%" }}>
+        {/* <Grid container spacing={1} style={{ height: "50%" }}>
           <VizController
             // title={evalIndex < 4 ? "A" : "B"}
             vizType={visType}
@@ -194,7 +194,26 @@ const Task2Page = (props) => {
             }
             data={left === "stocks" ? bonds : stocks}
           ></VizController>
-        </Grid>
+        </Grid> */}
+        <VizController
+          // title={evalIndex < 4 ? "A" : "B"}
+          vizType={visType}
+          title="A"
+          extent={extent}
+          densityExtent={densityExtent}
+          allocation={allocation !== null ? allocation : "Insert a value in "}
+          data={left === "stocks" ? stocks : bonds}
+        ></VizController>
+        <VizController
+          vizType={visType}
+          title="B"
+          extent={extent}
+          densityExtent={densityExtent}
+          allocation={
+            allocation !== null ? 100 - allocation : "Insert a value in "
+          }
+          data={left === "stocks" ? bonds : stocks}
+        ></VizController>
         <div
           style={{
             justifyContent: "center",
