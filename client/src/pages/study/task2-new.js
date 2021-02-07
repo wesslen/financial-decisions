@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-// import BinaryChoice from "../../components/choice/binaryChoice";
-// import DecisionDialog from "../../components/dialog/decisionDialog";
-// import AlertDialog from "../../components/dialog/alertDialog";
-// import Tweet from "../../components/tweet/tweet";
 import { jStat } from "jstat";
 import VizController from "../../components/visualization/task2vizController/task2vizcontroller";
 import LoadingCircle from "../../components/loading/loading";
@@ -19,6 +15,10 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import {
+  kernelDensityEstimator,
+  kernelEpanechnikov,
+} from "../../functions/kde";
 // import $ from "jquery";
 
 // let index = 0;
@@ -35,9 +35,10 @@ const Task2Page = (props) => {
   const [evalIndex, setEvalIndex] = useState(0);
   const [evalPeriod, setEvalPeriod] = useState(null);
   const [extent, setExtent] = useState(null);
+  const [densityExtent, setDensityExtent] = useState([0, 0.5]);
   const [left, setLeft] = useState("stocks");
   //vizTypes : hops,
-  const [visType, setVisType] = useState("hops");
+  const [visType, setVisType] = useState("point");
 
   const divContainer = useRef(null);
 
@@ -67,6 +68,27 @@ const Task2Page = (props) => {
     }
   };
 
+  const getDensityExtent = (stocks, bonds, extent) => {
+    let x = d3.scaleLinear().domain(extent).nice();
+    var kde = kernelDensityEstimator(kernelEpanechnikov(0.05), x.ticks(40));
+
+    var density1 = kde(
+      stocks.map(function (d) {
+        return d.value;
+      })
+    );
+    var density2 = kde(
+      bonds.map(function (d) {
+        return d.value;
+      })
+    );
+
+    let maxDensity1 = d3.max(density1.map((d) => d[1]));
+    let maxDensity2 = d3.max(density2.map((d) => d[1]));
+
+    return [0, d3.max([maxDensity1, maxDensity2])];
+  };
+
   const handleDecision = () => {
     let response = {
       allocation: allocation,
@@ -74,7 +96,7 @@ const Task2Page = (props) => {
       time: Date.now(),
       task: 2,
     };
-    console.log(allocation);
+
     axios.post("/api/response", response).then((response) => {
       setEvalIndex(response.data);
       // history.push("/instructions");
@@ -86,7 +108,7 @@ const Task2Page = (props) => {
   useEffect(() => {
     async function fetchData() {
       const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
-      const result = await axios.get("/api/data" + "?numsimulations=20");
+      const result = await axios.get("/api/data" + "?numsimulations=50");
       let data = result.data.data;
       console.log(data);
       let stk = data.equities_sp.map((s, i) => {
@@ -98,6 +120,9 @@ const Task2Page = (props) => {
       let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
       let maxExtent = d3.max(extent);
       extent = [-maxExtent, maxExtent];
+      let densityExtent = getDensityExtent(stk, bnd, extent);
+      console.log(densityExtent);
+      setDensityExtent(densityExtent);
       setExtent(extent);
       setEvalPeriod(result.data.evalPeriod);
       setLoadingOpacity(0.8);
@@ -107,8 +132,6 @@ const Task2Page = (props) => {
         Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
         setAllocation(null);
         setAllocationText("");
-        //   console.log(stk);
-        //   console.log(bnd);
         setStocks(stk);
         setBonds(bnd);
         setLoadingOpacity(0);
@@ -157,6 +180,7 @@ const Task2Page = (props) => {
             vizType={visType}
             title="A"
             extent={extent}
+            densityExtent={densityExtent}
             allocation={allocation !== null ? allocation : "Insert a value in "}
             data={left === "stocks" ? stocks : bonds}
           ></VizController>
@@ -164,6 +188,7 @@ const Task2Page = (props) => {
             vizType={visType}
             title="B"
             extent={extent}
+            densityExtent={densityExtent}
             allocation={
               allocation !== null ? 100 - allocation : "Insert a value in "
             }

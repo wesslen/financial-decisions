@@ -20,6 +20,7 @@ import TextField from "@material-ui/core/TextField";
 import Barchart from "../../components/visualization/barchart/barchart";
 import Dotplot from "../../components/visualization/dotplot/dotplot";
 import * as d3 from "d3";
+import LoadingCircle from "../../components/loading/loading";
 
 const useStyles = makeStyles((theme) => ({
   emph: {
@@ -58,66 +59,60 @@ const Instructions5 = (props) => {
   const [evalIndex, setEvalIndex] = useState(0);
   const [left, setLeft] = useState("stocks");
 
-
   const handleConsent = () => {
-    history.push("/instructions6");
+    setLoadingOpacity(0.8);
+    setPageOpacity(0.2);
+    // Just to create an illusion of loading so users know data has changed.
+    setTimeout(() => {
+      setLoadingOpacity(0);
+      setPageOpacity(1);
+      history.push("/instructions6");
+    }, 1000);
   };
 
-  function onChange(value) {
-    if (value !== null) {
-      setDisabled(false);
-    }
-    console.log("Captcha value:", value);
-  }
-
+  // function onChange(value) {
+  //   if (value !== null) {
+  //     setDisabled(false);
+  //   }
+  //   console.log("Captcha value:", value);
+  // }
 
   //DEMONSTRATING DATA VISUALIZATION, creating random data
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
 
-  const stks_sim1 = [];
-  const bnds_sim1 = [];
-  const stks_sim2 = [];
-  const bnds_sim2 = [];
-  for (let i = 0; i < 41; i++) {
-    stks_sim1.push({ key: i, value: getRandomArbitrary(-0.3, 0.3) });
-    bnds_sim1.push({ key: i, value: getRandomArbitrary(-0.08, 0.08) });
-    stks_sim2.push({ key: i, value: getRandomArbitrary(-0.1, 0.1) });
-    bnds_sim2.push({ key: i, value: getRandomArbitrary(-0.05, 0.05) });
-  }
-
-  let extent1 = d3.extent([
-    ...stks_sim1.map((d) => d.value),
-    ...bnds_sim1.map((d) => d.value),
-  ]);
-  let maxExtent1 = d3.max(extent1);
-
-  extent1 = [-maxExtent1, maxExtent1];
-  console.log(extent1, "Asdasd");
-
-  let extent2 = d3.extent([
-    ...stks_sim2.map((d) => d.value),
-    ...bnds_sim2.map((d) => d.value),
-  ]);
-  let maxExtent2 = d3.max(extent2);
-  extent2 = [-maxExtent2, maxExtent2];
-
   useEffect(() => {
     async function fetchData() {
-      const result = await axios.get("/api/data");
-      let data = result.data.data;
-      let stk = data.equities_sp.map((s, i) => {
-        return { key: i, value: s };
-      });
-      let bnd = data.treasury_10yr.map((s, i) => {
-        return { key: i, value: s };
-      });
-      let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
-      let maxExtent = d3.max(extent);
-      extent = [-maxExtent, maxExtent];
-      setExtent(extent);
-      setEvalPeriod(result.data.evalPeriod);
+      const stks_sim1 = [];
+      const bnds_sim1 = [];
+      const stks_sim2 = [];
+      const bnds_sim2 = [];
+      for (let i = 0; i < 41; i++) {
+        stks_sim1.push({ key: i, value: getRandomArbitrary(-0.3, 0.3) });
+        bnds_sim1.push({ key: i, value: getRandomArbitrary(-0.08, 0.08) });
+        stks_sim2.push({ key: i, value: getRandomArbitrary(-0.1, 0.1) });
+        bnds_sim2.push({ key: i, value: getRandomArbitrary(-0.05, 0.05) });
+      }
+
+      let extent1 = d3.extent([
+        ...stks_sim1.map((d) => d.value),
+        ...bnds_sim1.map((d) => d.value),
+      ]);
+      let maxExtent1 = d3.max(extent1);
+
+      extent1 = [-maxExtent1, maxExtent1];
+      console.log(extent1, "Asdasd");
+
+      let extent2 = d3.extent([
+        ...stks_sim2.map((d) => d.value),
+        ...bnds_sim2.map((d) => d.value),
+      ]);
+      let maxExtent2 = d3.max(extent2);
+      extent2 = [-0.3, 0.3];
+
+      setExtent(extent1);
+      setEvalPeriod(1);
       setLoadingOpacity(0.8);
       setPageOpacity(0.2);
       // Just to create an illusion of loading so users know data has changed.
@@ -125,14 +120,14 @@ const Instructions5 = (props) => {
         Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
         setAllocation(null);
         setAllocationText("");
-        setStocks(stk);
-        setBonds(bnd);
+        setStocks(stks_sim1);
+        setBonds(bnds_sim1);
         setLoadingOpacity(0);
         setPageOpacity(1);
       }, 1000);
     }
     fetchData();
-  });
+  }, []);
 
   const handleAllocation = (event) => {
     let newVal = +event.target.value;
@@ -169,20 +164,35 @@ const Instructions5 = (props) => {
           justifyContent: "center",
         }}
       >
-        <Grid container className={classes.root} spacing={1} style={{ height: "100%" }}>
-          <Barchart extent={extent1} title="A" data={bnds_sim1} allocation={allocation !== null ? allocation : "Insert a value in "}></Barchart>{" "}
+        <Grid
+          container
+          className={classes.root}
+          spacing={1}
+          style={{ height: "100%" }}
+        >
+          <Barchart
+            extent={extent}
+            title="A"
+            data={stocks}
+            allocation={allocation !== null ? allocation : "Insert a value in "}
+          ></Barchart>{" "}
           {/*extent={extent}*/}
           {/* <Dotplot data={data}></Dotplot> */}
-          <Barchart extent={extent1} title="B" data={stks_sim1} allocation={allocation !== null ? allocation : "Insert a value in "}></Barchart>{" "}
+          <Barchart
+            extent={extent}
+            title="B"
+            data={bonds}
+            allocation={allocation !== null ? allocation : "Insert a value in "}
+          ></Barchart>{" "}
           {/*extent={extent}*/}
         </Grid>
       </div>
       <div
         style={{
-            justifyContent: "center",
-            alignItems: "center",
-            // height: "10vh",
-            textAlign: "center",
+          justifyContent: "center",
+          alignItems: "center",
+          // height: "10vh",
+          textAlign: "center",
         }}
       >
         <p>
@@ -210,27 +220,33 @@ const Instructions5 = (props) => {
             type="number"
             color="secondary"
             value={allocationText}
-              /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+            /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
             onChange={handleAllocation}
           />
           <p> </p>
           <Button
-
-          style={{ backgroundColor: "gray", color: "black" }}
-          variant="contained"
-          onClick = {onChange}>
-            Make Decision</Button>
+            disabled={disabled}
+            style={{
+              backgroundColor: disabled ? "lightgrey" : "gray",
+              color: "black",
+            }}
+            variant="contained"
+            onClick={handleConsent}
+          >
+            Make Decision
+          </Button>
         </form>
       </div>
-      <div
+      {/* <div
         style={{
           textAlign: "center",
           paddingTop: "10px",
           paddingBottom: "10px",
         }}
       >
-        <Button disabled={disabled}
-                style={{
+        <Button
+          disabled={disabled}
+          style={{
             backgroundColor: disabled ? "lightgrey" : "gray",
             color: "black",
           }}
@@ -239,7 +255,8 @@ const Instructions5 = (props) => {
         >
           Continue
         </Button>
-      </div>
+      </div> */}
+      <LoadingCircle opacity={loadingOpacity}></LoadingCircle>
     </Container>
   );
 };
