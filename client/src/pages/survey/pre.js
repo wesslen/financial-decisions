@@ -3,8 +3,10 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import * as Survey from "survey-react";
 import "survey-react/survey.css";
+import * as showdown from "showdown";
 
 Survey.StylesManager.applyTheme("darkblue");
+
 
 const PreSurveyPage = (props) => {
   const history = useHistory();
@@ -17,9 +19,9 @@ const PreSurveyPage = (props) => {
             "name": "Samuelson_Classic1",
             "title":
                 "You are offered the " +
-                "opportunity to accept the following bet: flip a fair coin and if you guess " +
+                "opportunity to accept the following bet: <br/> Flip a fair coin and if you guess " +
                 "correctly you win $200 but if you guess incorrectly you lose $100. " +
-                "Would you accept this bet?",
+                "<br/> Would you accept this bet once?",
             "isRequired": false,
             "colCount": 2,
             "choices": [
@@ -49,7 +51,7 @@ const PreSurveyPage = (props) => {
             "name": "Grable2003_1",
             "title":
                 "In addition to whatever you own, you have been given $1,000. " +
-                "You are now asked to choose between:",
+                "<br/> You are now asked to choose between:",
             "isRequired": false,
             "colCount": 2,
             "choices": [
@@ -61,7 +63,7 @@ const PreSurveyPage = (props) => {
             "type": "radiogroup",
             "name": "Grable2003_2",
             "title":
-                "In addition to whatever you own, you have been given $2,000. You are now " +
+                "In addition to whatever you own, you have been given $2,000. <br/> You are now " +
                 "asked to choose between:",
             "isRequired": false,
             "colCount": 2,
@@ -129,54 +131,79 @@ const PreSurveyPage = (props) => {
       },
       {
         "questions": [
-          {
-            "type": "text",
-            "name": "Guiso_2008",
-            "title":
-                "You are offered the " +
-                "opportunity of acquiring a security permitting you, with the same " +
-                "probability, either to gain $5,000 US dollars or to lose all the " +
-                "capital invested. \n What is the most that you are prepared to pay for " +
-                "this security?",
-            "isRequired": false,
-          },
+          // {
+          //   "type": "text",
+          //   "name": "Guiso_2008",
+          //   "title":
+          //       "You are offered the " +
+          //       "opportunity of acquiring a security permitting you, with the same " +
+          //       "probability, either to gain $5,000 US dollars or to lose all the " +
+          //       "capital invested. \n What is the most that you are prepared to pay for " +
+          //       "this security?",
+          //   "isRequired": false,
+          // },
           {
             "type": "matrix",
             "name": "MankiwZeldes1991",
             "title":
-                "Suppose you are offered to choose between two investment opportunities. " +
-                "Investment 1 you have a 50% chance of $100,000 and a 50% chance of $50,000." +
-                "Under which scenarios would you instead choose an Investment 2 of:",
-            "columns": [
-              {
-                value: 1,
-                text: "Accept Investment 2 / Reject Investment 1"
-              },
-              {
-                value: 2,
-                text: "Reject Investment 2 / Accept Investment 1"
-              }
-            ],
+                "Suppose you are offered to choose between two investment opportunities under seven different scenarios:",
+            "columns": ["Investment 1", "Investment 2"],
             "isRequired": false,
             "colCount": 2,
             "rows": [
               {
+                value: "crra_75k",
+                text: "Scenario 1:", // CRRA of 30
+              }, {
                 value: "crra1",
-                text: "100% certainty of $70,711", // CRRA of 1; see http://karlshell.com/wp-content/uploads/2015/09/WebPage.pdf
+                text: "Scenario 2:", // CRRA of 1; see http://karlshell.com/wp-content/uploads/2015/09/WebPage.pdf
               }, {
                 value: "crra2",
-                text: "100% certainty of $66,667", // CRRA of 2
+                text: "Scenario 3:", // CRRA of 2
               },               {
                 value: "crra5",
-                text: "100% certainty of $58,566", // CRRA of 5
+                text: "Scenario 4:", // CRRA of 5
               },               {
                 value: "crra10",
-                text: "100% certainty of $53,991", // CRRA of 10
+                text: "Scenario 5:", // CRRA of 10
               },               {
                 value: "crra30",
-                text: "100% certainty of $51,209", // CRRA of 30
+                text: "Scenario 6:", // CRRA of 30
+              }, {
+                value: "crra_50k",
+                text: "Scenario 7:", // CRRA of 30
               }
             ],
+            "cells": {
+              "crra_75k": {
+                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment 2": "100% certainty of $75,000" // dummies
+              },
+              "crra1": {
+                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment 2": "100% certainty of $70,711" // CRRA of 1; see http://karlshell.com/wp-content/uploads/2015/09/WebPage.pdf
+              },
+              "crra2": {
+                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment 2": "100% certainty of $66,667" // CRRA of 2
+              },
+              "crra5": {
+                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment 2": "100% certainty of $58,566" // CRRA of 5
+              },
+              "crra10": {
+                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment 2": "100% certainty of $53,991" // CRRA of 10
+              },
+              "crra30": {
+                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment 2": "100% certainty of $51,209" // CRRA of 30
+              },
+              "crra_50k": {
+                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment 2": "100% certainty of $50,000" // dummies
+              },
+            }
           },
 
         ]
@@ -206,6 +233,21 @@ const PreSurveyPage = (props) => {
   //   }, []);
   const model = new Survey.Model(json);
   model.showCompletedPage = false;
+
+  //Create showdown markdown converter
+  var converter = new showdown.Converter();
+  model
+      .onTextMarkdown
+      .add(function (survey, options) {
+          //convert the markdown text to html
+          var str = converter.makeHtml(options.text);
+          //remove root paragraphs <p></p>
+          str = str.substring(3);
+          str = str.substring(0, str.length - 4);
+          //set html
+          options.html = str;
+      });
+
   return (
     <div
       style={{
