@@ -138,7 +138,7 @@ const Barchart = (props) => {
           .on("mousemove", function (d) {
             tip.style("opacity", 1);
             tip
-              .html(formatPercent(d.value.toFixed(2)))
+              .html(formatPercent(d.value.toFixed(3)))
               .style("left", d3.event.pageX + "px")
               .style("top", d3.event.pageY - 28 + "px");
           })
