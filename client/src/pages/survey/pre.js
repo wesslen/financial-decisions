@@ -86,49 +86,49 @@ const PreSurveyPage = (props) => {
           // }
         ]
       },
-      {
-        "questions": [
-          {
-            "type": "matrix",
-            "name": "Guillemette2012",
-            "title":
-                "Suppose you have saved $500,000 for retirement in a diversified portfolio. " +
-                "       \n    " +
-                "By what percentage could the total value of your retirement assets drop before " +
-                "you would begin to think about selling your investments and going to cash?",
-            "columns": [
-              {
-                value: 1,
-                text: "Yes: You would think about selling your investments"
-              },
-              {
-                value: 2,
-                text: "No: You would not think about selling your investments"
-              }
-            ],
-            "isRequired": false,
-            "colCount": 2,
-            "rows": [
-              {
-                value: "drop10",
-                text: "A 10% drop (retirement assets drop $50,000 to a value of $450,000)",
-              }, {
-                value: "drop20",
-                text: "A 20% drop (retirement assets drop $100,000 to a value of $400,000)",
-              },               {
-                value: "drop30",
-                text: "A 30% drop (retirement assets drop $150,000 to a value of $350,000)",
-              },               {
-                value: "drop40",
-                text: "A 40% drop (retirement assets drop $200,000 to a value of $300,000)",
-              },               {
-                value: "drop50",
-                text: "A 50% drop (retirement assets drop $250,000 to a value of $250,000)",
-              }
-            ],
-          },
-        ]
-      },
+      // {
+      //   "questions": [
+      //     {
+      //       "type": "matrix",
+      //       "name": "Guillemette2012",
+      //       "title":
+      //           "Suppose you have saved $500,000 for retirement in a diversified portfolio. " +
+      //           "       \n    " +
+      //           "By what percentage could the total value of your retirement assets drop before " +
+      //           "you would begin to think about selling your investments and going to cash?",
+      //       "columns": [
+      //         {
+      //           value: 1,
+      //           text: "Yes: You would think about selling your investments"
+      //         },
+      //         {
+      //           value: 2,
+      //           text: "No: You would not think about selling your investments"
+      //         }
+      //       ],
+      //       "isRequired": false,
+      //       "colCount": 2,
+      //       "rows": [
+      //         {
+      //           value: "drop10",
+      //           text: "A 10% drop (retirement assets drop $50,000 to a value of $450,000)",
+      //         }, {
+      //           value: "drop20",
+      //           text: "A 20% drop (retirement assets drop $100,000 to a value of $400,000)",
+      //         },               {
+      //           value: "drop30",
+      //           text: "A 30% drop (retirement assets drop $150,000 to a value of $350,000)",
+      //         },               {
+      //           value: "drop40",
+      //           text: "A 40% drop (retirement assets drop $200,000 to a value of $300,000)",
+      //         },               {
+      //           value: "drop50",
+      //           text: "A 50% drop (retirement assets drop $250,000 to a value of $250,000)",
+      //         }
+      //       ],
+      //     },
+      //   ]
+      // },
       {
         "questions": [
           // {
@@ -146,9 +146,9 @@ const PreSurveyPage = (props) => {
             "type": "matrix",
             "name": "MankiwZeldes1991",
             "title":
-                "Suppose you are offered to choose between two investment opportunities under seven different scenarios:",
-            "columns": ["Investment 1", "Investment 2"],
-            "isRequired": false,
+                "Suppose you are offered to choose between two investment opportunities under seven different scenarios.",
+            "columns": ["Investment A",  "Investment B"],
+            // "isRequired": true,
             "colCount": 2,
             "rows": [
               {
@@ -176,32 +176,32 @@ const PreSurveyPage = (props) => {
             ],
             "cells": {
               "crra_75k": {
-                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
-                "Investment 2": "100% certainty of $75,000" // dummies
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $75,000" // dummies
               },
               "crra1": {
-                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
-                "Investment 2": "100% certainty of $70,711" // CRRA of 1; see http://karlshell.com/wp-content/uploads/2015/09/WebPage.pdf
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $70,711" // CRRA of 1; see http://karlshell.com/wp-content/uploads/2015/09/WebPage.pdf
               },
               "crra2": {
-                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
-                "Investment 2": "100% certainty of $66,667" // CRRA of 2
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $66,667" // CRRA of 2
               },
               "crra5": {
-                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
-                "Investment 2": "100% certainty of $58,566" // CRRA of 5
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $58,566" // CRRA of 5
               },
               "crra10": {
-                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
-                "Investment 2": "100% certainty of $53,991" // CRRA of 10
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $53,991" // CRRA of 10
               },
               "crra30": {
-                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
-                "Investment 2": "100% certainty of $51,209" // CRRA of 30
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $51,209" // CRRA of 30
               },
               "crra_50k": {
-                "Investment 1": "50% chance of $100,000 and a 50% chance of $50,000",
-                "Investment 2": "100% certainty of $50,000" // dummies
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $50,000" // dummies
               },
             }
           },

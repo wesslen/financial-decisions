@@ -16,6 +16,8 @@ import Instructions5Page from "./pages/instructions/instructions5";
 import Instructions6Page from "./pages/instructions/instructions6";
 import Instructions7Page from "./pages/instructions/instructions7";
 import Instructions8Page from "./pages/instructions/instructions8";
+import InstructionsTask2 from "./pages/instructions/instructionsTask2";
+import Debrief from "./pages/debrief/debrief";
 import axios from "axios";
 import {
   BrowserRouter as Router,
@@ -114,22 +116,22 @@ class App extends React.Component {
                 component={Instructions8Page}
               ></Route>
               <Route path="/task1">
-                {/* <Task1></Task1> */}
-                <Task2></Task2>
-              </Route>
-              <Route path="/task2">
                 <Task1></Task1>
+              </Route>
+              <Route
+                  path="/instructionsTask2"
+                  component={InstructionsTask2}>
               </Route>
               <Route path="/task2">
                 <Task2
-                  answerCount={this.state.answerCount}
-                  setAnswerCount={this.setAnswerCount}
-                  personIndex={this.state.personIndex}
-                  setPersonIndex={this.setPersonIndex}
+                  // answerCount={this.state.answerCount}
+                  // setAnswerCount={this.setAnswerCount}
+                  // personIndex={this.state.personIndex}
+                  // setPersonIndex={this.setPersonIndex}
                 ></Task2>
               </Route>
               <Route path="/post" component={PostSurveyPage}></Route>
-              <Route path="/debrief"></Route>
+              <Route path="/debrief" component={Debrief}></Route>
             </Switch>
           </Container>
           <BottomNav height="7%"></BottomNav>

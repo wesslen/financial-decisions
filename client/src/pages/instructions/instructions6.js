@@ -17,7 +17,7 @@ import TextField from "@material-ui/core/TextField";
 // import Input from "@material-ui/core/Input";
 // import BinaryChoice from "../../components/choice/binaryChoice";
 // import Histogram from "../../components/visualization/histogram/histogram";
-import Barchart from "../../components/visualization/barchart/barchart";
+import Barchart from "../../components/visualization/barchart/barchart-intro";
 import Dotplot from "../../components/visualization/dotplot/dotplot";
 import * as d3 from "d3";
 import LoadingCircle from "../../components/loading/loading";
