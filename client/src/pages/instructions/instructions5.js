@@ -182,7 +182,7 @@ const Instructions5 = (props) => {
             extent={extent}
             title="B"
             data={bonds}
-            allocation={allocation !== null ? allocation : "Insert a value in "}
+            allocation={allocation !== null ? 100 - allocation : "Insert a value in "}
           ></Barchart>{" "}
           {/*extent={extent}*/}
         </Grid>

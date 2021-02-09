@@ -147,7 +147,7 @@ const Task1Page = (props) => {
         }}
       >
         {" "}
-        <Grid container spacing={1} style={{ height: "40%" }}>
+        <Grid container spacing={1} style={{ height: "60%" }}>
           <Barchart
             // title={evalIndex < 4 ? "A" : "B"}
             title="A"
