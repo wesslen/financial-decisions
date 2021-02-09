@@ -38,7 +38,7 @@ const Task2Page = (props) => {
   const [densityExtent, setDensityExtent] = useState([0, 0.5]);
   const [left, setLeft] = useState("stocks");
   //vizTypes : hops,
-  const [visType, setVisType] = useState("density");
+  const [visType, setVisType] = useState("dotplot");
 
   const divContainer = useRef(null);
 
