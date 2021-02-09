@@ -38,7 +38,7 @@ const Task2Page = (props) => {
   const [densityExtent, setDensityExtent] = useState([0, 0.5]);
   const [left, setLeft] = useState("stocks");
   //vizTypes : hops,
-  const [visType, setVisType] = useState("density");
+  const [visType, setVisType] = useState("table");
 
   const divContainer = useRef(null);
 
@@ -108,7 +108,7 @@ const Task2Page = (props) => {
   useEffect(() => {
     async function fetchData() {
       const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
-      const result = await axios.get("/api/data" + "?numsimulations=50");
+      const result = await axios.get("/api/data" + "?numsimulations=20");
       let data = result.data.data;
       console.log(data);
       let stk = data.equities_sp.map((s, i) => {

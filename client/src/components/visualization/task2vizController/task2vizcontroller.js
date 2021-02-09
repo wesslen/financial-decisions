@@ -5,6 +5,7 @@ import Hops from "../hops/hops";
 import PointPlot from "../pointplot/pointplot";
 import Interval from "../interval/interval";
 import Density from "../density/density";
+import Table from "../table/table";
 
 const VizController = (props) => {
   let vizType = props.vizType;
@@ -72,6 +73,16 @@ const VizController = (props) => {
           allocation={props.allocation}
           data={props.data}
         ></Density>
+      );
+      break;
+    case "table":
+      return (
+        <Table
+          title={props.title}
+          extent={props.extent}
+          allocation={props.allocation}
+          data={props.data}
+        ></Table>
       );
       break;
     default:
