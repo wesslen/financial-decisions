@@ -169,7 +169,7 @@ const InstructionsTask2 = (props) => {
       <h4>Round 2</h4>
       <ul>
         <li>
-          You'll have <b>seven</b> allocation decisions for two funds.
+          You'll have <b>seven</b> allocation decisions for two new funds: C and D.
         </li>
         <li>
           Each decision will show funds' rate of returns framed as different

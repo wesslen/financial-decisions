@@ -11,6 +11,17 @@ const VizController = (props) => {
   let vizType = props.vizType;
 
   switch (vizType) {
+    case "barchart":
+      // code block
+      return (
+        <BarChart
+          title={props.title}
+          extent={props.extent}
+          allocation={props.allocation}
+          data={props.data}
+        ></BarChart>
+      );
+      break;
     case "dotplot":
       // code block
       return (

@@ -140,10 +140,12 @@ const getEvaluationPeriods = () => {
 const getTreatment = () => {
   let treatment = choose([
     "dotplot",
-    "hops1",
-    "hops2",
-    "cdf",
-    "text",
+    "hops",
+    "hopsdist",
+    "point",
+    "interval",
+    "density",
+    "table",
     "barchart",
   ]);
   return treatment;

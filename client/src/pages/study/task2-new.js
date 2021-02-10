@@ -38,7 +38,7 @@ const Task2Page = (props) => {
   const [densityExtent, setDensityExtent] = useState([0, 0.5]);
   const [left, setLeft] = useState("stocks");
   //vizTypes : hops,
-  const [visType, setVisType] = useState("table");
+  const [visType, setVisType] = useState("dotplot");
 
   const divContainer = useRef(null);
 
@@ -108,7 +108,7 @@ const Task2Page = (props) => {
   useEffect(() => {
     async function fetchData() {
       const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
-      const result = await axios.get("/api/data" + "?numsimulations=20");
+      const result = await axios.get("/api/data" + "?numsimulations=33");
       let data = result.data.data;
       console.log(data);
       let stk = data.equities_sp.map((s, i) => {
@@ -198,7 +198,7 @@ const Task2Page = (props) => {
         <VizController
           // title={evalIndex < 4 ? "A" : "B"}
           vizType={visType}
-          title="A"
+          title="C"
           extent={extent}
           densityExtent={densityExtent}
           allocation={allocation !== null ? allocation : "Insert a value in "}
@@ -206,7 +206,7 @@ const Task2Page = (props) => {
         ></VizController>
         <VizController
           vizType={visType}
-          title="B"
+          title="D"
           extent={extent}
           densityExtent={densityExtent}
           allocation={
@@ -229,19 +229,19 @@ const Task2Page = (props) => {
               maximize investment rate of return{" "}
             </span>{" "}
             over a <span style={{ fontWeight: "bold" }}>
-              thirty (30) year
+              thirty (30) years.
             </span>{" "}
-            planning horizon.
+            {/*planning horizon.*/}
           </p>
           <p>
-            <span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}
+            {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
             <span> Rates of returns </span> are averaged and annualized over a{" "}
             <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
             evaluation period.
           </p>
           <p>
             Between 0% and 100%, how much of your investment do you want to
-            allocate to Fund A?
+            allocate to Fund C?
           </p>
           <form noValidate autoComplete="off">
             {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
@@ -253,7 +253,7 @@ const Task2Page = (props) => {
             {/*></Input>*/}
             <TextField
               id="Practice1"
-              label="Fund A allocation %"
+              label="Fund C allocation %"
               type="number"
               color="secondary"
               value={allocationText}
