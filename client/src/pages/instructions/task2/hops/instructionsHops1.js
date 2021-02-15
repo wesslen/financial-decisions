@@ -17,11 +17,8 @@ import TextField from "@material-ui/core/TextField";
 // import Input from "@material-ui/core/Input";
 // import BinaryChoice from "../../components/choice/binaryChoice";
 // import Histogram from "../../components/visualization/histogram/histogram";
-import Barchart from "../../components/visualization/barchart/barchart";
-import Dotplot from "../../components/visualization/dotplot/dotplot";
 import * as d3 from "d3";
-import InstructionController from "../../components/instructions/task2instructionscontroller";
-import VizController from "../../components/visualization/task2vizController/task2vizcontroller";
+
 const useStyles = makeStyles((theme) => ({
   emph: {
     fontWeight: "bold",
@@ -42,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InstructionsTask2 = (props) => {
+const InstructionsHops1 = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -77,14 +74,10 @@ const InstructionsTask2 = (props) => {
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
-
+  
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      {/*<InstructionController*/}
-      {/*    // title={evalIndex < 4 ? "A" : "B"}*/}
-      {/*    vizType={visType}*/}
-      {/*  ></InstructionController>*/}
       <h3>Round 2 Instructions</h3>
       <ul>
         <li>
@@ -140,4 +133,4 @@ const InstructionsTask2 = (props) => {
   );
 };
 
-export default InstructionsTask2;
+export default InstructionsHops1;
