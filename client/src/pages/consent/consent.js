@@ -85,9 +85,9 @@ const Consent = (props) => {
         <li>
           The goal of this study is to understand the effect of <b>different data visualizations </b>
           on <b>investment financial decisions for retirement</b>. You will view data visualizations of <b>investment rates of return</b>. In each of the 14 tasks, you will view data visualizations of
-          the <b>rates of returns</b> for two assets. You will then decide
+          the <b>rates of returns</b> for two funds. You will then decide
           how you would <b>allocate a hypothetical investment</b> for retirement between the two
-           assets as a percentage (0% to 100%).
+           funds as a percentage (0% to 100%).
         </li>
         <li>
           We are asking individuals who are age 18 or older and fluent in
@@ -110,9 +110,9 @@ const Consent = (props) => {
       <p>
         The purpose of this study is to understand how different data visualizations
           may affect financial retirement decisions. You will be provided different
-          simulated investment returns of different investable assets. You will then
+          simulated investment returns of different investable funds. You will then
           be asked to determine how much of investment funds you would allocate
-          between the two assets in order to achieve the highest expected return.
+          between the two funds in order to achieve the highest expected return.
           Please note that not all the details of this study are shared with you before the study.
           After you complete the study, we will explain in more detail information about the study.
       </p>

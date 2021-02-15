@@ -21,6 +21,7 @@ import Barchart from "../../components/visualization/barchart/barchart-intro";
 import Dotplot from "../../components/visualization/dotplot/dotplot";
 import * as d3 from "d3";
 import LoadingCircle from "../../components/loading/loading";
+import seedrandom from "seedrandom";
 
 const useStyles = makeStyles((theme) => ({
   emph: {
@@ -78,8 +79,10 @@ const Instructions5 = (props) => {
   // }
 
   //DEMONSTRATING DATA VISUALIZATION, creating random data
-  function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
+  function getRandomArbitrary(min, max, seed) {
+    var myrng = seedrandom(seed);
+    return myrng() * (max - min) + min;
+    // return Math.random() * (max - min) + min;
   }
 
   useEffect(() => {
@@ -89,10 +92,10 @@ const Instructions5 = (props) => {
       const stks_sim2 = [];
       const bnds_sim2 = [];
       for (let i = 0; i < 41; i++) {
-        stks_sim1.push({ key: i, value: getRandomArbitrary(-0.3, 0.3) });
-        bnds_sim1.push({ key: i, value: getRandomArbitrary(-0.08, 0.08) });
-        stks_sim2.push({ key: i, value: getRandomArbitrary(-0.1, 0.1) });
-        bnds_sim2.push({ key: i, value: getRandomArbitrary(-0.05, 0.05) });
+        stks_sim1.push({ key: i, value: getRandomArbitrary(-0.25, 0.25, i) });
+        bnds_sim1.push({ key: i, value: getRandomArbitrary(-0.08, 0.08, i) });
+        stks_sim2.push({ key: i, value: getRandomArbitrary(-0.1, 0.1, i) });
+        bnds_sim2.push({ key: i, value: getRandomArbitrary(-0.05, 0.05, i) });
       }
 
       let extent1 = d3.extent([
@@ -135,25 +138,23 @@ const Instructions5 = (props) => {
     // console.log(event.target.value);
     // setAllocationText(newVal);
     setAllocationText(newVal);
-    // ryan added: to keep as values between 0 and 100
-    // doesn't work correctly for integer component yet... need to check that
-    // what this doesn't do: prompt the user. need to create a front end warning too for this.
-    if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
+    if (newVal > -1 && newVal < 101) {
       setDisabled(false);
-      setAllocation(newVal);
+      // setAllocation(newVal);
     } else {
       alert(
-        "Please input a number between 0 and 100 with no decimals or percentage."
+        "Please input a valid number"
       );
       setDisabled(true);
     }
+    setDisabled(false);
   };
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <hr />
-      <h3>Let's practice:</h3>
-      <p> Consider two investments: Fund A and Fund B.</p>
+      {/*<h3>Let's practice:</h3>*/}
+      {/*<p> Consider Fund X's historical rates of returns.</p>*/}
       <div
         style={{
           width: "90%",
@@ -172,18 +173,18 @@ const Instructions5 = (props) => {
         >
           <Barchart
             extent={extent}
-            title="A"
+            title="X"
             data={stocks}
             allocation={allocation !== null ? allocation : "Insert a value in "}
           ></Barchart>{" "}
           {/*extent={extent}*/}
           {/* <Dotplot data={data}></Dotplot> */}
-          <Barchart
-            extent={extent}
-            title="B"
-            data={bonds}
-            allocation={allocation !== null ? 100 - allocation : "Insert a value in "}
-          ></Barchart>{" "}
+          {/*<Barchart*/}
+          {/*  extent={extent}*/}
+          {/*  title="B"*/}
+          {/*  data={bonds}*/}
+          {/*  allocation={allocation !== null ? 100 - allocation : "Insert a value in "}*/}
+          {/*></Barchart>{" "}*/}
           {/*extent={extent}*/}
         </Grid>
       </div>
@@ -196,17 +197,20 @@ const Instructions5 = (props) => {
         }}
       >
         <p>
-          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
-          <span className={classes.emph}> maximize annual rate of return </span>{" "}
-          over a thirty (30) years.
+          This chart shows the average rates of return for Fund X over thirty years.
+          {/*<span style={{ fontWeight: "bold" }}>Objective</span>:{" "}*/}
+          {/*<span className={classes.emph}> maximize annual rate of return </span>{" "}*/}
+          {/*over a thirty (30) years.*/}
         </p>
         <p>
+          Each bar represents a historical rate of return, ranked from worst (left) to best (right).
           {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-          <span> Rates of returns </span> are averaged and annualized over a{" "}
-          <span style={{ fontWeight: "bold" }}>five (5) year</span> evaluation
-          period.
+          {/*<span> Rates of returns </span> are averaged and annualized over a{" "}*/}
+          {/*<span style={{ fontWeight: "bold" }}>five (5) year</span> evaluation*/}
+          {/*period.*/}
         </p>
-        <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
+        <p>
+          You can hover your mouse to view the value. By hovering your mouse, what is Fund X's best one year return value?</p>
         <form className={classes.root} noValidate autoComplete="off">
           {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
           {/*<Input*/}
@@ -216,10 +220,11 @@ const Instructions5 = (props) => {
           {/*></Input>*/}
           <TextField
             id="Practice1"
-            label="Fund A allocation %"
+            label="Best rate of return"
             type="number"
             color="secondary"
             value={allocationText}
+            style = {{width: 150}}
             /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
             onChange={handleAllocation}
           />

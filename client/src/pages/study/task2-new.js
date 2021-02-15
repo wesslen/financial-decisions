@@ -195,6 +195,27 @@ const Task2Page = (props) => {
             data={left === "stocks" ? bonds : stocks}
           ></VizController>
         </Grid> */}
+        <p>
+            <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
+            <span style={{ textDecorationLine: "underline" }}>
+              {" "}
+              maximize investment rate of return{" "}
+            </span>{" "}
+            over a <span style={{ fontWeight: "bold" }}>
+              thirty (30) years.
+            </span>{" "}
+            {/*planning horizon.*/}
+          </p>
+          <p>
+            {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
+            <span> Rates of returns </span> are averaged and annualized over a{" "}
+            <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
+            evaluation period.
+          </p>
+          <p>
+            Between 0% and 100%, how much of your investment do you want to
+            allocate to Fund C?
+          </p>
         <VizController
           // title={evalIndex < 4 ? "A" : "B"}
           vizType={visType}
@@ -222,27 +243,7 @@ const Task2Page = (props) => {
             textAlign: "center",
           }}
         >
-          <p>
-            <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
-            <span style={{ textDecorationLine: "underline" }}>
-              {" "}
-              maximize investment rate of return{" "}
-            </span>{" "}
-            over a <span style={{ fontWeight: "bold" }}>
-              thirty (30) years.
-            </span>{" "}
-            {/*planning horizon.*/}
-          </p>
-          <p>
-            {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-            <span> Rates of returns </span> are averaged and annualized over a{" "}
-            <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
-            evaluation period.
-          </p>
-          <p>
-            Between 0% and 100%, how much of your investment do you want to
-            allocate to Fund C?
-          </p>
+
           <form noValidate autoComplete="off">
             {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
             {/*<Input*/}
@@ -252,11 +253,22 @@ const Task2Page = (props) => {
             {/*  onChange={handleAllocation}*/}
             {/*></Input>*/}
             <TextField
-              id="Practice1"
+              id="Task1"
               label="Fund C allocation %"
               type="number"
               color="secondary"
               value={allocationText}
+              style = {{width: 150}}
+              /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+              onChange={handleAllocation}
+            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <TextField
+              id="Task2"
+              label="Fund D allocation %"
+              type="number"
+              color="secondary"
+              value={100- allocationText}
+              style = {{width: 150}}
               /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
               onChange={handleAllocation}
             />{" "}

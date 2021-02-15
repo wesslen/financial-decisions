@@ -66,7 +66,7 @@ const Instructions6 = (props) => {
     setTimeout(() => {
       setLoadingOpacity(0);
       setPageOpacity(1);
-      history.push("/instructions7");
+      history.push("/instructions8");
     }, 1000);
   };
 
@@ -91,6 +91,8 @@ const Instructions6 = (props) => {
   // }, []);
   //DEMONSTRATING DATA VISUALIZATION, creating random data
   function getRandomArbitrary(min, max) {
+    // var myrng = new Math.seedrandom('hello.');
+    // return myrng * (max - min) + min;
     return Math.random() * (max - min) + min;
   }
 
@@ -190,20 +192,19 @@ const Instructions6 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Another scenario:</h3>
-      <p>
-        {" "}
-        Consider the same funds (Fund A and B) with possible annual rate of
-        returns over a
-        <span className={classes.emph}>
-          {" "}
-          twenty-five (25) year evaluation period
-        </span>
-        .{/*<span className={classes.highlight}>*/}
-        {/*  {" "}*/}
-        {/*  Use the interactive chart below for your decision.*/}
-        {/*</span>*/}
-      </p>
+        <p>
+          In this study, you'll be provided two funds (e.g., Fund Y and Z). You to decide how to allocate your retirement investment.
+        </p>
+                <p>
+          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
+          <span className={classes.emph}> maximize expected annual rate of return </span>
+          over a thirty (30) years.
+        </p>
+        <p>
+          {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
+          In this example, rates of returns are now framed in <span style={{ fontWeight: "bold" }}>thirty (30) year</span> returns, averaged and annualized.
+        </p>
+        <p>Between 0% and 100%, how much do you want to allocate to each fund?</p>
       <div
         style={{
           width: "90%",
@@ -222,13 +223,13 @@ const Instructions6 = (props) => {
         >
           <Barchart
             extent={extent}
-            title="A"
+            title="Y"
             data={stocks}
             allocation={allocation !== null ? allocation : "Insert a value in "}
           ></Barchart>
           <Barchart
             extent={extent}
-            title="B"
+            title="Z"
             data={bonds}
             allocation={allocation !== null ? 100 - allocation : "Insert a value in "}
           ></Barchart>
@@ -242,27 +243,28 @@ const Instructions6 = (props) => {
           textAlign: "center",
         }}
       >
-        <p>
-          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
-          <span className={classes.emph}> maximize annual rate of return </span>
-          over a thirty (30) years.
-        </p>
-        <p>
-          {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-          <span> Rates of returns </span> are averaged and annualized over a{" "}
-          <span style={{ fontWeight: "bold" }}>twenty-five (25) year</span>{" "}
-          evaluation period.
-        </p>
-        <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
+
         <form className={classes.root} noValidate autoComplete="off">
           <TextField
             id="Practice2"
-            label="Fund A allocation %"
+            label="Fund Y allocation %"
             type="number"
             color="secondary"
             value={allocationText}
+            style = {{width: 150}}
             /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
             onChange={handleAllocation}
+          />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <TextField
+            id="Practice3"
+            label="Fund Z allocation %"
+            type="number"
+            color="secondary"
+            value={100-  allocationText}
+            style = {{width: 150}}
+            /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+            // onChange={handleAllocation}
           />
           <h4> </h4>
           <Button
