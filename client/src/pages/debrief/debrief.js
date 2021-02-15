@@ -154,7 +154,7 @@ const Debrief = (props) => {
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Thank you!</h3>
       <p>
-        You have completed the study. Your MTurk code is:
+        You have completed the study. Your MTurk code is
       </p>
       <p>
         Your total compensation will be $1.25 (Base) + $[sum of trial incentive column].

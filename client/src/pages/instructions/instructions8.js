@@ -156,41 +156,18 @@ const Instructions8 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>What you will do in this study</h3>
-      <ul>
-        <li>
-          In two different rounds, you will make allocation decisions between
-          two funds.
-        </li>
-        <li>
-          Your goal is to maximize your expected returns over a thirty (30) year
-          period.
-        </li>
-      </ul>
       <h4>Round 1</h4>
       <ul>
         <li>
           You'll have <b>seven</b> allocation decisions for two funds.
         </li>
         <li>
-          Each decision will show funds' rate of returns framed as different
+          Each time you will see funds' rate of returns framed as different
           evaluation periods (e.g., one year period, thirty year period).
         </li>
         <li>
           Your goal is to maximize your expected returns over a thirty (30) year
           period.
-        </li>
-      </ul>
-      <h4>Round 2</h4>
-      <ul>
-        <li>
-          {" "}
-          Repeat Round 1 but with different funds and a different data
-          visualization.
-        </li>
-        <li>
-          {" "}
-          Instructions will be provided before on how to interpret the new data visualization.
         </li>
       </ul>
       <div

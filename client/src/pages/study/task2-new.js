@@ -199,7 +199,7 @@ const Task2Page = (props) => {
             <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
             <span style={{ textDecorationLine: "underline" }}>
               {" "}
-              maximize investment rate of return{" "}
+              maximize expected rate of return{" "}
             </span>{" "}
             over a <span style={{ fontWeight: "bold" }}>
               thirty (30) years.
@@ -214,7 +214,7 @@ const Task2Page = (props) => {
           </p>
           <p>
             Between 0% and 100%, how much of your investment do you want to
-            allocate to Fund C?
+            allocate to each fund?
           </p>
         <VizController
           // title={evalIndex < 4 ? "A" : "B"}
