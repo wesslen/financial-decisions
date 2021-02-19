@@ -48,7 +48,7 @@ const Task1Page = (props) => {
   //          !isNaN(parseInt(value, 10));
   // }
 
-  const handleAllocationleft = (event) => {
+  const handleAllocationLeft = (event) => {
     let newVal = +event.target.value;
     // newVal = parseInt(newVal);
     // console.log(event.target.value);
@@ -276,7 +276,7 @@ const Task1Page = (props) => {
               value={allocationTextLeft}
               style={{ width: 150 }}
               /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
-              onChange={handleAllocationleft}
+              onChange={handleAllocationLeft}
             />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <TextField
