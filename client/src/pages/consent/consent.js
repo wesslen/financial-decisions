@@ -95,7 +95,7 @@ const Consent = (props) => {
           minutes in total.
         </li>
         <li>
-          For completing the study, you will receive <b>$1.25</b>. You are eligible for <b>optional incentives of up to $1.12</b> depending on your
+          For completing the study, you will receive <b>$1.00</b>. You are eligible for <b>optional incentives of up to $3.50</b> depending on your
             decisions. For each task (i.e., allocation decision), a model will simulate hypothetical
             results. Your bonus will be dependent on your relative performance compared to all possible scenarios using
           historical data simulations.
@@ -129,7 +129,7 @@ const Consent = (props) => {
         computer-based task in which you will make decisions about h. After completing the task, you will be
         asked some questions about your experience as well as basic demographic
         questions (age, level of education, self-identified gender). Your total time
-        commitment if you choose to participate will be approximately 10
+        commitment if you choose to participate will be approximately 15
         minutes.
       </p>
 
@@ -155,13 +155,11 @@ const Consent = (props) => {
         Research data collected as part of this study will remain confidential
         to the fullest extent possible and will only be disclosed with your
         permission or as required by law. Identifiable information (Amazon
-        Mechanical Turk IDs) will be stored separately from all other data
-        collected during this study. Records of your responses during the task
-        will be linked to identifiable data (your MTurk ID) only for payment
+        Mechanical Turk IDs) will not be collected or stored during this study.
+        Records of your responses during the task will be linked to a randomized token only for payment
         purposes; your information will be permanently deleted when your payment
-        is processed. Until that point any identifiable information will be
-        stored in protected databases accessible only to the researchers or
-        University administrators, on University-managed infrastructure.
+        is processed. Any additional information from the study (decisions, survey responses, etc.) will be
+        stored in protected databases accessible only to the researchers.
       </p>
 
       <h2>How will my information be used after the study is over?</h2>
@@ -174,9 +172,9 @@ const Consent = (props) => {
 
       <h2>Will I receive an incentive for taking part in this study?</h2>
       <p>
-        You will receive a minimum payment of $1.25 through Amazon Mechanical
+        You will receive a minimum payment of $1.00 through Amazon Mechanical
         Turk upon completion of the study. In addition, you are eligible
-        for additional incentives between $0.14 to $1.12. If you decide to withdraw from the
+        for additional incentives up to $3.50. If you decide to withdraw from the
         study prior to completion you will not be eligible for payment.
       </p>
 
@@ -193,7 +191,7 @@ const Consent = (props) => {
         participant?
       </h2>
       <p>
-        For questions about this research, you may contact Ryan Wesslen
+        For questions about this research (IRB 21-0005), you may contact Ryan Wesslen
         (rwesslen@uncc.edu) and Dr. Wenwen Dou (wdou1@uncc.edu). If you have
         questions about your rights as a research participant, or wish to obtain
         information, ask questions, or discuss any concerns about this study

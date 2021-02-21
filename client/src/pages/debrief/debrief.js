@@ -187,6 +187,13 @@ const Debrief = (props) => {
 this study.
       </p>
       <p>
+        For this study, the funds you observed were traditional asset benchmarks used commonly in retirement investment decisions.
+        Since this study's objective is to study the effect of data visualizations on your investment decisions, the visualization that
+        was provided to you was assigned randomly from different data visualizations than what other participants viewed. We did this so we
+        could better measure the effect of the data visualization on individual decisions, holding all other factors constant.
+
+      </p>
+      <p>
         Your total compensation will be $1.00 (Base) + $[sum of trial incentive column].
       </p>
       <p>
@@ -217,13 +224,7 @@ this study.
         </Table>
       </TableContainer>
       </p>
-      <p>
-        For this study, the funds you observed were traditional asset benchmarks used commonly in retirement investment decisions.
-        Since this study's objective is to study the effect of data visualizations on your investment decisions, the visualization that
-        was provided to you was assigned randomly from different data visualizations than what other participants viewed. We did this so we
-        could better measure the effect of the data visualization on individual decisions, holding all other factors constant.
 
-      </p>
 
 
       <div
