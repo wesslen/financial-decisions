@@ -26,6 +26,32 @@ router.post("/preq", (req, res) => {
   );
 });
 
+router.post("/mid1", (req, res) => {
+  // console.log(req.body);
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { mid1: req.body },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      else res.json(req.body);
+    }
+  );
+});
+
+router.post("/mid2", (req, res) => {
+  // console.log(req.body);
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { mid2: req.body },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      else res.json(req.body);
+    }
+  );
+});
+
 router.get("/debrief", (req, res) => {
   if (req.session.completed) {
     res.status(200).json({ token: req.session.usertoken });

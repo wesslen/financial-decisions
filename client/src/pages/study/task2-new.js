@@ -200,7 +200,7 @@ const Task2Page = (props) => {
     if (evalIndex < 7) {
       fetchData();
     } else {
-      history.push("/post");
+      history.push("/mid2");
     }
   }, [evalIndex]);
 

@@ -150,18 +150,48 @@ const Debrief = (props) => {
     ),
   ];
 
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+
+// https://reactjs.org/docs/faq-ajax.html
+//   useEffect(() => {
+//     async function fetchData() {
+//       const responses = axios.get("/api/response");
+//       let res = responses.data.responses;
+//       fetch("http://rw-simulation.herokuapp.com/get_returns?stock=")
+//           .then(res => res.json())
+//           .then(
+//               (result) => {
+//                 setIsLoaded(true);
+//                 setItems(result);
+//               },
+//               // Note: it's important to handle errors here
+//               // instead of a catch() block so that we don't swallow
+//               // exceptions from actual bugs in components.
+//               (error) => {
+//                 setIsLoaded(true);
+//                 setError(error);
+//               }
+//           )
+//       }
+//
+//       fetchData();
+//   }, [])
+
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Thank you!</h3>
       <p>
-        You have completed the study. Your MTurk code is
+        You have completed the study. Your MTurk code is [insert code]. Please enter this in the text box on Amazon MTurk as a proof of your completion of
+this study.
       </p>
       <p>
-        Your total compensation will be $1.25 (Base) + $[sum of trial incentive column].
+        Your total compensation will be $1.00 (Base) + $[sum of trial incentive column].
       </p>
       <p>
       <TableContainer>
-        <Table className={classes.table} aria-label="simple table">
+        <Table className={classes.table} aria-label="simple table" style={{width: 400}}>
           <TableHead>
             <TableRow>
               <TableCell>Trial</TableCell>

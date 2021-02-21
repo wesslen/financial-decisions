@@ -174,7 +174,7 @@ const Task1Page = (props) => {
     if (evalIndex < 7) {
       fetchData();
     } else {
-      history.push("/InstructionsTask2");
+      history.push("/mid1");
     }
   }, [evalIndex]);
 

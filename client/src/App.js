@@ -6,6 +6,8 @@ import Task1 from "./pages/study/task1-new";
 import Task2 from "./pages/study/task2-new";
 import PreSurveyPage from "./pages/survey/pre";
 import PostSurveyPage from "./pages/survey/post";
+import MidSurvey1Page from "./pages/survey/mid1";
+import MidSurvey2Page from "./pages/survey/mid2";
 import ConsentPage from "./pages/consent/consent";
 // import InstructionsMainPage from "./pages/instructions/instructionMain";
 import InstructionsCaptcha from "./pages/instructions/instructionsCaptcha";
@@ -123,6 +125,9 @@ class App extends React.Component {
               <Route path="/task1">
                 <Task1></Task1>
               </Route>
+              <Route path="/mid1" component={MidSurvey1Page}>
+
+              </Route>
               <Route
                   path="/instructionsTask2"
                   component={InstructionsTask2}>
@@ -134,6 +139,9 @@ class App extends React.Component {
                   // personIndex={this.state.personIndex}
                   // setPersonIndex={this.setPersonIndex}
                 ></Task2>
+              </Route>
+                              <Route path="/mid2" component={MidSurvey2Page}>
+
               </Route>
               <Route path="/post" component={PostSurveyPage}></Route>
               <Route path="/debrief" component={Debrief}></Route>

@@ -17,6 +17,8 @@ const responseSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  mid1: Schema.Types.Mixed,
+  mid2: Schema.Types.Mixed,
   prequestionnaire: Schema.Types.Mixed,
   postquestionnaire: Schema.Types.Mixed,
 });
