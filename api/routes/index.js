@@ -125,7 +125,11 @@ router.get("/data", (req, res) => {
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
   let returns = gr.getReturns(evalPeriod, numSimulations);
   returns.then((result) => {
-    res.json({ data: result, evalPeriod: evalPeriod });
+    res.json({
+      data: result,
+      evalPeriod: evalPeriod,
+      treatment: req.session.treatment,
+    });
   });
 });
 
@@ -136,7 +140,7 @@ router.get("/consent", (req, res) => {
     req.session.evalPeriods = getEvaluationPeriods();
     req.session.evalPeriodIndex = 0;
     req.session.treatment = getTreatment();
-
+    console.log(req.session.treatment);
     let newResponse = new Response({
       usertoken: usertoken,
       evalPeriods: req.session.evalPeriods,

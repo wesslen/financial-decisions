@@ -39,6 +39,7 @@ const Task2Page = (props) => {
   const [extent, setExtent] = useState(null);
   const [densityExtent, setDensityExtent] = useState([0, 0.5]);
   const [left, setLeft] = useState("stocks");
+  const [alert, setAlert] = useState(false);
   //vizTypes : hops,
   const [visType, setVisType] = useState("dotplot");
 
@@ -51,7 +52,8 @@ const Task2Page = (props) => {
   // }
 
   const handleAllocationLeft = (event) => {
-    let newVal = +event.target.value;
+    let newVal = parseInt(event.target.value, 10);
+
     // newVal = parseInt(newVal);
     // console.log(event.target.value);
     // setAllocationText(newVal);
@@ -59,35 +61,30 @@ const Task2Page = (props) => {
     if (newVal !== null) {
       setAllocationTextRight(100 - newVal);
     }
-    if (!newVal) {
+
+    // ryan added: to keep as values between 0 and 100
+    // doesn't work correctly for integer component yet... need to check that
+    // what this doesn't do: prompt the user. need to create a front end warning too for this.
+    if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
+      setDisabled(false);
+      setAlert(false);
+      setAllocationLeft(newVal);
+      setAllocationTextLeft(newVal);
+      setAllocationRight(100 - newVal);
+      setAllocationTextRight(100 - newVal);
+    } else {
+      setAlert(true);
       setAllocationLeft(null);
       setAllocationTextLeft("");
       setAllocationRight(null);
       setAllocationTextRight("");
       setDisabled(true);
     }
-    // ryan added: to keep as values between 0 and 100
-    // doesn't work correctly for integer component yet... need to check that
-    // what this doesn't do: prompt the user. need to create a front end warning too for this.
-    else if (
-      newVal > -1 &&
-      newVal < 101 &&
-      Number.isInteger(newVal) &&
-      newVal
-    ) {
-      setDisabled(false);
-      setAllocationLeft(newVal);
-      setAllocationRight(100 - newVal);
-    } else {
-      alert(
-        "Please input a number between 0 and 100 with no decimals or percentage."
-      );
-      setDisabled(true);
-    }
   };
 
   const handleAllocationRight = (event) => {
-    let newVal = +event.target.value;
+    let newVal = parseInt(event.target.value, 10);
+
     // newVal = parseInt(newVal);
     // console.log(event.target.value);
     // setAllocationText(newVal);
@@ -95,29 +92,23 @@ const Task2Page = (props) => {
     if (newVal !== null) {
       setAllocationTextLeft(100 - newVal);
     }
-    if (newVal === 0) {
-      setAllocationLeft(0);
-      setAllocationTextLeft("");
-      setAllocationRight(0);
-      setAllocationTextRight("");
-      setDisabled(true);
-    }
+
     // ryan added: to keep as values between 0 and 100
     // doesn't work correctly for integer component yet... need to check that
     // what this doesn't do: prompt the user. need to create a front end warning too for this.
-    else if (
-      newVal > -1 &&
-      newVal < 101 &&
-      Number.isInteger(newVal) &&
-      newVal
-    ) {
+    if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
       setDisabled(false);
-      setAllocationRight(newVal);
+      setAlert(false);
       setAllocationLeft(100 - newVal);
+      setAllocationTextLeft(100 - newVal);
+      setAllocationRight(newVal);
+      setAllocationTextRight(newVal);
     } else {
-      alert(
-        "Please input a number between 0 and 100 with no decimals or percentage."
-      );
+      setAlert(true);
+      setAllocationLeft(null);
+      setAllocationTextLeft("");
+      setAllocationRight(null);
+      setAllocationTextRight("");
       setDisabled(true);
     }
   };
@@ -165,8 +156,9 @@ const Task2Page = (props) => {
       //for dev, comment this for prod.
       const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result = await axios.get("/api/data" + "?numsimulations=33");
+      console.log(result.data.treatment);
+      setVisType(result.data.treatment);
       let data = result.data.data;
-      console.log(data);
       let stk = data.equities_sp.map((s, i) => {
         return { key: i, value: s };
       });
@@ -177,7 +169,6 @@ const Task2Page = (props) => {
       let maxExtent = d3.max(extent);
       extent = [-maxExtent, maxExtent];
       let densityExtent = getDensityExtent(stk, bnd, extent);
-      console.log(densityExtent);
       setDensityExtent(densityExtent);
       setExtent(extent);
       setEvalPeriod(result.data.evalPeriod);
@@ -265,7 +256,6 @@ const Task2Page = (props) => {
           </span>{" "}
           {/*planning horizon.*/}
         </p>
-
         <VizController
           // title={evalIndex < 4 ? "A" : "B"}
           vizType={visType}
@@ -287,7 +277,6 @@ const Task2Page = (props) => {
           }
           data={left === "stocks" ? bonds : stocks}
         ></VizController>
-
         <div
           style={{
             justifyContent: "center",
@@ -296,16 +285,18 @@ const Task2Page = (props) => {
             textAlign: "center",
           }}
         >
-                          <p>
-          {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-          <span> Rates of returns </span> are averaged and annualized over a{" "}
-          <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
-          evaluation period.
-        </p>
-        <p>
-          Between 0% and 100%, how much of your investment do you want to
-          allocate to each fund?
-        </p>
+          <p>
+            {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
+            <span> Rates of returns </span> are averaged and annualized over a{" "}
+            <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
+            evaluation period.
+          </p>
+          <p>
+            <span style={{ color: alert ? "red" : "black" }}>
+              Between 0% and 100%
+            </span>
+            , how much of your investment do you want to allocate to each fund?
+          </p>
 
           <form noValidate autoComplete="off">
             {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
@@ -322,6 +313,13 @@ const Task2Page = (props) => {
               color="secondary"
               value={allocationTextLeft}
               style={{ width: 150 }}
+              InputProps={{
+                inputProps: {
+                  max: 100,
+                  min: 0,
+                },
+              }}
+              // InputProps={{ inputProps: { min: 0, max: 10 } }}
               /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
               onChange={handleAllocationLeft}
             />

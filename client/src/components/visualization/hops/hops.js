@@ -98,7 +98,6 @@ const Hops = (props) => {
           .attr("stroke-width", 6);
 
         setInterval(function () {
-          console.log(band.size());
           var index = Math.floor(Math.random() * band.size());
           if (band.size() !== 0) {
             let d = d3.select(band.nodes()[index]).data();
