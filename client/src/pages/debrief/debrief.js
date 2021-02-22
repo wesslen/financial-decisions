@@ -45,6 +45,15 @@ const Debrief = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    axios.get("api/debrief").then((res) => {
+      setToken(res.data.token);
+      console.log(res);
+    });
+  }, []);
+
   function createData(trial, user_allocation, simulated_returns, simulated_percentile, incentive) {
     return { trial, user_allocation, simulated_returns, simulated_percentile, incentive };
   }
@@ -150,18 +159,74 @@ const Debrief = (props) => {
     ),
   ];
 
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+
+// https://reactjs.org/docs/faq-ajax.html
+//   useEffect(() => {
+//     async function fetchData() {
+//       const responses = axios.get("/api/response");
+//       let res = responses.data.responses;
+//       fetch("http://rw-simulation.herokuapp.com/get_returns?stock=")
+//           .then(res => res.json())
+//           .then(
+//               (result) => {
+//                 setIsLoaded(true);
+//                 setItems(result);
+//               },
+//               // Note: it's important to handle errors here
+//               // instead of a catch() block so that we don't swallow
+//               // exceptions from actual bugs in components.
+//               (error) => {
+//                 setIsLoaded(true);
+//                 setError(error);
+//               }
+//           )
+//       }
+//
+//       fetchData();
+//   }, [])
+
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Thank you!</h3>
+      <div style={{ textAlign: "center" }}>
+        <img
+          src={process.env.PUBLIC_URL + "/university.png"}
+          height="120px"
+        ></img>
+      </div>
+      <h1>Debriefing</h1>
       <p>
-        You have completed the study. Your MTurk code is
+        <b>Principal investigator:</b> Ryan Wesslen, College of Computing and
+        Informatics
       </p>
       <p>
-        Your total compensation will be $1.25 (Base) + $[sum of trial incentive column].
+        <b>Faculty Adviser:</b> Dr. Wenwen Dou, College of Computing and
+        Informatics
+      </p>
+      <p>
+        <b>Co-PIs:</b> Dr. Doug Markant (Department of Psychological Science),
+        Alireza Karduni (College of Computing and Informatics)
+      </p>
+      <p>
+         Thank you for your participation! For this study, the funds you observed were traditional asset benchmarks used commonly in retirement investment decisions.
+        Since this study's objective is to study the effect of data visualizations on your investment decisions, the visualization that
+        was provided to you was assigned randomly from different data visualizations than what other participants viewed. We did this so we
+        could better measure the effect of the data visualization on individual decisions, holding all other factors constant.
+
+      </p>
+      <p>
+Your MTurk code is <h3>{token}</h3>. Please enter this in the text box on Amazon MTurk as a proof of your completion of
+this study.
+
+      </p>
+      <p>
+        Your total compensation will be $1.00 (Base) + $[sum of trial incentive column].
       </p>
       <p>
       <TableContainer>
-        <Table className={classes.table} aria-label="simple table">
+        <Table className={classes.table} aria-label="simple table" style={{width: 400}}>
           <TableHead>
             <TableRow>
               <TableCell>Trial</TableCell>
@@ -187,12 +252,21 @@ const Debrief = (props) => {
         </Table>
       </TableContainer>
       </p>
+      {/*      <p>*/}
+      {/*  If your instructor has offered extra credits for this study, please*/}
+      {/*  email them your unique token. We will confirm your participation by*/}
+      {/*  cross-checking your token within our secure database if inquired by the*/}
+      {/*  instructor. If you are participating in this study through SONA, you*/}
+      {/*  will receive 0.5 credits for your participation. Please click on the*/}
+      {/*  following link to be redirected back to SONA.*/}
+      {/*</p>*/}
       <p>
-        For this study, the funds you observed were traditional asset benchmarks used commonly in retirement investment decisions.
-        Since this study's objective is to study the effect of data visualizations on your investment decisions, the visualization that
-        was provided to you was assigned randomly from different data visualizations than what other participants viewed. We did this so we
-        could better measure the effect of the data visualization on individual decisions, holding all other factors constant.
-
+        For questions about this research (#21-005), you may contact Ryan Wesslen
+        (rwesslen@uncc.edu) and Dr. Wenwen Dou (Wdou1@uncc.edu). If you have
+        questions about your rights as a research participant, or wish to obtain
+        information, ask questions, or discuss any concerns about this study
+        with someone other than the researcher(s), please contact the Office of
+        Research Protections and Integrity at 704-687-1871 or uncc-irb@uncc.edu.
       </p>
 
 

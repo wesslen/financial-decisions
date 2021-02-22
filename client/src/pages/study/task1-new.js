@@ -174,7 +174,7 @@ const Task1Page = (props) => {
     if (evalIndex < 7) {
       fetchData();
     } else {
-      history.push("/InstructionsTask2");
+      history.push("/mid1");
     }
   }, [evalIndex]);
 
@@ -223,16 +223,7 @@ const Task1Page = (props) => {
           </span>{" "}
           {/*planning horizon.*/}
         </p>
-        <p>
-          {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-          <span> Rates of returns </span> are averaged and annualized over a{" "}
-          <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
-          evaluation period.
-        </p>
-        <p>
-          Between 0% and 100%, how much of your investment do you want to
-          allocate to each fund?
-        </p>{" "}
+
         <Grid container spacing={1} style={{ height: "60%" }}>
           <Barchart
             // title={evalIndex < 4 ? "A" : "B"}
@@ -252,6 +243,7 @@ const Task1Page = (props) => {
             data={left === "stocks" ? bonds : stocks}
           ></Barchart>
         </Grid>
+
         <div
           style={{
             justifyContent: "center",
@@ -260,6 +252,16 @@ const Task1Page = (props) => {
             textAlign: "center",
           }}
         >
+                    <p>
+          {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
+          <span> Rates of returns </span> are averaged and annualized over a{" "}
+          <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
+          evaluation period.
+        </p>
+        <p>
+          Between 0% and 100%, how much of your investment do you want to
+          allocate to each fund?
+        </p>{" "}
           <form noValidate autoComplete="off">
             {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
             {/*<Input*/}
