@@ -54,30 +54,16 @@ const InstructionsTask2 = (props) => {
     history.push("/task2");
   };
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const result = await axios.get("/api/data");
-  //     let data = result.data.data;
-  //     setEvalPeriod(result.data.evalPeriod);
-  //     let stk = data.equities_sp.map((s, i) => {
-  //       return { key: i, value: s };
-  //     });
-  //     let bnd = data.treasury_10yr.map((s, i) => {
-  //       return { key: i, value: s };
-  //     });
-  //     let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
-  //     console.log(extent, "this is the extent of both datasets");
-  //     setExtent(extent);
-  //     setStocks(stk);
-  //     setBonds(bnd);
-  //   }
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios.get("/api/changeround");
+    }
+    fetchData();
+  }, []);
   //DEMONSTRATING DATA VISUALIZATION, creating random data
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
-
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
@@ -87,9 +73,7 @@ const InstructionsTask2 = (props) => {
       {/*  ></InstructionController>*/}
       <h3>Round 2 Instructions</h3>
       <ul>
-        <li>
-          Info info info.
-        </li>
+        <li>Info info info.</li>
         <li>
           Your goal is to maximize your expected returns over a thirty (30) year
           period.
@@ -98,7 +82,8 @@ const InstructionsTask2 = (props) => {
       <h4>Round 2</h4>
       <ul>
         <li>
-          You'll have <b>seven</b> allocation decisions for two new funds: C and D.
+          You'll have <b>seven</b> allocation decisions for two new funds: C and
+          D.
         </li>
         <li>
           Each decision will show funds' rate of returns framed as different

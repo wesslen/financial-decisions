@@ -236,7 +236,7 @@ const Task2Page = (props) => {
           {/*planning horizon.*/}
         </p>
         {visType == "barchart" ? (
-          <Grid container spacing={1} style={{ height: "50%" }}>
+          <Grid container spacing={1} style={{ height: "60%" }}>
             <VizController
               // title={evalIndex < 4 ? "A" : "B"}
               vizType={visType}

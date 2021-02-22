@@ -62,6 +62,13 @@ router.get("/debrief", (req, res) => {
   }
 });
 
+router.get("/changeround", (req, res) => {
+  console.log(req.session.round);
+  req.session.round = 2;
+  console.log(req.session.round);
+  res.status(200).send("changing to round 2");
+});
+
 router.post("/postq", (req, res) => {
   // console.log(req.body);
   let usertoken = req.session.usertoken;
@@ -104,10 +111,10 @@ router.post("/response", (req, res) => {
   let usertoken = req.session.usertoken;
   let resp = req.body;
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
+  let round = req.session.round;
   resp["evalPeriod"] = evalPeriod;
   let response = {};
-  console.log(resp);
-  response[`responses.${evalPeriod}`] = resp;
+  response[`responses.${round}.${evalPeriod}`] = resp;
   Response.findOneAndUpdate({ usertoken: usertoken }, response, (err, doc) => {
     if (err) req.status(404).send(err);
     else {
@@ -140,7 +147,7 @@ router.get("/consent", (req, res) => {
     req.session.evalPeriods = getEvaluationPeriods();
     req.session.evalPeriodIndex = 0;
     req.session.treatment = getTreatment();
-    console.log(req.session.treatment);
+    req.session.round = 1;
     let newResponse = new Response({
       usertoken: usertoken,
       evalPeriods: req.session.evalPeriods,
