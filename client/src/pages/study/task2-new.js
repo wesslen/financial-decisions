@@ -149,6 +149,7 @@ const Task2Page = (props) => {
       allocationRight: allocationRight,
       left: left,
       time: Date.now(),
+      task: "task2",
     };
 
     axios.post("/api/response", response).then((response) => {

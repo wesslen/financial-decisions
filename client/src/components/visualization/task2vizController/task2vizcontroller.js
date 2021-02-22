@@ -30,6 +30,7 @@ const VizController = (props) => {
           extent={props.extent}
           allocation={props.allocation}
           data={props.data}
+          nBins={50}
         ></Dotplot>
       );
       break;

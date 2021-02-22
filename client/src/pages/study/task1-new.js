@@ -93,7 +93,7 @@ const Task1Page = (props) => {
     if (newVal !== null) {
       setAllocationTextLeft(100 - newVal);
     }
-    if (newVal === 0) {
+    if (!newVal) {
       setAllocationLeft(0);
       setAllocationTextLeft("");
       setAllocationRight(0);
