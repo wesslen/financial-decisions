@@ -224,27 +224,6 @@ const Task2Page = (props) => {
         }}
       >
         {" "}
-        {/* <Grid container spacing={1} style={{ height: "50%" }}>
-          <VizController
-            // title={evalIndex < 4 ? "A" : "B"}
-            vizType={visType}
-            title="A"
-            extent={extent}
-            densityExtent={densityExtent}
-            allocation={allocation !== null ? allocation : "Insert a value in "}
-            data={left === "stocks" ? stocks : bonds}
-          ></VizController>
-          <VizController
-            vizType={visType}
-            title="B"
-            extent={extent}
-            densityExtent={densityExtent}
-            allocation={
-              allocation !== null ? 100 - allocation : "Insert a value in "
-            }
-            data={left === "stocks" ? bonds : stocks}
-          ></VizController>
-        </Grid> */}
         <p>
           <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
           <span style={{ textDecorationLine: "underline" }}>
@@ -256,27 +235,59 @@ const Task2Page = (props) => {
           </span>{" "}
           {/*planning horizon.*/}
         </p>
-        <VizController
-          // title={evalIndex < 4 ? "A" : "B"}
-          vizType={visType}
-          title="C"
-          extent={extent}
-          densityExtent={densityExtent}
-          allocation={
-            allocationLeft !== null ? allocationLeft : "Insert a value in "
-          }
-          data={left === "stocks" ? stocks : bonds}
-        ></VizController>
-        <VizController
-          vizType={visType}
-          title="D"
-          extent={extent}
-          densityExtent={densityExtent}
-          allocation={
-            allocationRight !== null ? allocationRight : "Insert a value in "
-          }
-          data={left === "stocks" ? bonds : stocks}
-        ></VizController>
+        {visType == "barchart" ? (
+          <Grid container spacing={1} style={{ height: "50%" }}>
+            <VizController
+              // title={evalIndex < 4 ? "A" : "B"}
+              vizType={visType}
+              title="C"
+              extent={extent}
+              densityExtent={densityExtent}
+              allocation={
+                allocationLeft !== null ? allocationLeft : "Insert a value in "
+              }
+              data={left === "stocks" ? stocks : bonds}
+            ></VizController>
+            <VizController
+              vizType={visType}
+              title="D"
+              extent={extent}
+              densityExtent={densityExtent}
+              allocation={
+                allocationRight !== null
+                  ? allocationRight
+                  : "Insert a value in "
+              }
+              data={left === "stocks" ? bonds : stocks}
+            ></VizController>
+          </Grid>
+        ) : (
+          <div>
+            <VizController
+              // title={evalIndex < 4 ? "A" : "B"}
+              vizType={visType}
+              title="C"
+              extent={extent}
+              densityExtent={densityExtent}
+              allocation={
+                allocationLeft !== null ? allocationLeft : "Insert a value in "
+              }
+              data={left === "stocks" ? stocks : bonds}
+            ></VizController>
+            <VizController
+              vizType={visType}
+              title="D"
+              extent={extent}
+              densityExtent={densityExtent}
+              allocation={
+                allocationRight !== null
+                  ? allocationRight
+                  : "Insert a value in "
+              }
+              data={left === "stocks" ? bonds : stocks}
+            ></VizController>
+          </div>
+        )}
         <div
           style={{
             justifyContent: "center",
