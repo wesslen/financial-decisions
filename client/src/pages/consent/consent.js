@@ -126,7 +126,7 @@ const Consent = (props) => {
       <h2>What will happen if I take part in this study?</h2>
       <p>
         If you choose to participate in this study, you will complete a
-        computer-based task in which you will make decisions about h. After completing the task, you will be
+        computer-based task in which you will make decisions about hypothetical financial investments for retirement. After completing the task, you will be
         asked some questions about your experience as well as basic demographic
         questions (age, level of education, self-identified gender). Your total time
         commitment if you choose to participate will be approximately 15

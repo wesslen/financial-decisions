@@ -97,8 +97,10 @@ const Dotplot = (props) => {
           );
 
         let quantiles = ecdf(props.data.map((d) => d.value));
+        let formatter = d3.format(".0%");
+        let xScale = d3.scaleLinear().domain(extent).rangeRound([0, w]).tickFormat(formatter).nice();
 
-        let xScale = d3.scaleLinear().domain(extent).rangeRound([0, w]).nice();
+
 
         // let yScale = d3
         //   .scaleLinear()
@@ -107,6 +109,8 @@ const Dotplot = (props) => {
         // const qBinwidth = 1.25 * Math.sqrt(20 / quantiles.length);
         const qVals = quantiles.map((c) => c.x);
         const qBinwidth = (extent[1] - extent[0]) / 200;
+
+
 
         const qfStacks = generateDotplotStacks(qVals, qBinwidth);
         console.log(qBinwidth);
@@ -117,6 +121,8 @@ const Dotplot = (props) => {
           .attr("class", "axis axis_x")
           .attr("transform", `translate(0, ${h - margins.bottom})`)
           .call(d3.axisBottom(xScale));
+
+
 
         const bins = dotplotContainer.selectAll(".gBin").data(qfStacks);
 
@@ -140,6 +146,7 @@ const Dotplot = (props) => {
           .attr("cy", (d) => -d.idx * 2 * d.radius - d.radius)
           .attr("r", (d) => d.radius)
           .attr("fill-opacity", 1);
+
       }
     },
 

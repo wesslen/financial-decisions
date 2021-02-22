@@ -243,7 +243,16 @@ const Task1Page = (props) => {
             data={left === "stocks" ? bonds : stocks}
           ></Barchart>
         </Grid>
-        <p>
+
+        <div
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            height: "10vh",
+            textAlign: "center",
+          }}
+        >
+                    <p>
           {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
           <span> Rates of returns </span> are averaged and annualized over a{" "}
           <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
@@ -253,14 +262,6 @@ const Task1Page = (props) => {
           Between 0% and 100%, how much of your investment do you want to
           allocate to each fund?
         </p>{" "}
-        <div
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            height: "10vh",
-            textAlign: "center",
-          }}
-        >
           <form noValidate autoComplete="off">
             {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
             {/*<Input*/}

@@ -83,12 +83,12 @@ const Instructions4 = (props) => {
             "isRequired": true,
             "colCount": 1,
             "choices": [
-                "Your decisions lead to better simulated results",
+                "Your decisions lead to higher simulated results",
                 "You complete the study as quickly as possible",
                 "You fail to complete the post-questionnaire",
                 "You interact more with the visualizations (e.g., click on it)"
             ],
-            "correctAnswer": "Your decisions lead to better simulated results"
+            "correctAnswer": "Your decisions lead to higher simulated results"
           }
         ]
   };
@@ -119,7 +119,7 @@ const Instructions4 = (props) => {
         }
     }
    else if (options.name == 'learning3') {
-       if(options.value != 'Your decisions lead to better simulated results') {
+       if(options.value != 'Your decisions lead to higher simulated results') {
             options.error = "#3 is not correct. Please give another answer";
         }
     }

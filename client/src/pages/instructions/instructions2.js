@@ -158,10 +158,10 @@ const Instructions2 = (props) => {
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Compensation for Study Completion:</h3>
       <p>
-            If you complete the study, you will receive <b>$1.25</b>.
+            If you complete the study, you will receive <b>$1.00</b>.
       </p>
       <p>
-            You are eligible for <b>optional incentives of up to $1.12</b>{" "}
+            You are eligible for <b>optional incentives of up to $3.50</b>{" "}
             depending on your decisions.
       </p>
       <p>
@@ -169,8 +169,7 @@ const Instructions2 = (props) => {
             hypothetical results.
       </p>
       <p>
-        You will receive up to $0.08 per task for higher simulated rate of
-        returns.
+        You will receive up to $0.25 per task for better performance (i.e., higher/better simulated results).
       </p>
       <div
         style={{
