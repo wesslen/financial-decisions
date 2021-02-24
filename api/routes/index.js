@@ -13,18 +13,7 @@ const gr = new getReturns("task1");
 
 const Response = mongoose.model("response", responseSchema);
 
-router.post("/preq", (req, res) => {
-  // console.log(req.body);
-  let usertoken = req.session.usertoken;
-  Response.findOneAndUpdate(
-    { usertoken: usertoken },
-    { prequestionnaire: req.body },
-    (err, doc) => {
-      if (err) req.status(404).send(err);
-      else res.json(req.body);
-    }
-  );
-});
+
 
 router.post("/mid1", (req, res) => {
   // console.log(req.body);
@@ -67,6 +56,20 @@ router.get("/changeround", (req, res) => {
   req.session.round = 2;
   console.log(req.session.round);
   res.status(200).send("changing to round 2");
+});
+
+router.post("/preq", (req, res) => {
+  // console.log(req.body);
+  let usertoken = req.session.usertoken;
+  req.session.completed = true;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { prequestionnaire: req.body },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      else res.status(200).json(req.body);
+    }
+  );
 });
 
 router.post("/postq", (req, res) => {

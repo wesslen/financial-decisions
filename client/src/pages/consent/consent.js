@@ -91,7 +91,7 @@ const Consent = (props) => {
         </li>
         <li>
           We are asking individuals who are age 18 or older and fluent in
-          English to participate. Participation will take approximately 10
+          English to participate. Participation will take approximately 15
           minutes in total.
         </li>
         <li>
