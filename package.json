@@ -9,6 +9,7 @@
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.5",
     "csvtojson": "^2.0.10",

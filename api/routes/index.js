@@ -5,6 +5,7 @@ const responseSchema = require("../models/response");
 const randomstring = require("randomstring");
 // const getReturns = require('../../public/generateDataset');
 const getReturns = require("../functions/generateDataset");
+const axios = require("axios");
 
 //experiment functions ef.choose(list), ef.getRandomInt; ef.shuffle(list);
 const ef = require("../functions/experimenhtFunctions");
@@ -56,6 +57,35 @@ router.get("/changeround", (req, res) => {
   req.session.evalPeriodIndex = 0;
   console.log(req.session.round);
   res.status(200).send("changing to round 2");
+});
+
+router.get("/getincentives", (req, res) => {
+  let usertoken = req.session.usertoken;
+  Response.findOne({ usertoken: usertoken }, { responses: 1, _id: 0 }).then(
+    (document) => {
+      let responses = document.responses;
+      let stockResponses = [];
+      Object.keys(responses).forEach((roundKey) => {
+        let round = responses[roundKey];
+        Object.keys(round).forEach((respKey) => {
+          let resp = round[respKey];
+          let stockResponse =
+            resp.left === "stocks" ? resp.allocationLeft : resp.allocationRight;
+          // console.log(stockResponse);
+          stockResponses.push(stockResponse);
+        });
+      });
+      let stockResponsesString = JSON.stringify(stockResponses);
+      axios
+        .get(
+          `http://rw-simulation.herokuapp.com/get_returns_array?stock_array=${stockResponsesString}`
+        )
+        .then((response) => {
+          let incentives = response.data;
+          res.json(incentives);
+        });
+    }
+  );
 });
 
 router.post("/preq", (req, res) => {

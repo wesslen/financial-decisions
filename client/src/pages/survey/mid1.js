@@ -7,22 +7,20 @@ import * as showdown from "showdown";
 
 Survey.StylesManager.applyTheme("darkblue");
 
-
 const MidSurvey1Page = (props) => {
   const history = useHistory();
   const json = {
-    "questions": [
-          {
-            "type": "comment",
-            "name": "Mid1",
-            "title":
-                "How did you use the charts to complete the task?" +
-                " Please do your best to describe what sorts of visual properties you looked for and how you used them.",
-            "isRequired": false,
-          }
-    ]
+    questions: [
+      {
+        type: "comment",
+        name: "Mid1",
+        title:
+          "How did you use the charts to complete the task?" +
+          " Please do your best to describe what sorts of visual properties you looked for and how you used them.",
+        isRequired: false,
+      },
+    ],
   };
-
 
   const onComplete = (survey, options) => {
     //Write survey results into database
@@ -48,17 +46,15 @@ const MidSurvey1Page = (props) => {
 
   //Create showdown markdown converter
   var converter = new showdown.Converter();
-  model
-      .onTextMarkdown
-      .add(function (survey, options) {
-          //convert the markdown text to html
-          var str = converter.makeHtml(options.text);
-          //remove root paragraphs <p></p>
-          str = str.substring(3);
-          str = str.substring(0, str.length - 4);
-          //set html
-          options.html = str;
-      });
+  model.onTextMarkdown.add(function (survey, options) {
+    //convert the markdown text to html
+    var str = converter.makeHtml(options.text);
+    //remove root paragraphs <p></p>
+    str = str.substring(3);
+    str = str.substring(0, str.length - 4);
+    //set html
+    options.html = str;
+  });
 
   return (
     <div

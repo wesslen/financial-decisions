@@ -203,7 +203,7 @@ const Task1Page = (props) => {
   useEffect(() => {
     async function fetchData() {
       //for dev, comment this for prod.
-      // const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
+      const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result = await axios.get("/api/data");
       let data = result.data.data;
       let stk = data.equities_sp.map((s, i) => {
@@ -305,7 +305,6 @@ const Task1Page = (props) => {
             }
             data={left === "stocks" ? bonds : stocks}
           ></Barchart>
-
         </Grid>
         <div
           style={{
@@ -315,18 +314,18 @@ const Task1Page = (props) => {
             textAlign: "center",
           }}
         >
-                            <p>
-          {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-          <span> Rates of returns </span> are averaged and annualized over a{" "}
-          <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
-          evaluation period.
-        </p>
-        <p>
-          <span style={{ color: alert ? "red" : "black" }}>
-            Between 0% and 100%
-          </span>
-          , how much of your investment do you want to allocate to each fund?
-        </p>{" "}
+          <p>
+            {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
+            <span> Rates of returns </span> are averaged and annualized over a{" "}
+            <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
+            evaluation period.
+          </p>
+          <p>
+            <span style={{ color: alert ? "red" : "black" }}>
+              Between 0% and 100%
+            </span>
+            , how much of your investment do you want to allocate to each fund?
+          </p>{" "}
           <form noValidate autoComplete="off">
             {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
             {/*<Input*/}
