@@ -17,9 +17,11 @@ import TextField from "@material-ui/core/TextField";
 // import Input from "@material-ui/core/Input";
 // import BinaryChoice from "../../components/choice/binaryChoice";
 // import Histogram from "../../components/visualization/histogram/histogram";
-import Barchart from "../../components/visualization/barchart/barchart";
+import Barchart from "../../components/visualization/barchart/barchart-intro";
 import Dotplot from "../../components/visualization/dotplot/dotplot";
 import * as d3 from "d3";
+import LoadingCircle from "../../components/loading/loading";
+import seedrandom from "seedrandom";
 
 const useStyles = makeStyles((theme) => ({
   emph: {
@@ -59,63 +61,70 @@ const Instructions5 = (props) => {
   const [left, setLeft] = useState("stocks");
 
   const handleConsent = () => {
-    history.push("/instructions6");
+    setLoadingOpacity(0.8);
+    setPageOpacity(0.2);
+    // Just to create an illusion of loading so users know data has changed.
+    setTimeout(() => {
+      setLoadingOpacity(0);
+      setPageOpacity(1);
+      history.push("/instructions6");
+    }, 1000);
   };
 
+<<<<<<< HEAD
   function onChange(value) {
     if (value !== null) {
       setDisabled(false);
     }
     console.log("Captcha value:", value);
   }
+=======
+  // function onChange(value) {
+  //   if (value !== null) {
+  //     setDisabled(false);
+  //   }
+  //   console.log("Captcha value:", value);
+  // }
+>>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
 
   //DEMONSTRATING DATA VISUALIZATION, creating random data
-  function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
+  function getRandomArbitrary(min, max, seed) {
+    var myrng = seedrandom(seed);
+    return myrng() * (max - min) + min;
+    // return Math.random() * (max - min) + min;
   }
-
-  const stks_sim1 = [];
-  const bnds_sim1 = [];
-  const stks_sim2 = [];
-  const bnds_sim2 = [];
-  for (let i = 0; i < 41; i++) {
-    stks_sim1.push({ key: i, value: getRandomArbitrary(-0.3, 0.3) });
-    bnds_sim1.push({ key: i, value: getRandomArbitrary(-0.08, 0.08) });
-    stks_sim2.push({ key: i, value: getRandomArbitrary(-0.1, 0.1) });
-    bnds_sim2.push({ key: i, value: getRandomArbitrary(-0.05, 0.05) });
-  }
-
-  let extent1 = d3.extent([
-    ...stks_sim1.map((d) => d.value),
-    ...bnds_sim1.map((d) => d.value),
-  ]);
-  let maxExtent1 = d3.max(extent1);
-
-  extent1 = [-maxExtent1, maxExtent1];
-  console.log(extent1, "Asdasd");
-
-  let extent2 = d3.extent([
-    ...stks_sim2.map((d) => d.value),
-    ...bnds_sim2.map((d) => d.value),
-  ]);
-  let maxExtent2 = d3.max(extent2);
-  extent2 = [-maxExtent2, maxExtent2];
 
   useEffect(() => {
     async function fetchData() {
-      const result = await axios.get("/api/data");
-      let data = result.data.data;
-      let stk = data.equities_sp.map((s, i) => {
-        return { key: i, value: s };
-      });
-      let bnd = data.treasury_10yr.map((s, i) => {
-        return { key: i, value: s };
-      });
-      let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
-      let maxExtent = d3.max(extent);
-      extent = [-maxExtent, maxExtent];
-      setExtent(extent);
-      setEvalPeriod(result.data.evalPeriod);
+      const stks_sim1 = [];
+      const bnds_sim1 = [];
+      const stks_sim2 = [];
+      const bnds_sim2 = [];
+      for (let i = 0; i < 41; i++) {
+        stks_sim1.push({ key: i, value: getRandomArbitrary(-0.25, 0.25, i) });
+        bnds_sim1.push({ key: i, value: getRandomArbitrary(-0.08, 0.08, i) });
+        stks_sim2.push({ key: i, value: getRandomArbitrary(-0.1, 0.1, i) });
+        bnds_sim2.push({ key: i, value: getRandomArbitrary(-0.05, 0.05, i) });
+      }
+
+      let extent1 = d3.extent([
+        ...stks_sim1.map((d) => d.value),
+        ...bnds_sim1.map((d) => d.value),
+      ]);
+      let maxExtent1 = d3.max(extent1);
+
+      extent1 = [-maxExtent1, maxExtent1];
+      console.log(extent1, "Asdasd");
+
+      let extent2 = d3.extent([
+        ...stks_sim2.map((d) => d.value),
+        ...bnds_sim2.map((d) => d.value),
+      ]);
+      let maxExtent2 = d3.max(extent2);
+      extent2 = [-0.3, 0.3];
+
+      setExtent(extent1);
+      setEvalPeriod(1);
       setLoadingOpacity(0.8);
       setPageOpacity(0.2);
       // Just to create an illusion of loading so users know data has changed.
@@ -123,8 +132,8 @@ const Instructions5 = (props) => {
         Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
         setAllocation(null);
         setAllocationText("");
-        setStocks(stk);
-        setBonds(bnd);
+        setStocks(stks_sim1);
+        setBonds(bnds_sim1);
         setLoadingOpacity(0);
         setPageOpacity(1);
       }, 1000);
@@ -138,25 +147,23 @@ const Instructions5 = (props) => {
     // console.log(event.target.value);
     // setAllocationText(newVal);
     setAllocationText(newVal);
-    // ryan added: to keep as values between 0 and 100
-    // doesn't work correctly for integer component yet... need to check that
-    // what this doesn't do: prompt the user. need to create a front end warning too for this.
-    if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
+    if (newVal > -1 && newVal < 101) {
       setDisabled(false);
-      setAllocation(newVal);
+      // setAllocation(newVal);
     } else {
       alert(
-        "Please input a number between 0 and 100 with no decimals or percentage."
+        "Please input a valid number"
       );
       setDisabled(true);
     }
+    setDisabled(false);
   };
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <hr />
-      <h3>Let's practice:</h3>
-      <p> Consider two investments: Fund A and Fund B.</p>
+      {/*<h3>Let's practice:</h3>*/}
+      {/*<p> Consider Fund X's historical rates of returns.</p>*/}
       <div
         style={{
           width: "90%",
@@ -174,19 +181,34 @@ const Instructions5 = (props) => {
           style={{ height: "100%" }}
         >
           <Barchart
+<<<<<<< HEAD
             extent={extent1}
             title="A"
             data={bnds_sim1}
+=======
+            extent={extent}
+            title="X"
+            data={stocks}
+>>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
             allocation={allocation !== null ? allocation : "Insert a value in "}
           ></Barchart>{" "}
           {/*extent={extent}*/}
           {/* <Dotplot data={data}></Dotplot> */}
+<<<<<<< HEAD
           <Barchart
             extent={extent1}
             title="B"
             data={stks_sim1}
             allocation={allocation !== null ? allocation : "Insert a value in "}
           ></Barchart>{" "}
+=======
+          {/*<Barchart*/}
+          {/*  extent={extent}*/}
+          {/*  title="B"*/}
+          {/*  data={bonds}*/}
+          {/*  allocation={allocation !== null ? 100 - allocation : "Insert a value in "}*/}
+          {/*></Barchart>{" "}*/}
+>>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
           {/*extent={extent}*/}
         </Grid>
       </div>
@@ -199,17 +221,20 @@ const Instructions5 = (props) => {
         }}
       >
         <p>
-          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
-          <span className={classes.emph}> maximize annual rate of return </span>{" "}
-          over a thirty (30) years.
+          This chart shows the average rates of return for Fund X over thirty years.
+          {/*<span style={{ fontWeight: "bold" }}>Objective</span>:{" "}*/}
+          {/*<span className={classes.emph}> maximize annual rate of return </span>{" "}*/}
+          {/*over a thirty (30) years.*/}
         </p>
         <p>
+          Each bar represents a historical rate of return, ranked from worst (left) to best (right).
           {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-          <span> Rates of returns </span> are averaged and annualized over a{" "}
-          <span style={{ fontWeight: "bold" }}>five (5) year</span> evaluation
-          period.
+          {/*<span> Rates of returns </span> are averaged and annualized over a{" "}*/}
+          {/*<span style={{ fontWeight: "bold" }}>five (5) year</span> evaluation*/}
+          {/*period.*/}
         </p>
-        <p>Between 0% and 100%, how much do you want to allocate to Fund A?</p>
+        <p>
+          You can hover your mouse to view the value. By hovering your mouse, what is Fund X's best one year return value?</p>
         <form className={classes.root} noValidate autoComplete="off">
           {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
           {/*<Input*/}
@@ -219,24 +244,38 @@ const Instructions5 = (props) => {
           {/*></Input>*/}
           <TextField
             id="Practice1"
-            label="Fund A allocation %"
+            label="Best rate of return"
             type="number"
             color="secondary"
             value={allocationText}
+<<<<<<< HEAD
+=======
+            style = {{width: 150}}
+>>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
             /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
             onChange={handleAllocation}
           />
           <p> </p>
           <Button
+<<<<<<< HEAD
             style={{ backgroundColor: "gray", color: "black" }}
             variant="contained"
             onClick={onChange}
+=======
+            disabled={disabled}
+            style={{
+              backgroundColor: disabled ? "lightgrey" : "gray",
+              color: "black",
+            }}
+            variant="contained"
+            onClick={handleConsent}
+>>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
           >
             Make Decision
           </Button>
         </form>
       </div>
-      <div
+      {/* <div
         style={{
           textAlign: "center",
           paddingTop: "10px",
@@ -254,7 +293,8 @@ const Instructions5 = (props) => {
         >
           Continue
         </Button>
-      </div>
+      </div> */}
+      <LoadingCircle opacity={loadingOpacity}></LoadingCircle>
     </Container>
   );
 };

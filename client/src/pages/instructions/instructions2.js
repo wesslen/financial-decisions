@@ -161,7 +161,7 @@ const Instructions2 = (props) => {
             If you complete the study, you will receive <b>$1.00</b>.
       </p>
       <p>
-            You are eligible for <b>optional incentives of up to $1.12</b>{" "}
+            You are eligible for <b>optional incentives of up to $3.50</b>{" "}
             depending on your decisions.
       </p>
       <p>
@@ -169,8 +169,7 @@ const Instructions2 = (props) => {
             hypothetical results.
       </p>
       <p>
-        You will receive up to $0.08 per task for higher simulated rate of
-        returns.
+        You will receive up to $0.25 per task for better performance (i.e., higher/better simulated results).
       </p>
       <div
         style={{

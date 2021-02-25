@@ -13,12 +13,27 @@ const gr = new getReturns("task1");
 
 const Response = mongoose.model("response", responseSchema);
 
-router.post("/preq", (req, res) => {
+
+
+router.post("/mid1", (req, res) => {
   // console.log(req.body);
   let usertoken = req.session.usertoken;
   Response.findOneAndUpdate(
     { usertoken: usertoken },
-    { prequestionnaire: req.body },
+    { mid1: req.body },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      else res.json(req.body);
+    }
+  );
+});
+
+router.post("/mid2", (req, res) => {
+  // console.log(req.body);
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { mid2: req.body },
     (err, doc) => {
       if (err) req.status(404).send(err);
       else res.json(req.body);
@@ -31,9 +46,30 @@ router.get("/debrief", (req, res) => {
     res.status(200).json({ token: req.session.usertoken });
   } else {
     res.status(200).send({
-      token: "you have skiped pages. Please complete the study first.",
+      token: "you have skipped pages. Please complete the study first.",
     });
   }
+});
+
+router.get("/changeround", (req, res) => {
+  console.log(req.session.round);
+  req.session.round = 2;
+  console.log(req.session.round);
+  res.status(200).send("changing to round 2");
+});
+
+router.post("/preq", (req, res) => {
+  // console.log(req.body);
+  let usertoken = req.session.usertoken;
+  req.session.completed = true;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { prequestionnaire: req.body },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      else res.status(200).json(req.body);
+    }
+  );
 });
 
 router.post("/postq", (req, res) => {
@@ -78,10 +114,10 @@ router.post("/response", (req, res) => {
   let usertoken = req.session.usertoken;
   let resp = req.body;
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
+  let round = req.session.round;
   resp["evalPeriod"] = evalPeriod;
   let response = {};
-  console.log(resp);
-  response[`responses.${evalPeriod}`] = resp;
+  response[`responses.${round}.${evalPeriod}`] = resp;
   Response.findOneAndUpdate({ usertoken: usertoken }, response, (err, doc) => {
     if (err) req.status(404).send(err);
     else {
@@ -99,7 +135,11 @@ router.get("/data", (req, res) => {
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
   let returns = gr.getReturns(evalPeriod, numSimulations);
   returns.then((result) => {
-    res.json({ data: result, evalPeriod: evalPeriod });
+    res.json({
+      data: result,
+      evalPeriod: evalPeriod,
+      treatment: req.session.treatment,
+    });
   });
 });
 
@@ -110,7 +150,7 @@ router.get("/consent", (req, res) => {
     req.session.evalPeriods = getEvaluationPeriods();
     req.session.evalPeriodIndex = 0;
     req.session.treatment = getTreatment();
-
+    req.session.round = 1;
     let newResponse = new Response({
       usertoken: usertoken,
       evalPeriods: req.session.evalPeriods,
@@ -140,10 +180,12 @@ const getEvaluationPeriods = () => {
 const getTreatment = () => {
   let treatment = choose([
     "dotplot",
-    "hops1",
-    "hops2",
-    "cdf",
-    "text",
+    "hops",
+    "hopsdist",
+    "point",
+    "interval",
+    "density",
+    "table",
     "barchart",
   ]);
   return treatment;

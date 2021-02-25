@@ -4,7 +4,7 @@ import BinaryChoice from "../../components/choice/binaryChoice";
 import DecisionDialog from "../../components/dialog/decisionDialog";
 import AlertDialog from "../../components/dialog/alertDialog";
 import PersonDialog from "../../components/dialog/personDialog";
-import Tweet from "../../components/tweet/tweet";
+import Tweet from "../../../../../../.config/JetBrains/PyCharm2020.2/scratches/tweet/tweet";
 import LoadingCircle from "../../components/loading/loading";
 import Instructions from "../../components/instructions/instructions";
 import { useHistory } from "react-router-dom";

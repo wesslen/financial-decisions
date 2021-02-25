@@ -146,41 +146,41 @@ const Barchart = (props) => {
             tip.style("opacity", 0);
           });
 
-        // let annot = g.append("g");
-        // console.log(props.data);
-        // if (props.data.length > 0) {
-        //   annot
-        //     .datum(props.data[0])
-        //     .append("text")
-        //     .attr("x", (d) => x(d.key) + x.bandwidth() / 4)
-        //     .attr("y", (d) => y(d.value) + 15)
-        //     .style("font-size", 20)
-        //     .attr("text-anchor", "middle")
-        //     .text("↑");
-        //   annot
-        //     .datum(props.data[0])
-        //     .append("text")
-        //     .attr("x", (d) => x(d.key) + x.bandwidth() + 10)
-        //     .attr("y", (d) => y(d.value) + 15)
-        //     .style("font-weight", 20)
-        //     .text("Worst return");
-        //   annot
-        //     .datum(props.data[props.data.length - 1])
-        //     .append("text")
-        //     .attr("x", (d) => x(d.key) - x.bandwidth() / 4)
-        //     .attr("y", (d) => y(d.value) - 5)
-        //     .style("font-size", 20)
-        //     .text("↓");
-        //
-        //   annot
-        //     .datum(props.data[props.data.length - 1])
-        //     .append("text")
-        //     .attr("x", (d) => x(d.key) - 10)
-        //     .attr("y", (d) => y(d.value) - 5)
-        //     .attr("text-anchor", "end")
-        //     .style("font-weight", 20)
-        //     .text("Best return");
-        // }
+        let annot = g.append("g");
+        console.log(props.data);
+        if (props.data.length > 0) {
+          annot
+            .datum(props.data[0])
+            .append("text")
+            .attr("x", (d) => x(d.key) + x.bandwidth() / 4)
+            .attr("y", (d) => y(d.value) + 15)
+            .style("font-size", 20)
+            .attr("text-anchor", "middle")
+            .text("↑");
+          annot
+            .datum(props.data[0])
+            .append("text")
+            .attr("x", (d) => x(d.key) + x.bandwidth() + 10)
+            .attr("y", (d) => y(d.value) + 15)
+            .style("font-weight", 20)
+            .text("Worst return");
+          annot
+            .datum(props.data[props.data.length - 1])
+            .append("text")
+            .attr("x", (d) => x(d.key) - x.bandwidth() / 4)
+            .attr("y", (d) => y(d.value) - 5)
+            .style("font-size", 20)
+            .text("↓");
+
+          annot
+            .datum(props.data[props.data.length - 1])
+            .append("text")
+            .attr("x", (d) => x(d.key) - 10)
+            .attr("y", (d) => y(d.value) - 5)
+            .attr("text-anchor", "end")
+            .style("font-weight", 20)
+            .text("Best return");
+        }
 
         // g.selectAll(".label")
         //   .data(props.data)

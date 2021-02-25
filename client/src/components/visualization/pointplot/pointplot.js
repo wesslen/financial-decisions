@@ -1,13 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
-
+import { jStat } from "jstat";
 /* Component */
-const Hops = (props) => {
+const Point = (props) => {
   const d3Container = useRef(null);
   const width = props.width || "75%";
   const height = props.height || "60%";
-  const hopSpeed = props.hopSpeed | 350;
-  const showDist = props.showDist;
+  const hopSpeed = props.hopSpeed | 500;
+  const showDist = props.showDist || true;
 
   useEffect(
     () => {
@@ -36,12 +36,11 @@ const Hops = (props) => {
         const w = width - margins.left - margins.right;
         const h = height - margins.top - margins.bottom;
         const extent = props.extent || [-1.0, 1.0];
-
         const allocation = props.allocation || 0;
         svg
           .append("text")
           .attr("x", margins.left)
-          .attr("y", margins.top)
+          .attr("y", margins.top + 20)
           .attr("fill", "teal")
           .attr("class", "charttitle")
           .text(`Fund ${props.title}: ${allocation}%`);
@@ -54,17 +53,42 @@ const Hops = (props) => {
 
         let xAxis = svg
           .append("g")
-          .attr(
-            "transform",
-            `translate(${margins.left},${h / 2 + margins.top})`
-          )
+          .attr("transform", `translate(${margins.left},${h + margins.top})`)
           .call(
             d3.axisBottom(xScale)
             //   .ticks(tickLabels.length - 1)
             //   .tickFormat((d, i) => tickLabels[i])
           )
           .attr("pointer-events", "none");
+        let vals = props.data.map((d) => d.value);
+        let mean = jStat.mean(vals);
+        let stdev = jStat.stdev(vals);
+        let ci50 = [mean - 0.67449 * stdev, mean + 0.67449 * stdev];
 
+        let ci95 = [mean - 1.95996 * stdev, mean + 1.95996 * stdev];
+        // console.log(p);
+
+        g.append("line")
+          .attr("x1", xScale(ci95[0]))
+          .attr("x2", xScale(ci95[1]))
+          .attr("y1", h / 2 + margins.top)
+          .attr("y2", h / 2 + margins.top)
+          .attr("stroke", "#76D7C4")
+          .attr("stroke-width", 12);
+
+        g.append("line")
+          .attr("x1", xScale(ci50[0]))
+          .attr("x2", xScale(ci50[1]))
+          .attr("y1", h / 2 + margins.top)
+          .attr("y2", h / 2 + margins.top)
+          .attr("stroke", "#148F77")
+          .attr("stroke-width", 12);
+
+        g.append("circle")
+          .attr("cx", xScale(mean))
+          .attr("cy", h / 2 + margins.top)
+          .attr("fill", "white")
+          .attr("r", 6);
         // let rect = g
         //   .append("rect")
         //   .attr("width", w)
@@ -75,59 +99,60 @@ const Hops = (props) => {
         // for (var i = 0; i < nLines; i++) {
         //   xs.push(0);
         // }
-        let band = g
-          .selectAll(".uncertaintyLines")
-          .data(props.data)
-          .enter()
-          .append("line")
-          .attr("class", "uncertaintyLines")
-          .attr("pointer-events", "none");
+        // let band = g
+        //   .selectAll(".uncertaintyLines")
+        //   .data(props.data)
+        //   .enter()
+        //   .append("line")
+        //   .attr("class", "uncertaintyLines")
+        //   .attr("pointer-events", "none");
 
-        band
-          .attr("class", "uncertaintyLines")
-          .attr("x1", function (d) {
-            return xScale(d.value);
-          })
-          .attr("x2", function (d) {
-            return xScale(d.value);
-          })
-          .attr("y1", h * topMarginPct)
-          .attr("y2", h - h * topMarginPct)
-          .attr("stroke", "orange")
-          .attr("stroke-opacity", 0)
-          .attr("stroke-width", 6);
+        // band
+        //   .attr("class", "uncertaintyLines")
+        //   .attr("x1", function (d) {
+        //     return xScale(d.value);
+        //   })
+        //   .attr("x2", function (d) {
+        //     return xScale(d.value);
+        //   })
+        //   .attr("y1", h * topMarginPct)
+        //   .attr("y2", h - h * topMarginPct)
+        //   .attr("stroke", "orange")
+        //   .attr("stroke-opacity", 0)
+        //   .attr("stroke-width", 6);
 
-        setInterval(function () {
-          var index = Math.floor(Math.random() * band.size());
-          if (band.size() !== 0) {
-            let d = d3.select(band.nodes()[index]).data();
+        // setInterval(function () {
+        //   console.log(band.size());
+        //   var index = Math.floor(Math.random() * band.size());
+        //   if (band.size() !== 0) {
+        //     let d = d3.select(band.nodes()[index]).data();
 
-            band.sort(function (a, b) {
-              // console.log(a);
-              if (a.key === d[0].key) return 1;
-              else return -1;
-            });
-          }
+        //     band.sort(function (a, b) {
+        //       // console.log(a);
+        //       if (a.key === d[0].key) return 1;
+        //       else return -1;
+        //     });
+        //   }
 
-          band
-            .transition()
-            .duration(hopSpeed / 2)
-            .style("z-index", function (d, i) {
-              return i === index ? 999 : 1;
-            })
-            .style("stroke-opacity", function (d, i) {
-              return showDist
-                ? i === index
-                  ? 0.8
-                  : 0.2
-                : i === index
-                ? 0.8
-                : 0;
-            })
-            .style("stroke", function (d, i) {
-              return i === index ? "orange" : "lightgrey";
-            });
-        }, hopSpeed);
+        //   band
+        //     .transition()
+        //     .duration(hopSpeed / 2)
+        //     .style("z-index", function (d, i) {
+        //       return i === index ? 999 : 1;
+        //     })
+        //     .style("stroke-opacity", function (d, i) {
+        //       return showDist
+        //         ? i === index
+        //           ? 0.8
+        //           : 0.2
+        //         : i === index
+        //         ? 0.8
+        //         : 0;
+        //     })
+        //     .style("stroke", function (d, i) {
+        //       return i === index ? "orange" : "lightgrey";
+        //     });
+        // }, hopSpeed);
 
         // let line = g
         //   .append("line")
@@ -211,4 +236,4 @@ const Hops = (props) => {
 };
 
 /* App */
-export default Hops;
+export default Point;

@@ -3,8 +3,10 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import * as Survey from "survey-react";
 import "survey-react/survey.css";
+import * as showdown from "showdown";
 
 Survey.StylesManager.applyTheme("darkblue");
+
 
 const PreSurveyPage = (props) => {
   const history = useHistory();
@@ -17,9 +19,9 @@ const PreSurveyPage = (props) => {
             "name": "Samuelson_Classic1",
             "title":
                 "You are offered the " +
-                "opportunity to accept the following bet: flip a fair coin and if you guess " +
+                "opportunity to accept the following bet: <br/> Flip a fair coin and if you guess " +
                 "correctly you win $200 but if you guess incorrectly you lose $100. " +
-                "Would you accept this bet?",
+                "<br/> Would you accept this bet once?",
             "isRequired": false,
             "colCount": 2,
             "choices": [
@@ -49,7 +51,7 @@ const PreSurveyPage = (props) => {
             "name": "Grable2003_1",
             "title":
                 "In addition to whatever you own, you have been given $1,000. " +
-                "You are now asked to choose between:",
+                "<br/> You are now asked to choose between:",
             "isRequired": false,
             "colCount": 2,
             "choices": [
@@ -61,7 +63,7 @@ const PreSurveyPage = (props) => {
             "type": "radiogroup",
             "name": "Grable2003_2",
             "title":
-                "In addition to whatever you own, you have been given $2,000. You are now " +
+                "In addition to whatever you own, you have been given $2,000. <br/> You are now " +
                 "asked to choose between:",
             "isRequired": false,
             "colCount": 2,
@@ -84,99 +86,124 @@ const PreSurveyPage = (props) => {
           // }
         ]
       },
+      // {
+      //   "questions": [
+      //     {
+      //       "type": "matrix",
+      //       "name": "Guillemette2012",
+      //       "title":
+      //           "Suppose you have saved $500,000 for retirement in a diversified portfolio. " +
+      //           "       \n    " +
+      //           "By what percentage could the total value of your retirement assets drop before " +
+      //           "you would begin to think about selling your investments and going to cash?",
+      //       "columns": [
+      //         {
+      //           value: 1,
+      //           text: "Yes: You would think about selling your investments"
+      //         },
+      //         {
+      //           value: 2,
+      //           text: "No: You would not think about selling your investments"
+      //         }
+      //       ],
+      //       "isRequired": false,
+      //       "colCount": 2,
+      //       "rows": [
+      //         {
+      //           value: "drop10",
+      //           text: "A 10% drop (retirement assets drop $50,000 to a value of $450,000)",
+      //         }, {
+      //           value: "drop20",
+      //           text: "A 20% drop (retirement assets drop $100,000 to a value of $400,000)",
+      //         },               {
+      //           value: "drop30",
+      //           text: "A 30% drop (retirement assets drop $150,000 to a value of $350,000)",
+      //         },               {
+      //           value: "drop40",
+      //           text: "A 40% drop (retirement assets drop $200,000 to a value of $300,000)",
+      //         },               {
+      //           value: "drop50",
+      //           text: "A 50% drop (retirement assets drop $250,000 to a value of $250,000)",
+      //         }
+      //       ],
+      //     },
+      //   ]
+      // },
       {
         "questions": [
-          {
-            "type": "matrix",
-            "name": "Guillemette2012",
-            "title":
-                "Suppose you have saved $500,000 for retirement in a diversified portfolio. " +
-                "       \n    " +
-                "By what percentage could the total value of your retirement assets drop before " +
-                "you would begin to think about selling your investments and going to cash?",
-            "columns": [
-              {
-                value: 1,
-                text: "Yes: You would think about selling your investments"
-              },
-              {
-                value: 2,
-                text: "No: You would not think about selling your investments"
-              }
-            ],
-            "isRequired": false,
-            "colCount": 2,
-            "rows": [
-              {
-                value: "drop10",
-                text: "A 10% drop (retirement assets drop $50,000 to a value of $450,000)",
-              }, {
-                value: "drop20",
-                text: "A 20% drop (retirement assets drop $100,000 to a value of $400,000)",
-              },               {
-                value: "drop30",
-                text: "A 30% drop (retirement assets drop $150,000 to a value of $350,000)",
-              },               {
-                value: "drop40",
-                text: "A 40% drop (retirement assets drop $200,000 to a value of $300,000)",
-              },               {
-                value: "drop50",
-                text: "A 50% drop (retirement assets drop $250,000 to a value of $250,000)",
-              }
-            ],
-          },
-        ]
-      },
-      {
-        "questions": [
-          {
-            "type": "text",
-            "name": "Guiso_2008",
-            "title":
-                "You are offered the " +
-                "opportunity of acquiring a security permitting you, with the same " +
-                "probability, either to gain $5,000 US dollars or to lose all the " +
-                "capital invested. \n What is the most that you are prepared to pay for " +
-                "this security?",
-            "isRequired": false,
-          },
+          // {
+          //   "type": "text",
+          //   "name": "Guiso_2008",
+          //   "title":
+          //       "You are offered the " +
+          //       "opportunity of acquiring a security permitting you, with the same " +
+          //       "probability, either to gain $5,000 US dollars or to lose all the " +
+          //       "capital invested. \n What is the most that you are prepared to pay for " +
+          //       "this security?",
+          //   "isRequired": false,
+          // },
           {
             "type": "matrix",
             "name": "MankiwZeldes1991",
             "title":
-                "Suppose you are offered to choose between two investment opportunities. " +
-                "Investment 1 you have a 50% chance of $100,000 and a 50% chance of $50,000." +
-                "Under which scenarios would you instead choose an Investment 2 of:",
-            "columns": [
-              {
-                value: 1,
-                text: "Accept Investment 2 / Reject Investment 1"
-              },
-              {
-                value: 2,
-                text: "Reject Investment 2 / Accept Investment 1"
-              }
-            ],
-            "isRequired": false,
+                "Suppose you are offered to choose between two investment opportunities under seven different scenarios.",
+            "columns": ["Investment A",  "Investment B"],
+            // "isRequired": true,
             "colCount": 2,
             "rows": [
               {
+                value: "crra_75k",
+                text: "Scenario 1:", // CRRA of 30
+              }, {
                 value: "crra1",
-                text: "100% certainty of $70,711", // CRRA of 1; see http://karlshell.com/wp-content/uploads/2015/09/WebPage.pdf
+                text: "Scenario 2:", // CRRA of 1; see http://karlshell.com/wp-content/uploads/2015/09/WebPage.pdf
               }, {
                 value: "crra2",
-                text: "100% certainty of $66,667", // CRRA of 2
+                text: "Scenario 3:", // CRRA of 2
               },               {
                 value: "crra5",
-                text: "100% certainty of $58,566", // CRRA of 5
+                text: "Scenario 4:", // CRRA of 5
               },               {
                 value: "crra10",
-                text: "100% certainty of $53,991", // CRRA of 10
+                text: "Scenario 5:", // CRRA of 10
               },               {
                 value: "crra30",
-                text: "100% certainty of $51,209", // CRRA of 30
+                text: "Scenario 6:", // CRRA of 30
+              }, {
+                value: "crra_50k",
+                text: "Scenario 7:", // CRRA of 30
               }
             ],
+            "cells": {
+              "crra_75k": {
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $75,000" // dummies
+              },
+              "crra1": {
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $70,711" // CRRA of 1; see http://karlshell.com/wp-content/uploads/2015/09/WebPage.pdf
+              },
+              "crra2": {
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $66,667" // CRRA of 2
+              },
+              "crra5": {
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $58,566" // CRRA of 5
+              },
+              "crra10": {
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $53,991" // CRRA of 10
+              },
+              "crra30": {
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $51,209" // CRRA of 30
+              },
+              "crra_50k": {
+                "Investment A": "50% chance of $100,000 and a 50% chance of $50,000",
+                "Investment B": "100% certainty of $50,000" // dummies
+              },
+            }
           },
 
         ]
@@ -190,7 +217,7 @@ const PreSurveyPage = (props) => {
     console.log("Survey results: " + JSON.stringify(survey.data));
     axios.post("/api/preq", survey.data).then((response) => {
       console.log(response);
-      history.push("/instructions1");
+      history.push("/instructionsCaptcha");
     });
   };
   //   console.log(props.setChoice);
@@ -206,6 +233,21 @@ const PreSurveyPage = (props) => {
   //   }, []);
   const model = new Survey.Model(json);
   model.showCompletedPage = false;
+
+  //Create showdown markdown converter
+  var converter = new showdown.Converter();
+  model
+      .onTextMarkdown
+      .add(function (survey, options) {
+          //convert the markdown text to html
+          var str = converter.makeHtml(options.text);
+          //remove root paragraphs <p></p>
+          str = str.substring(3);
+          str = str.substring(0, str.length - 4);
+          //set html
+          options.html = str;
+      });
+
   return (
     <div
       style={{

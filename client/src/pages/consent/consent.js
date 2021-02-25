@@ -85,17 +85,17 @@ const Consent = (props) => {
         <li>
           The goal of this study is to understand the effect of <b>different data visualizations </b>
           on <b>investment financial decisions for retirement</b>. You will view data visualizations of <b>investment rates of return</b>. In each of the 14 tasks, you will view data visualizations of
-          the <b>rates of returns</b> for two assets. You will then decide
+          the <b>rates of returns</b> for two funds. You will then decide
           how you would <b>allocate a hypothetical investment</b> for retirement between the two
-           assets as a percentage (0% to 100%).
+           funds as a percentage (0% to 100%).
         </li>
         <li>
           We are asking individuals who are age 18 or older and fluent in
-          English to participate. Participation will take approximately 10
+          English to participate. Participation will take approximately 15
           minutes in total.
         </li>
         <li>
-          For completing the study, you will receive <b>$1.00</b>. You are eligible for <b>optional incentives of up to $1.12</b> depending on your
+          For completing the study, you will receive <b>$1.00</b>. You are eligible for <b>optional incentives of up to $3.50</b> depending on your
             decisions. For each task (i.e., allocation decision), a model will simulate hypothetical
             results. Your bonus will be dependent on your relative performance compared to all possible scenarios using
           historical data simulations.
@@ -110,9 +110,9 @@ const Consent = (props) => {
       <p>
         The purpose of this study is to understand how different data visualizations
           may affect financial retirement decisions. You will be provided different
-          simulated investment returns of different investable assets. You will then
+          simulated investment returns of different investable funds. You will then
           be asked to determine how much of investment funds you would allocate
-          between the two assets in order to achieve the highest expected return.
+          between the two funds in order to achieve the highest expected return.
           Please note that not all the details of this study are shared with you before the study.
           After you complete the study, we will explain in more detail information about the study.
       </p>
@@ -126,10 +126,10 @@ const Consent = (props) => {
       <h2>What will happen if I take part in this study?</h2>
       <p>
         If you choose to participate in this study, you will complete a
-        computer-based task in which you will make decisions about h. After completing the task, you will be
+        computer-based task in which you will make decisions about hypothetical financial investments for retirement. After completing the task, you will be
         asked some questions about your experience as well as basic demographic
         questions (age, level of education, self-identified gender). Your total time
-        commitment if you choose to participate will be approximately 10
+        commitment if you choose to participate will be approximately 15
         minutes.
       </p>
 
@@ -155,13 +155,11 @@ const Consent = (props) => {
         Research data collected as part of this study will remain confidential
         to the fullest extent possible and will only be disclosed with your
         permission or as required by law. Identifiable information (Amazon
-        Mechanical Turk IDs) will be stored separately from all other data
-        collected during this study. Records of your responses during the task
-        will be linked to identifiable data (your MTurk ID) only for payment
+        Mechanical Turk IDs) will not be collected or stored during this study.
+        Records of your responses during the task will be linked to a randomized token only for payment
         purposes; your information will be permanently deleted when your payment
-        is processed. Until that point any identifiable information will be
-        stored in protected databases accessible only to the researchers or
-        University administrators, on University-managed infrastructure.
+        is processed. Any additional information from the study (decisions, survey responses, etc.) will be
+        stored in protected databases accessible only to the researchers.
       </p>
 
       <h2>How will my information be used after the study is over?</h2>
@@ -176,7 +174,7 @@ const Consent = (props) => {
       <p>
         You will receive a minimum payment of $1.00 through Amazon Mechanical
         Turk upon completion of the study. In addition, you are eligible
-        for additional incentives between $0.14 to $1.12. If you decide to withdraw from the
+        for additional incentives up to $3.50. If you decide to withdraw from the
         study prior to completion you will not be eligible for payment.
       </p>
 
@@ -193,7 +191,7 @@ const Consent = (props) => {
         participant?
       </h2>
       <p>
-        For questions about this research, you may contact Ryan Wesslen
+        For questions about this research (IRB 21-0005), you may contact Ryan Wesslen
         (rwesslen@uncc.edu) and Dr. Wenwen Dou (wdou1@uncc.edu). If you have
         questions about your rights as a research participant, or wish to obtain
         information, ask questions, or discuss any concerns about this study
