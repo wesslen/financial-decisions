@@ -13,8 +13,6 @@ const gr = new getReturns("task1");
 
 const Response = mongoose.model("response", responseSchema);
 
-
-
 router.post("/mid1", (req, res) => {
   // console.log(req.body);
   let usertoken = req.session.usertoken;
@@ -54,6 +52,8 @@ router.get("/debrief", (req, res) => {
 router.get("/changeround", (req, res) => {
   console.log(req.session.round);
   req.session.round = 2;
+  // req.session.evalPeriods = getEvaluationPeriods();
+  req.session.evalPeriodIndex = 0;
   console.log(req.session.round);
   res.status(200).send("changing to round 2");
 });

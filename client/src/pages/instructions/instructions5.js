@@ -71,21 +71,12 @@ const Instructions5 = (props) => {
     }, 1000);
   };
 
-<<<<<<< HEAD
-  function onChange(value) {
-    if (value !== null) {
-      setDisabled(false);
-    }
-    console.log("Captcha value:", value);
-  }
-=======
   // function onChange(value) {
   //   if (value !== null) {
   //     setDisabled(false);
   //   }
   //   console.log("Captcha value:", value);
   // }
->>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
 
   //DEMONSTRATING DATA VISUALIZATION, creating random data
   function getRandomArbitrary(min, max, seed) {
