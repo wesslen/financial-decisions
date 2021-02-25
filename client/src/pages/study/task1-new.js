@@ -203,7 +203,7 @@ const Task1Page = (props) => {
   useEffect(() => {
     async function fetchData() {
       //for dev, comment this for prod.
-      const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
+      // const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result = await axios.get("/api/data");
       let data = result.data.data;
       let stk = data.equities_sp.map((s, i) => {
