@@ -142,9 +142,7 @@ const Instructions5 = (props) => {
       setDisabled(false);
       // setAllocation(newVal);
     } else {
-      alert(
-        "Please input a valid number"
-      );
+      alert("Please input a valid number");
       setDisabled(true);
     }
     setDisabled(false);
@@ -172,34 +170,19 @@ const Instructions5 = (props) => {
           style={{ height: "100%" }}
         >
           <Barchart
-<<<<<<< HEAD
-            extent={extent1}
-            title="A"
-            data={bnds_sim1}
-=======
             extent={extent}
             title="X"
             data={stocks}
->>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
             allocation={allocation !== null ? allocation : "Insert a value in "}
           ></Barchart>{" "}
           {/*extent={extent}*/}
           {/* <Dotplot data={data}></Dotplot> */}
-<<<<<<< HEAD
-          <Barchart
-            extent={extent1}
-            title="B"
-            data={stks_sim1}
-            allocation={allocation !== null ? allocation : "Insert a value in "}
-          ></Barchart>{" "}
-=======
           {/*<Barchart*/}
           {/*  extent={extent}*/}
           {/*  title="B"*/}
           {/*  data={bonds}*/}
           {/*  allocation={allocation !== null ? 100 - allocation : "Insert a value in "}*/}
           {/*></Barchart>{" "}*/}
->>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
           {/*extent={extent}*/}
         </Grid>
       </div>
@@ -212,20 +195,24 @@ const Instructions5 = (props) => {
         }}
       >
         <p>
-          This chart shows the average rates of return for Fund X over thirty years.
+          This chart shows the average rates of return for Fund X over thirty
+          years.
           {/*<span style={{ fontWeight: "bold" }}>Objective</span>:{" "}*/}
           {/*<span className={classes.emph}> maximize annual rate of return </span>{" "}*/}
           {/*over a thirty (30) years.*/}
         </p>
         <p>
-          Each bar represents a historical rate of return, ranked from worst (left) to best (right).
+          Each bar represents a historical rate of return, ranked from worst
+          (left) to best (right).
           {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
           {/*<span> Rates of returns </span> are averaged and annualized over a{" "}*/}
           {/*<span style={{ fontWeight: "bold" }}>five (5) year</span> evaluation*/}
           {/*period.*/}
         </p>
         <p>
-          You can hover your mouse to view the value. By hovering your mouse, what is Fund X's best one year return value?</p>
+          You can hover your mouse to view the value. By hovering your mouse,
+          what is Fund X's best one year return value?
+        </p>
         <form className={classes.root} noValidate autoComplete="off">
           {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
           {/*<Input*/}
@@ -239,20 +226,12 @@ const Instructions5 = (props) => {
             type="number"
             color="secondary"
             value={allocationText}
-<<<<<<< HEAD
-=======
-            style = {{width: 150}}
->>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
+            style={{ width: 150 }}
             /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
             onChange={handleAllocation}
           />
           <p> </p>
           <Button
-<<<<<<< HEAD
-            style={{ backgroundColor: "gray", color: "black" }}
-            variant="contained"
-            onClick={onChange}
-=======
             disabled={disabled}
             style={{
               backgroundColor: disabled ? "lightgrey" : "gray",
@@ -260,7 +239,6 @@ const Instructions5 = (props) => {
             }}
             variant="contained"
             onClick={handleConsent}
->>>>>>> 42a90bc96330048607a71a384472dbc5436e9467
           >
             Make Decision
           </Button>
