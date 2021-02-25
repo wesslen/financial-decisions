@@ -159,12 +159,12 @@ const Debrief = (props) => {
         holding all other factors constant.
       </p>
       <p>
-        Your MTurk code is <h3>{token}</h3>. Please enter this in the text box
+        Your MTurk code is <b>{token}</b>. Please enter this in the text box
         on Amazon MTurk as a proof of your completion of this study.
       </p>
       <p>
         Your total compensation will be $1.00 (Base) + $[sum of trial incentive
-        column].
+        column] (Bonus).
       </p>
       <p>
         <TableContainer>
@@ -202,8 +202,8 @@ const Debrief = (props) => {
                     </TableCell>
                     <TableCell>{row.stockAllocation}</TableCell>
                     <TableCell>{row.expReturns}</TableCell>
-                    <TableCell>{row.decile}</TableCell>
                     <TableCell>{row.percrank}</TableCell>
+                    <TableCell>{row.decile}</TableCell>
                   </TableRow>
                 );
               })}
