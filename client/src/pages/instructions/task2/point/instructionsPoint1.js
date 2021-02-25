@@ -81,7 +81,7 @@ const InstructionsPoint1 = (props) => {
       <h3>Round 2 Instructions</h3>
       <ul>
         <li>
-          Info info info.
+          You will see an interval plot with a point (mean).
         </li>
         <li>
           Your goal is to maximize your expected returns over a thirty (30) year
