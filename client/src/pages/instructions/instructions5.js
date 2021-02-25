@@ -58,7 +58,6 @@ const Instructions5 = (props) => {
   const [evalIndex, setEvalIndex] = useState(0);
   const [left, setLeft] = useState("stocks");
 
-
   const handleConsent = () => {
     history.push("/instructions6");
   };
@@ -69,7 +68,6 @@ const Instructions5 = (props) => {
     }
     console.log("Captcha value:", value);
   }
-
 
   //DEMONSTRATING DATA VISUALIZATION, creating random data
   function getRandomArbitrary(min, max) {
@@ -132,7 +130,7 @@ const Instructions5 = (props) => {
       }, 1000);
     }
     fetchData();
-  });
+  }, []);
 
   const handleAllocation = (event) => {
     let newVal = +event.target.value;
@@ -169,20 +167,35 @@ const Instructions5 = (props) => {
           justifyContent: "center",
         }}
       >
-        <Grid container className={classes.root} spacing={1} style={{ height: "100%" }}>
-          <Barchart extent={extent1} title="A" data={bnds_sim1} allocation={allocation !== null ? allocation : "Insert a value in "}></Barchart>{" "}
+        <Grid
+          container
+          className={classes.root}
+          spacing={1}
+          style={{ height: "100%" }}
+        >
+          <Barchart
+            extent={extent1}
+            title="A"
+            data={bnds_sim1}
+            allocation={allocation !== null ? allocation : "Insert a value in "}
+          ></Barchart>{" "}
           {/*extent={extent}*/}
           {/* <Dotplot data={data}></Dotplot> */}
-          <Barchart extent={extent1} title="B" data={stks_sim1} allocation={allocation !== null ? allocation : "Insert a value in "}></Barchart>{" "}
+          <Barchart
+            extent={extent1}
+            title="B"
+            data={stks_sim1}
+            allocation={allocation !== null ? allocation : "Insert a value in "}
+          ></Barchart>{" "}
           {/*extent={extent}*/}
         </Grid>
       </div>
       <div
         style={{
-            justifyContent: "center",
-            alignItems: "center",
-            // height: "10vh",
-            textAlign: "center",
+          justifyContent: "center",
+          alignItems: "center",
+          // height: "10vh",
+          textAlign: "center",
         }}
       >
         <p>
@@ -210,16 +223,17 @@ const Instructions5 = (props) => {
             type="number"
             color="secondary"
             value={allocationText}
-              /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+            /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
             onChange={handleAllocation}
           />
           <p> </p>
           <Button
-
-          style={{ backgroundColor: "gray", color: "black" }}
-          variant="contained"
-          onClick = {onChange}>
-            Make Decision</Button>
+            style={{ backgroundColor: "gray", color: "black" }}
+            variant="contained"
+            onClick={onChange}
+          >
+            Make Decision
+          </Button>
         </form>
       </div>
       <div
@@ -229,8 +243,9 @@ const Instructions5 = (props) => {
           paddingBottom: "10px",
         }}
       >
-        <Button disabled={disabled}
-                style={{
+        <Button
+          disabled={disabled}
+          style={{
             backgroundColor: disabled ? "lightgrey" : "gray",
             color: "black",
           }}
