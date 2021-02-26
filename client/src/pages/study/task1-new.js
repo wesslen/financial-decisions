@@ -272,6 +272,7 @@ const Task1Page = (props) => {
           margin: "0 auto",
           alignItems: "center",
           justifyContent: "center",
+          textAlign: "center",
         }}
       >
         <p>

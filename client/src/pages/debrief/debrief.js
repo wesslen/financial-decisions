@@ -81,51 +81,26 @@ const Debrief = (props) => {
     };
   }
 
-  const terms = [
-    createData("1", "34%", "24.4%", "78%", "$0.01"),
-    createData("2", "54%", "29.4%", "50%", "$0.02"),
-    createData("3", "23%", "25.4%", "84%", "$0.00"),
-    createData("4", "95%", "50.6%", "5%", "$0.04"),
-    createData("5", "78%", "47.4%", "23%", "$0.03"),
-    createData("6", "28%", "24.4%", "74%", "$0.03"),
-    createData("7", "50%", "24.4%", "74%", "$0.03"),
-    createData("8", "29%", "24.4%", "74%", "$0.03"),
-    createData("9", "45%", "24.4%", "74%", "$0.03"),
-    createData("10", "49%", "24.4%", "74%", "$0.03"),
-    createData("11", "57%", "24.4%", "74%", "$0.03"),
-    createData("12", "86%", "24.4%", "74%", "$0.03"),
-    createData("13", "15%", "24.4%", "74%", "$0.03"),
-    createData("14", "12%", "24.4%", "74%", "$0.03"),
-  ];
+  // const terms = [
+  //   createData("1", "34%", "24.4%", "78%", "$0.01"),
+  //   createData("2", "54%", "29.4%", "50%", "$0.02"),
+  //   createData("3", "23%", "25.4%", "84%", "$0.00"),
+  //   createData("4", "95%", "50.6%", "5%", "$0.04"),
+  //   createData("5", "78%", "47.4%", "23%", "$0.03"),
+  //   createData("6", "28%", "24.4%", "74%", "$0.03"),
+  //   createData("7", "50%", "24.4%", "74%", "$0.03"),
+  //   createData("8", "29%", "24.4%", "74%", "$0.03"),
+  //   createData("9", "45%", "24.4%", "74%", "$0.03"),
+  //   createData("10", "49%", "24.4%", "74%", "$0.03"),
+  //   createData("11", "57%", "24.4%", "74%", "$0.03"),
+  //   createData("12", "86%", "24.4%", "74%", "$0.03"),
+  //   createData("13", "15%", "24.4%", "74%", "$0.03"),
+  //   createData("14", "12%", "24.4%", "74%", "$0.03"),
+  // ];
 
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-
-  // https://reactjs.org/docs/faq-ajax.html
-  //   useEffect(() => {
-  //     async function fetchData() {
-  //       const responses = axios.get("/api/response");
-  //       let res = responses.data.responses;
-  //       fetch("http://rw-simulation.herokuapp.com/get_returns?stock=")
-  //           .then(res => res.json())
-  //           .then(
-  //               (result) => {
-  //                 setIsLoaded(true);
-  //                 setItems(result);
-  //               },
-  //               // Note: it's important to handle errors here
-  //               // instead of a catch() block so that we don't swallow
-  //               // exceptions from actual bugs in components.
-  //               (error) => {
-  //                 setIsLoaded(true);
-  //                 setError(error);
-  //               }
-  //           )
-  //       }
-  //
-  //       fetchData();
-  //   }, [])
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>

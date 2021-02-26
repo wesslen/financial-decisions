@@ -211,7 +211,7 @@ const Instructions5 = (props) => {
         </p>
         <p>
           You can hover your mouse to view the value. By hovering your mouse,
-          what is Fund X's best one year return value?
+          what is Fund X's best average rate of return value?
         </p>
         <form className={classes.root} noValidate autoComplete="off">
           {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}

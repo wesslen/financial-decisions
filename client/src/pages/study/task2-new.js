@@ -41,7 +41,7 @@ const Task2Page = (props) => {
   const [left, setLeft] = useState("stocks");
   const [alert, setAlert] = useState(false);
   //vizTypes : hops,
-  const [visType, setVisType] = useState("dotplot");
+  const [visType, setVisType] = useState("table");
 
   const divContainer = useRef(null);
 
@@ -221,6 +221,7 @@ const Task2Page = (props) => {
           margin: "0 auto",
           alignItems: "center",
           justifyContent: "center",
+          textAlign: "center",
         }}
       >
         {" "}

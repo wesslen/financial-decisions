@@ -50,6 +50,10 @@ const InstructionsTask2 = (props) => {
   const [stocks, setStocks] = useState([]);
   const [extent, setExtent] = useState(null);
   const [evalPeriod, setEvalPeriod] = useState(null);
+
+
+  const [visType, setVisType] = useState(null);
+
   const handleConsent = () => {
     history.push("/task2");
   };
@@ -57,6 +61,10 @@ const InstructionsTask2 = (props) => {
   useEffect(() => {
     async function fetchData() {
       const result = await axios.get("/api/changeround");
+      const result2 = await axios.get("/api/data" + "?numsimulations=33");
+      console.log(result2.data.treatment);
+      setVisType(result2.data.treatment);
+      let data = result2.data.data;
     }
     fetchData();
   }, []);

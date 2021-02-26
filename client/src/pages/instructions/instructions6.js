@@ -192,19 +192,9 @@ const Instructions6 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-        <p>
+                <p>
           In this study, you'll be provided two funds (e.g., Fund Y and Z). You to decide how to allocate your retirement investment.
         </p>
-                <p>
-          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
-          <span className={classes.emph}> maximize expected annual rate of return </span>
-          over a thirty (30) years.
-        </p>
-        <p>
-          {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-          In this example, rates of returns are now framed in <span style={{ fontWeight: "bold" }}>thirty (30) year</span> returns, averaged and annualized.
-        </p>
-        <p>Between 0% and 100%, how much do you want to allocate to each fund?</p>
       <div
         style={{
           width: "90%",
@@ -215,6 +205,13 @@ const Instructions6 = (props) => {
           justifyContent: "center",
         }}
       >
+
+                <p>
+          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
+          <span className={classes.emph}> maximize expected annual rate of return </span>
+          over a thirty (30) years.
+        </p>
+
         <Grid
           container
           className={classes.root}
@@ -234,8 +231,7 @@ const Instructions6 = (props) => {
             allocation={allocation !== null ? 100 - allocation : "Insert a value in "}
           ></Barchart>
         </Grid>
-      </div>
-      <div
+             <div
         style={{
           justifyContent: "center",
           alignItems: "center",
@@ -243,7 +239,11 @@ const Instructions6 = (props) => {
           textAlign: "center",
         }}
       >
-
+        <p>
+          {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
+          In this example, rates of returns are now framed in <span style={{ fontWeight: "bold" }}>thirty (30) year</span> returns, averaged and annualized.
+        </p>
+        <p>Between 0% and 100%, how much do you want to allocate to each fund?</p>
         <form className={classes.root} noValidate autoComplete="off">
           <TextField
             id="Practice2"
@@ -280,6 +280,8 @@ const Instructions6 = (props) => {
           </Button>
         </form>
       </div>
+      </div>
+
       {/* 
       <div
         style={{
