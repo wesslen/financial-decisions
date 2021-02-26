@@ -147,7 +147,8 @@ router.post("/response", (req, res) => {
   let round = req.session.round;
   resp["evalPeriod"] = evalPeriod;
   let response = {};
-  response[`responses.${round}.${evalPeriod}`] = resp;
+  // response[`responses.${round}.${evalPeriod}`] = resp;
+  response[`responses.${round}.${req.session.evalPeriodIndex}`] = resp;
   Response.findOneAndUpdate({ usertoken: usertoken }, response, (err, doc) => {
     if (err) req.status(404).send(err);
     else {
