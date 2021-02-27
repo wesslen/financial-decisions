@@ -47,16 +47,16 @@ const DataTable = (props) => {
   const getNestedData = (data, nCols) => {
     let nestedData = [];
     for (let j = 0; j < data.length; j += nCols) {
-      nestedData.push(data.slice(j, j + 5));
+      nestedData.push(data.slice(j, j + 10));
     }
 
     return nestedData;
   };
-  const nCols = 5;
-  const columns = [...Array(5).keys()];
+  const nCols = 10;
+  const columns = [...Array(10).keys()];
   const data = getNestedData(
     props.data.sort((a, b) => {
-      return b.value - a.value;
+      return a.value - b.value;
     }),
     nCols
   );
