@@ -7,8 +7,18 @@ import InstructionsHopsdist1 from "../../pages/instructions/task2/hopsdist/instr
 import InstructionsInterval1 from "../../pages/instructions/task2/interval/instructionsInterval1";
 import InstructionsPoint1 from "../../pages/instructions/task2/point/instructionsPoint1";
 import InstructionsTable1 from "../../pages/instructions/task2/table/instructionsTable1";
-import {Route, Switch} from "react-router-dom";
+import BarChart from "../visualization/barchart/barchart";
+import Dotplot from "../visualization/dotplot/dotplotalt";
+import Hops from "../visualization/hops/hops";
+import PointPlot from "../visualization/pointplot/pointplot";
+import Interval from "../visualization/interval/interval";
+import Density from "../visualization/density/density";
+import Table from "../visualization/table/table";
 
+import {Route, Switch} from "react-router-dom";
+import {
+  Grid,
+} from "@material-ui/core";
 const InstructionController = (props) => {
   let vizType = props.vizType;
 
@@ -16,68 +26,147 @@ const InstructionController = (props) => {
     case "barchart":
       // code block
       return (
-          <Route
-             path="/instructionsBarchart1"
-             component={InstructionsBarchart1}
-          ></Route>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+          >
+          <InstructionsBarchart1>
+          </InstructionsBarchart1>
+        {/*<BarChart*/}
+        {/*  title={props.title}*/}
+        {/*  extent={props.extent}*/}
+        {/*  allocation={props.allocation}*/}
+        {/*  data={props.data}*/}
+        {/*></BarChart>*/}
+          </Grid>
       );
       break;
     case "dotplot":
       // code block
       return (
-
-          <Route
-             path="/instructionsDot1"
-             component={InstructionsDot1}
-          ></Route>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+          >
+          <InstructionsDot1>
+          </InstructionsDot1>
+        {/*<Dotplot*/}
+        {/*  title={props.title}*/}
+        {/*  extent={props.extent}*/}
+        {/*  allocation={props.allocation}*/}
+        {/*  data={props.data}*/}
+        {/*  nBins={50}*/}
+        {/*></Dotplot>*/}
+        </Grid>
       );
       break;
     case "hops":
       return (
-          <Route
-             path="/instructionsHops1"
-             component={InstructionsHops1}
-          ></Route>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+          >
+          <InstructionsHops1>
+
+          </InstructionsHops1>
+        {/*<Hops*/}
+        {/*  showDist={false}*/}
+        {/*  title={props.title}*/}
+        {/*  extent={props.extent}*/}
+        {/*  allocation={props.allocation}*/}
+        {/*  data={props.data}*/}
+        {/*></Hops>*/}
+            </Grid>
       );
       break;
     case "hopsdist":
       return (
-          <Route
-             path="/instructionsHopsdist1"
-             component={InstructionsHopsdist1}
-          ></Route>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+          >
+          <InstructionsHopsdist1></InstructionsHopsdist1>
+        {/*            <Hops*/}
+        {/*  showDist={true}*/}
+        {/*  title={props.title}*/}
+        {/*  extent={props.extent}*/}
+        {/*  allocation={props.allocation}*/}
+        {/*  data={props.data}*/}
+        {/*></Hops>*/}
+            </Grid>
       );
       break;
     case "point":
       return (
-          <Route
-             path="/instructionsPoint1"
-             component={InstructionsPoint1}
-          ></Route>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+          >
+          <InstructionsPoint1></InstructionsPoint1>
+        {/*         <PointPlot*/}
+        {/*  title={props.title}*/}
+        {/*  extent={props.extent}*/}
+        {/*  allocation={props.allocation}*/}
+        {/*  data={props.data}*/}
+        {/*></PointPlot>*/}
+            </Grid>
       );
       break;
     case "interval":
       return (
-          <Route
-             path="/instructionsInterval1"
-             component={InstructionsInterval1}
-          ></Route>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+          >
+          <InstructionsInterval1></InstructionsInterval1>
+        {/*          <Interval*/}
+        {/*  title={props.title}*/}
+        {/*  extent={props.extent}*/}
+        {/*  allocation={props.allocation}*/}
+        {/*  data={props.data}*/}
+        {/*></Interval>*/}
+            </Grid>
       );
       break;
     case "density":
       return (
-          <Route
-             path="/instructionsDensity1"
-             component={InstructionsDensity1}
-          ></Route>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+          >
+          <InstructionsDensity1></InstructionsDensity1>
+        {/*          <Density*/}
+        {/*  title={props.title}*/}
+        {/*  extent={props.extent}*/}
+        {/*  densityExtent={props.densityExtent}*/}
+        {/*  allocation={props.allocation}*/}
+        {/*  data={props.data}*/}
+        {/*></Density>*/}
+          </Grid>
       );
       break;
     case "table":
       return (
-          <Route
-             path="/instructionsTable1"
-             component={InstructionsTable1}
-          ></Route>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+          >
+          <InstructionsTable1></InstructionsTable1>
+        {/*      <Table*/}
+        {/*  title={props.title}*/}
+        {/*  extent={props.extent}*/}
+        {/*  allocation={props.allocation}*/}
+        {/*  data={props.data}*/}
+        {/*></Table>*/}
+            </Grid>
       );
       break;
     default:

@@ -21,7 +21,7 @@ const PreSurveyPage = (props) => {
               "opportunity to accept the following bet: <br/> Flip a fair coin and if you guess " +
               "correctly you win $200 but if you guess incorrectly you lose $100. " +
               "<br/> Would you accept this bet once?",
-            isRequired: false,
+            isRequired: true,
             colCount: 2,
             choices: [
               "Yes, I would accept the bet.",
@@ -34,7 +34,7 @@ const PreSurveyPage = (props) => {
             title:
               "You are offered the same bet from #1: " +
               "would you accept this bet 100 times?",
-            isRequired: false,
+            isRequired: true,
             colCount: 2,
             choices: [
               "Yes, I would accept the same bet 100 times.",
@@ -47,11 +47,11 @@ const PreSurveyPage = (props) => {
         questions: [
           {
             type: "radiogroup",
-            name: "Grable2003_1",
+            name: "Kahneman_1979_Gain",
             title:
               "In addition to whatever you own, you have been given $1,000. " +
               "<br/> You are now asked to choose between:",
-            isRequired: false,
+            isRequired: true,
             colCount: 2,
             choices: [
               "A sure gain of $500",
@@ -60,11 +60,11 @@ const PreSurveyPage = (props) => {
           },
           {
             type: "radiogroup",
-            name: "Grable2003_2",
+            name: "Kahneman_1979_Loss",
             title:
               "In addition to whatever you own, you have been given $2,000. <br/> You are now " +
               "asked to choose between:",
-            isRequired: false,
+            isRequired: true,
             colCount: 2,
             choices: [
               "A sure loss of $500",
@@ -147,7 +147,7 @@ const PreSurveyPage = (props) => {
             title:
               "Suppose you are offered to choose between two investment opportunities under seven different scenarios.",
             columns: ["Investment A", "Investment B"],
-            // "isRequired": true,
+            "isRequired": true,
             colCount: 2,
             rows: [
               {

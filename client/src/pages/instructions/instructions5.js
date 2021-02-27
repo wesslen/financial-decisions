@@ -56,19 +56,35 @@ const Instructions5 = (props) => {
   // const [data, setData] = useState([]);
   const [allocation, setAllocation] = useState(null);
   const [disabled, setDisabled] = useState(true);
+  // const [disabledDecision, setDisabledDecision] = useState(true);
   const [allocationText, setAllocationText] = useState("");
   const [evalIndex, setEvalIndex] = useState(0);
   const [left, setLeft] = useState("stocks");
 
-  const handleConsent = () => {
-    setLoadingOpacity(0.8);
-    setPageOpacity(0.2);
-    // Just to create an illusion of loading so users know data has changed.
-    setTimeout(() => {
-      setLoadingOpacity(0);
-      setPageOpacity(1);
-      history.push("/instructions6");
-    }, 1000);
+  const handleConsent = (event) => {
+
+    // let newVal = +event.target.value;
+    // newVal = parseInt(newVal);
+    // console.log(event.target.value);
+    // setAllocationText(newVal);
+    if (allocationText > 23 && allocationText < 24 || allocationText > 0.23 && allocationText < 0.24) {
+      setLoadingOpacity(0.8);
+      setPageOpacity(0.2);
+      // Just to create an illusion of loading so users know data has changed.
+      setTimeout(() => {
+        setLoadingOpacity(0);
+        setPageOpacity(1);
+        history.push("/instructions6");
+      }, 1000);
+      // setDisabledDecision(false);
+      // setAllocation(newVal);
+    } else {
+      alert("Try again. Hover your mouse over the largest bar. ");
+      // setDisabledDecision(true);
+    }
+    // setDisabledDecision(false);
+
+
   };
 
   // function onChange(value) {
@@ -105,7 +121,7 @@ const Instructions5 = (props) => {
       let maxExtent1 = d3.max(extent1);
 
       extent1 = [-maxExtent1, maxExtent1];
-      console.log(extent1, "Asdasd");
+      // console.log(extent1, "Asdasd");
 
       let extent2 = d3.extent([
         ...stks_sim2.map((d) => d.value),
@@ -140,9 +156,9 @@ const Instructions5 = (props) => {
     setAllocationText(newVal);
     if (newVal > -1 && newVal < 101) {
       setDisabled(false);
-      // setAllocation(newVal);
+      setAllocation(newVal);
     } else {
-      alert("Please input a valid number");
+      alert("Please enter a valid number.");
       setDisabled(true);
     }
     setDisabled(false);
@@ -173,7 +189,7 @@ const Instructions5 = (props) => {
             extent={extent}
             title="X"
             data={stocks}
-            allocation={allocation !== null ? allocation : "Insert a value in "}
+            allocation={allocation !== null ? " " : " "}
           ></Barchart>{" "}
           {/*extent={extent}*/}
           {/* <Dotplot data={data}></Dotplot> */}
@@ -213,7 +229,7 @@ const Instructions5 = (props) => {
           You can hover your mouse to view the value. By hovering your mouse,
           what is Fund X's best average rate of return value?
         </p>
-        <form className={classes.root} noValidate autoComplete="off">
+        <form className={classes.root} autoComplete="off">
           {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
           {/*<Input*/}
           {/*  id="Practice1"*/}
@@ -222,11 +238,11 @@ const Instructions5 = (props) => {
           {/*></Input>*/}
           <TextField
             id="Practice1"
-            label="Best rate of return"
+            label="Best rate of return (as %)"
             type="number"
             color="secondary"
             value={allocationText}
-            style={{ width: 150 }}
+            style={{ width: 200 }}
             /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
             onChange={handleAllocation}
           />

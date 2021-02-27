@@ -59,6 +59,11 @@ const Instructions6 = (props) => {
   const [evalIndex, setEvalIndex] = useState(0);
   const [left, setLeft] = useState("stocks");
 
+  const [allocationLeft, setAllocationLeft] = useState(null);
+  const [allocationRight, setAllocationRight] = useState(null);
+  const [allocationTextLeft, setAllocationTextLeft] = useState("");
+  const [allocationTextRight, setAllocationTextRight] = useState("");
+  const [alert, setAlert] = useState(false);
   const handleConsent = () => {
     setLoadingOpacity(0.8);
     setPageOpacity(0.2);
@@ -143,7 +148,7 @@ const Instructions6 = (props) => {
       let maxExtent1 = d3.max(extent1);
 
       extent1 = [-maxExtent1, maxExtent1];
-      console.log(extent1, "Asdasd");
+      // console.log(extent1, "Asdasd");
 
       let extent2 = d3.extent([
         ...stks_sim2.map((d) => d.value),
@@ -161,6 +166,10 @@ const Instructions6 = (props) => {
         Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
         setAllocation(null);
         setAllocationText("");
+        setAllocationLeft(null);
+        setAllocationTextLeft("");
+        setAllocationRight(null);
+        setAllocationTextRight("");
         setStocks(stks_sim2);
         setBonds(bnds_sim2);
         setLoadingOpacity(0);
@@ -170,22 +179,85 @@ const Instructions6 = (props) => {
     fetchData();
   }, []);
 
-  const handleAllocation = (event) => {
-    let newVal = +event.target.value;
+  // const handleAllocation = (event) => {
+  //   let newVal = +event.target.value;
+  //   // newVal = parseInt(newVal);
+  //   // console.log(event.target.value);
+  //   // setAllocationText(newVal);
+  //
+  //   // ryan added: to keep as values between 0 and 100
+  //   // doesn't work correctly for integer component yet... need to check that
+  //   // what this doesn't do: prompt the user. need to create a front end warning too for this.
+  //   if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
+  //     setDisabled(false);
+  //     setAllocation(newVal);
+  //   } else {
+  //     alert(
+  //       "Please input a number between 0 and 100 with no decimals or percentage."
+  //     );
+  //     setDisabled(true);
+  //   }
+  // };
+
+
+  const handleAllocationLeft = (event) => {
+    let newVal = parseInt(event.target.value, 10);
+
     // newVal = parseInt(newVal);
     // console.log(event.target.value);
     // setAllocationText(newVal);
-    setAllocationText(newVal);
+    setAllocationTextLeft(newVal);
+    if (newVal !== null) {
+      setAllocationTextRight(100 - newVal);
+    }
+
     // ryan added: to keep as values between 0 and 100
     // doesn't work correctly for integer component yet... need to check that
     // what this doesn't do: prompt the user. need to create a front end warning too for this.
     if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
       setDisabled(false);
-      setAllocation(newVal);
+      setAlert(false);
+      setAllocationLeft(newVal);
+      setAllocationTextLeft(newVal);
+      setAllocationRight(100 - newVal);
+      setAllocationTextRight(100 - newVal);
     } else {
-      alert(
-        "Please input a number between 0 and 100 with no decimals or percentage."
-      );
+      setAlert(true);
+      setAllocationLeft(null);
+      setAllocationTextLeft("");
+      setAllocationRight(null);
+      setAllocationTextRight("");
+      setDisabled(true);
+    }
+  };
+
+  const handleAllocationRight = (event) => {
+    let newVal = parseInt(event.target.value, 10);
+
+    // newVal = parseInt(newVal);
+    // console.log(event.target.value);
+    // setAllocationText(newVal);
+    setAllocationTextRight(newVal);
+    if (newVal !== null) {
+      setAllocationTextLeft(100 - newVal);
+    }
+
+    // ryan added: to keep as values between 0 and 100
+    // doesn't work correctly for integer component yet... need to check that
+    // what this doesn't do: prompt the user. need to create a front end warning too for this.
+    if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
+      setDisabled(false);
+      setAlert(false);
+      setAllocationLeft(100 - newVal);
+      setAllocationTextLeft(100 - newVal);
+      setAllocationRight(newVal);
+      setAllocationTextRight(newVal);
+    } else {
+      setAlert(true);
+      setAllocationLeft(null);
+      setAllocationTextLeft("");
+      setAllocationRight(null);
+      setAllocationTextRight("");
       setDisabled(true);
     }
   };
@@ -219,16 +291,21 @@ const Instructions6 = (props) => {
           style={{ height: "100%" }}
         >
           <Barchart
+            // title={evalIndex < 4 ? "A" : "B"}
+            title="A"
             extent={extent}
-            title="Y"
-            data={stocks}
-            allocation={allocation !== null ? allocation : "Insert a value in "}
+            allocation={
+              allocationLeft !== null ? allocationLeft : "Insert a value in "
+            }
+            data={left === "stocks" ? stocks : bonds}
           ></Barchart>
           <Barchart
+            title="B"
             extent={extent}
-            title="Z"
-            data={bonds}
-            allocation={allocation !== null ? 100 - allocation : "Insert a value in "}
+            allocation={
+              allocationRight !== null ? allocationRight : "Insert a value in "
+            }
+            data={left === "stocks" ? bonds : stocks}
           ></Barchart>
         </Grid>
              <div
@@ -245,27 +322,27 @@ const Instructions6 = (props) => {
         </p>
         <p>Between 0% and 100%, how much do you want to allocate to each fund?</p>
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField
-            id="Practice2"
-            label="Fund Y allocation %"
-            type="number"
-            color="secondary"
-            value={allocationText}
-            style = {{width: 150}}
-            /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
-            onChange={handleAllocation}
-          />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <TextField
-            id="Practice3"
-            label="Fund Z allocation %"
-            type="number"
-            color="secondary"
-            value={100-  allocationText}
-            style = {{width: 150}}
-            /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
-            // onChange={handleAllocation}
-          />
+            <TextField
+              id="Practice1"
+              label="Fund A allocation %"
+              type="number"
+              color="secondary"
+              value={allocationTextLeft}
+              style={{ width: 150 }}
+              /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+              onChange={handleAllocationLeft}
+            />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <TextField
+              id="Practice2"
+              label="Fund B allocation %"
+              type="number"
+              color="secondary"
+              value={allocationTextRight}
+              style={{ width: 150 }}
+              /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+              onChange={handleAllocationRight}
+            />{" "}
           <h4> </h4>
           <Button
             disabled={disabled}

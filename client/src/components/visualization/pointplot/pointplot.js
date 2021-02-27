@@ -62,6 +62,8 @@ const Point = (props) => {
           .attr("pointer-events", "none");
         let vals = props.data.map((d) => d.value);
         let mean = jStat.mean(vals);
+        let q_ci66 = jStat.quantiles(vals, [.17,.83]);
+        let q_xi95 = jStat.quantiles(vals, [.025,.975]);
         let stdev = jStat.stdev(vals);
         let ci50 = [mean - 0.67449 * stdev, mean + 0.67449 * stdev];
 
@@ -69,16 +71,16 @@ const Point = (props) => {
         // console.log(p);
 
         g.append("line")
-          .attr("x1", xScale(ci95[0]))
-          .attr("x2", xScale(ci95[1]))
+          .attr("x1", xScale(q_xi95[0]))
+          .attr("x2", xScale(q_xi95[1]))
           .attr("y1", h / 2 + margins.top)
           .attr("y2", h / 2 + margins.top)
           .attr("stroke", "#76D7C4")
           .attr("stroke-width", 12);
 
         g.append("line")
-          .attr("x1", xScale(ci50[0]))
-          .attr("x2", xScale(ci50[1]))
+          .attr("x1", xScale(q_ci66[0]))
+          .attr("x2", xScale(q_ci66[1]))
           .attr("y1", h / 2 + margins.top)
           .attr("y2", h / 2 + margins.top)
           .attr("stroke", "#148F77")

@@ -41,7 +41,7 @@ const Task2Page = (props) => {
   const [left, setLeft] = useState("stocks");
   const [alert, setAlert] = useState(false);
   //vizTypes : hops,
-  const [visType, setVisType] = useState("table");
+  const [visType, setVisType] = useState("interval");
 
   const divContainer = useRef(null);
 
@@ -232,7 +232,7 @@ const Task2Page = (props) => {
             maximize expected rate of return{" "}
           </span>{" "}
           over a <span style={{ fontWeight: "bold" }}>
-            thirty (30) years.
+            thirty (30) year period.
           </span>{" "}
           {/*planning horizon.*/}
         </p>

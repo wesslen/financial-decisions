@@ -79,29 +79,16 @@ const InstructionsHops1 = (props) => {
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Round 2 Instructions</h3>
-      <ul>
         <li>
-          You will see a hypothetical outcome plot (HOP).
+          You'll repeat the same task for new funds: C and D.
+        </li>
+        <li>
+          However, in this round you view a hypothetical outcome plot (HOP).
         </li>
         <li>
           Your goal is to maximize your expected returns over a thirty (30) year
           period.
         </li>
-      </ul>
-      <h4>Round 2</h4>
-      <ul>
-        <li>
-          You'll have <b>seven</b> allocation decisions for two new funds: C and D.
-        </li>
-        <li>
-          Each decision will show funds' rate of returns framed as different
-          evaluation periods (e.g., one year period, thirty year period).
-        </li>
-        <li>
-          Your goal is to maximize your expected returns over a thirty (30) year
-          period.
-        </li>
-      </ul>
       {/*<h4>Round 2</h4>*/}
       {/*<ul>*/}
       {/*  <li>*/}
@@ -121,13 +108,13 @@ const InstructionsHops1 = (props) => {
           paddingBottom: "10px",
         }}
       >
-        <Button
-          style={{ backgroundColor: "gray", color: "black" }}
-          variant="contained"
-          onClick={handleConsent}
-        >
-          Continue
-        </Button>
+        {/*<Button*/}
+        {/*  style={{ backgroundColor: "gray", color: "black" }}*/}
+        {/*  variant="contained"*/}
+        {/*  onClick={handleConsent}*/}
+        {/*>*/}
+        {/*  Continue*/}
+        {/*</Button>*/}
       </div>
     </Container>
   );
