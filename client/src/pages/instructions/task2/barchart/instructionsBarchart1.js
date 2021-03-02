@@ -18,6 +18,16 @@ import TextField from "@material-ui/core/TextField";
 // import BinaryChoice from "../../components/choice/binaryChoice";
 // import Histogram from "../../components/visualization/histogram/histogram";
 import * as d3 from "d3";
+import BarChart from "../../../../components/visualization/barchart/barchart";
+// import VizController from "../../../../components/visualization/task2vizController/task2vizcontroller";
+import {kernelDensityEstimator, kernelEpanechnikov} from "../../../../functions/kde";
+
+import * as Survey from "survey-react";
+import "survey-react/survey.css";
+
+Survey.StylesManager.applyTheme("darkblue");
+
+
 
 const useStyles = makeStyles((theme) => ({
   emph: {
@@ -39,38 +49,159 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const InstructionsBarchart1 = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
+  const json = {
+    questions: [
+      {
+        type: "radiogroup",
+        name: "Barchart_Instruction2",
+        title:
+          "What does each bar stand for?",
+        isRequired: true,
+        colCount: 1,
+        choices: [
+          "Wrong answer",
+          "Wrong answer",
+          "Correct answer",
+          "Wrong answer"
+        ],
+        "correctAnswer": "Correct answer"
+      },
+    ],
+  };
+
+  const model = new Survey.Model(json);
+  model.showCompletedPage = false;
+
   const [bonds, setBonds] = useState([]);
   const [stocks, setStocks] = useState([]);
-  const [extent, setExtent] = useState(null);
-  const [evalPeriod, setEvalPeriod] = useState(null);
+  const [extent, setExtent] = useState([-0.2, 0.2]); // hard coded for instructions1
+  const [loadingOpacity, setLoadingOpacity] = useState(0);
+  const [pageOpacity, setPageOpacity] = useState(1);
+  const [evalPeriod, setEvalPeriod] = useState(1);
+  const [allocationLeft, setAllocationLeft] = useState(null);
+  const [allocationRight, setAllocationRight] = useState(null);
+  const [allocationTextLeft, setAllocationTextLeft] = useState("");
+  const [allocationTextRight, setAllocationTextRight] = useState("");
+  const [disabled, setDisabled] = useState(true);
+
+  const [alert, setAlert] = useState(false);
+  const [left, setLeft] = useState("stocks");
+  //const [densityExtent, setDensityExtent] = useState([0, 0.5]);
+
+  // setExtent(extent);
+  // setEvalPeriod(30);
+  // setLoadingOpacity(0.8);
+  //setPageOpacity(0.2);
+  // Just to create an illusion of loading so users know data has changed.
+  setTimeout(() => {
+    Math.random() < 0.5 ? setLeft("stocks") : setLeft("bonds");
+    setDisabled(true);
+    setAllocationLeft(null);
+    setAllocationTextLeft("");
+    setAllocationRight(null);
+    setAllocationTextRight("");
+    // setStocks(stocks);
+    // setBonds(bonds);
+    setLoadingOpacity(0.8);
+    setPageOpacity(0.2);
+  }, 1000);
+
+
+
+
+    const handleAllocationLeft = (event) => {
+    let newVal = parseInt(event.target.value, 10);
+
+    // newVal = parseInt(newVal);
+    // console.log(event.target.value);
+    // setAllocationText(newVal);
+    setAllocationTextLeft(newVal);
+    if (newVal !== null) {
+      setAllocationTextRight(100 - newVal);
+    }
+
+    // ryan added: to keep as values between 0 and 100
+    // doesn't work correctly for integer component yet... need to check that
+    // what this doesn't do: prompt the user. need to create a front end warning too for this.
+    if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
+      setDisabled(false);
+      setAlert(false);
+      setAllocationLeft(newVal);
+      setAllocationTextLeft(newVal);
+      setAllocationRight(100 - newVal);
+      setAllocationTextRight(100 - newVal);
+    } else {
+      setAlert(true);
+      setAllocationLeft(null);
+      setAllocationTextLeft("");
+      setAllocationRight(null);
+      setAllocationTextRight("");
+      setDisabled(true);
+    }
+  };
+
+  const handleAllocationRight = (event) => {
+    let newVal = parseInt(event.target.value, 10);
+
+    // newVal = parseInt(newVal);
+    // console.log(event.target.value);
+    // setAllocationText(newVal);
+    setAllocationTextRight(newVal);
+    if (newVal !== null) {
+      setAllocationTextLeft(100 - newVal);
+    }
+
+    // ryan added: to keep as values between 0 and 100
+    // doesn't work correctly for integer component yet... need to check that
+    // what this doesn't do: prompt the user. need to create a front end warning too for this.
+    if (newVal > -1 && newVal < 101 && Number.isInteger(newVal)) {
+      setDisabled(false);
+      setAlert(false);
+      setAllocationLeft(100 - newVal);
+      setAllocationTextLeft(100 - newVal);
+      setAllocationRight(newVal);
+      setAllocationTextRight(newVal);
+    } else {
+      setAlert(true);
+      setAllocationLeft(null);
+      setAllocationTextLeft("");
+      setAllocationRight(null);
+      setAllocationTextRight("");
+      setDisabled(true);
+    }
+  };
+
+  const getDensityExtent = (stocks, bonds, extent) => {
+    let x = d3.scaleLinear().domain(extent).nice();
+    var kde = kernelDensityEstimator(kernelEpanechnikov(0.05), x.ticks(40));
+
+    var density1 = kde(
+      stocks.map(function (d) {
+        return d.value;
+      })
+    );
+    var density2 = kde(
+      bonds.map(function (d) {
+        return d.value;
+      })
+    );
+
+    let maxDensity1 = d3.max(density1.map((d) => d[1]));
+    let maxDensity2 = d3.max(density2.map((d) => d[1]));
+
+    return [0, d3.max([maxDensity1, maxDensity2])];
+  };
+
+
   const handleConsent = () => {
     history.push("/task2");
   };
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const result = await axios.get("/api/data");
-  //     let data = result.data.data;
-  //     setEvalPeriod(result.data.evalPeriod);
-  //     let stk = data.equities_sp.map((s, i) => {
-  //       return { key: i, value: s };
-  //     });
-  //     let bnd = data.treasury_10yr.map((s, i) => {
-  //       return { key: i, value: s };
-  //     });
-  //     let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
-  //     console.log(extent, "this is the extent of both datasets");
-  //     setExtent(extent);
-  //     setStocks(stk);
-  //     setBonds(bnd);
-  //   }
-  //   fetchData();
-  // }, []);
-  //DEMONSTRATING DATA VISUALIZATION, creating random data
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
@@ -78,6 +209,9 @@ const InstructionsBarchart1 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
+
+      // page 1
+      <div>
       <h3>Round 2 Instructions</h3>
       <ul>
         <li>
@@ -91,6 +225,134 @@ const InstructionsBarchart1 = (props) => {
           period.
         </li>
       </ul>
+      </div>
+
+      // page 2
+
+      <div  >
+        <img
+        src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+        alt=""
+        style={{width: 400}}
+        className={classes.image}
+      />
+
+      </div>
+      // page 3
+            <div
+        style={{
+          width: "90%",
+          // paddingLeft: "50",
+          height: "60%",
+          margin: "0 auto",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+        }}
+      >
+ <Grid container spacing={1} style={{ height: "60%" }}>
+        <BarChart
+          title="C"
+            extent={extent}
+          allocation={
+                allocationLeft !== null ? allocationLeft : "Insert a value in "
+              }
+          data={props.bonds}
+        ></BarChart>
+              <BarChart
+          title="D"
+          extent={extent}
+          allocation={
+                allocationRight !== null
+                  ? allocationRight
+                  : "Insert a value in "
+              }
+          data={props.stocks}
+        ></BarChart>
+</Grid>
+        <div
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            height: "10vh",
+            textAlign: "center",
+          }}
+        >
+          <p>
+            {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
+            <span> Rates of returns </span> are averaged and annualized over a{" "}
+            <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
+            evaluation period.
+          </p>
+          <p>
+            <span style={{ color: alert ? "red" : "black" }}>
+              Between 0% and 100%
+            </span>
+            , how much of your investment do you want to allocate to each fund?
+          </p>
+          <form noValidate autoComplete="off">
+            {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
+            {/*<Input*/}
+            {/*  id="Practice1"*/}
+            {/*  type="number"*/}
+            {/*  placeholder="Fund A allocation %"*/}
+            {/*  onChange={handleAllocation}*/}
+            {/*></Input>*/}
+            <TextField
+              id="Task1"
+              label="Fund C allocation %"
+              type="number"
+              color="secondary"
+              value={allocationTextLeft}
+              style={{ width: 150 }}
+              InputProps={{
+                inputProps: {
+                  max: 100,
+                  min: 0,
+                },
+              }}
+              // InputProps={{ inputProps: { min: 0, max: 10 } }}
+              /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+              onChange={handleAllocationLeft}
+            />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <TextField
+              id="Task2"
+              label="Fund D allocation %"
+              type="number"
+              color="secondary"
+              value={allocationTextRight}
+              style={{ width: 150 }}
+              /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+              onChange={handleAllocationRight}
+            />{" "}
+            <p> </p>
+            {/*<Button*/}
+            {/*  disabled={disabled}*/}
+            {/*  variant="contained"*/}
+            {/*  onClick={handleDecision}*/}
+            {/*>*/}
+            {/*  Make Decision*/}
+            {/*</Button>*/}
+          </form>
+        </div>
+      </div>
+
+      // page 4
+
+          <div
+      style={{
+        width: "100%",
+        height: "60%",
+        margin: "0 auto",
+        overflow: "auto",
+        paddingTop: "30px",
+        paddingBottom: "30px",
+      }}
+    >
+      <Survey.Survey model={model}  />  {/*onComplete={onComplete}*/}
+    </div>
+
       {/*<h4>Round 2</h4>*/}
       {/*<ul>*/}
       {/*  <li>*/}
@@ -103,21 +365,21 @@ const InstructionsBarchart1 = (props) => {
       {/*    Instructions will be provided before on how to interpret the new data visualization.*/}
       {/*  </li>*/}
       {/*</ul>*/}
-      <div
-        style={{
-          textAlign: "center",
-          paddingTop: "10px",
-          paddingBottom: "10px",
-        }}
-      >
-        {/*<Button*/}
-        {/*  style={{ backgroundColor: "gray", color: "black" }}*/}
-        {/*  variant="contained"*/}
-        {/*  onClick={handleConsent}*/}
-        {/*>*/}
-        {/*  Continue*/}
-        {/*</Button>*/}
-      </div>
+      {/*<div*/}
+      {/*  style={{*/}
+      {/*    textAlign: "center",*/}
+      {/*    paddingTop: "10px",*/}
+      {/*    paddingBottom: "10px",*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  /!*<Button*!/*/}
+      {/*  /!*  style={{ backgroundColor: "gray", color: "black" }}*!/*/}
+      {/*  /!*  variant="contained"*!/*/}
+      {/*  /!*  onClick={handleConsent}*!/*/}
+      {/*  /!*>*!/*/}
+      {/*  /!*  Continue*!/*/}
+      {/*  /!*</Button>*!/*/}
+      {/*</div>*/}
     </Container>
   );
 };

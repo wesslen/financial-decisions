@@ -17,7 +17,7 @@ const MidSurvey2Page = (props) => {
         title:
           "How did you use the charts to complete the task?" +
           " Please do your best to describe what sorts of visual properties you looked for and how you used them.",
-        isRequired: false,
+        isRequired: true,
       },
     ],
   };

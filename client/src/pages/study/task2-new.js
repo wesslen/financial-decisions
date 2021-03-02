@@ -41,7 +41,7 @@ const Task2Page = (props) => {
   const [left, setLeft] = useState("stocks");
   const [alert, setAlert] = useState(false);
   //vizTypes : hops,
-  const [visType, setVisType] = useState("interval");
+  const [visType, setVisType] = useState("barchart");
 
   const divContainer = useRef(null);
 

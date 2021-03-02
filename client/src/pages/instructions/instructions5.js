@@ -67,7 +67,7 @@ const Instructions5 = (props) => {
     // newVal = parseInt(newVal);
     // console.log(event.target.value);
     // setAllocationText(newVal);
-    if (allocationText > 23 && allocationText < 24 || allocationText > 0.23 && allocationText < 0.24) {
+    if (allocationText > 22 && allocationText < 24 || allocationText > 0.23 && allocationText < 0.24) {
       setLoadingOpacity(0.8);
       setPageOpacity(0.2);
       // Just to create an illusion of loading so users know data has changed.

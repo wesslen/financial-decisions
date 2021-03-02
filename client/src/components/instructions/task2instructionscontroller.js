@@ -7,6 +7,7 @@ import InstructionsHopsdist1 from "../../pages/instructions/task2/hopsdist/instr
 import InstructionsInterval1 from "../../pages/instructions/task2/interval/instructionsInterval1";
 import InstructionsPoint1 from "../../pages/instructions/task2/point/instructionsPoint1";
 import InstructionsTable1 from "../../pages/instructions/task2/table/instructionsTable1";
+import VizController from "../visualization/task2vizController/task2vizcontroller";
 import BarChart from "../visualization/barchart/barchart";
 import Dotplot from "../visualization/dotplot/dotplotalt";
 import Hops from "../visualization/hops/hops";
@@ -31,14 +32,9 @@ const InstructionController = (props) => {
             direction="column"
             justify="center"
           >
-          <InstructionsBarchart1>
+          <InstructionsBarchart1 stocks={props.stocks} bonds={props.bonds} vizType={props.vizType}>
           </InstructionsBarchart1>
-        {/*<BarChart*/}
-        {/*  title={props.title}*/}
-        {/*  extent={props.extent}*/}
-        {/*  allocation={props.allocation}*/}
-        {/*  data={props.data}*/}
-        {/*></BarChart>*/}
+
           </Grid>
       );
       break;

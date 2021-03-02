@@ -78,6 +78,7 @@ const InstructionsTable1 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
+      <div>
       <h3>Round 2 Instructions</h3>
         <li>
           You'll repeat the same task for new funds: C and D.
@@ -89,6 +90,10 @@ const InstructionsTable1 = (props) => {
           Your goal is to maximize your expected returns over a thirty (30) year
           period.
         </li>
+      </div>
+      <div>
+
+      </div>
       {/*<h4>Round 2</h4>*/}
       {/*<ul>*/}
       {/*  <li>*/}
