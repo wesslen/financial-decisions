@@ -6,8 +6,7 @@ const gmean = require("gmean");
 const jStat = require("jstat");
 
 function getReturns(seed) {
-  console.log(seed);
-  var rng = seedrandom(seed);
+  var rng = seedrandom("test");
   this.getReturns = async function (n_bootstrap, n_simul) {
     // make sure the csv file is in the same folder.
     let csvPath = path.join(__dirname, "returns.csv");
@@ -41,21 +40,21 @@ function getReturns(seed) {
     return r;
   };
 
-  this.ecdf = (data) => {
-    data = data.sort((a, b) => {
-      return a - b;
-    });
-    // let inds = [...Array(data.length).keys()];
-    // let probs = inds.map((ind) => {
-    //   return (ind + 1) / data.length;
-    // });
-    let probs = jStat.seq(
-      1 / data.length / 2,
-      1 - 1 / data.length / 2,
-      data.length
-    );
-    return { x: data, p_less_than_x: probs };
-  };
+  // this.ecdf = (data) => {
+  //   data = data.sort((a, b) => {
+  //     return a - b;
+  //   });
+  //   // let inds = [...Array(data.length).keys()];
+  //   // let probs = inds.map((ind) => {
+  //   //   return (ind + 1) / data.length;
+  //   // });
+  //   let probs = jStat.seq(
+  //     1 / data.length / 2,
+  //     1 - 1 / data.length / 2,
+  //     data.length
+  //   );
+  //   return { x: data, p_less_than_x: probs };
+  // };
 
   this.bootstrap = function (n, dataObj) {
     let bootstrap = [];
@@ -71,13 +70,15 @@ function getReturns(seed) {
 
 // returns.then(console.log);
 
-const gr = new getReturns("task1");
-
-let returns = gr.getReturns(1, 20);
-returns.then((results) => {
-  let eqs = results.equities_sp;
-  ecdf = gr.ecdf(eqs);
-  console.log(ecdf);
-});
+// async function returnTest() {
+//   let returnsSamples = [];
+//   for (var i = 0; i < 5; i++) {
+//     const gr = new getReturns("task1");
+//     let returns = await gr.getReturns(1, 33);
+//     returnsSamples.push(returns);
+//   }
+//   console.log(returnsSamples.map((r) => r.equities_sp));
+// }
+// returnTest();
 
 module.exports = getReturns;

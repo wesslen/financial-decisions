@@ -3,12 +3,11 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const responseSchema = require("../models/response");
 const randomstring = require("randomstring");
-// const getReturns = require('../../public/generateDataset');
+//experiment functions ef.choose(list), ef.getRandomInt; ef.shuffle(list);
+const ef = require("../functions/experimenhtFunctions");
 const getReturns = require("../functions/generateDataset");
 const axios = require("axios");
 
-//experiment functions ef.choose(list), ef.getRandomInt; ef.shuffle(list);
-const ef = require("../functions/experimenhtFunctions");
 // get returns
 const gr = new getReturns("task1");
 
@@ -164,6 +163,7 @@ router.get("/data", (req, res) => {
   console.log(req.query);
   let numSimulations = +req.query.numsimulations || 33;
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
+  let gr = new getReturns("task1");
   let returns = gr.getReturns(evalPeriod, numSimulations);
   returns.then((result) => {
     res.json({
@@ -250,5 +250,10 @@ function shuffle(array) {
 
   return array;
 }
+// let r = gr.getReturns(0, 33);
+// console.log(r);
+// for (var i = 0; i < 10; i++) {
+//   gr.getReturns(0, 33);
+// }
 
 module.exports = router;
