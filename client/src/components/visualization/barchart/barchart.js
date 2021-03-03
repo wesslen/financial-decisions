@@ -227,7 +227,7 @@ const Barchart = (props) => {
             if the variables are valid, but we do not have to compare old props
             to next props to decide whether to rerender.
         */
-    [props.data, props.allocation]
+    [props.data, props.allocation, props.page]
   );
 
   return (
