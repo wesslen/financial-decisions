@@ -8,19 +8,20 @@ const Hops = (props) => {
   const height = props.height || "60%";
   const hopSpeed = props.hopSpeed | 350;
   const showDist = props.showDist;
-
+  const svg = useRef(null);
+  const allocation = props.allocation || 0;
   useEffect(
     () => {
       if (d3Container.current) {
         //svg returned by this component
-        const svg = d3.select(d3Container.current);
-        svg.selectAll(".charttitle").remove();
-        svg.selectAll(".axis").remove();
-        svg.selectAll("g").remove();
+        svg.current = d3.select(d3Container.current);
+        svg.current.selectAll(".charttitle").remove();
+        svg.current.selectAll(".axis").remove();
+        svg.current.selectAll("g").remove();
         //width of svg
-        const width = svg.node().getBoundingClientRect().width;
+        const width = svg.current.node().getBoundingClientRect().width;
         //height of svg
-        const height = svg.node().getBoundingClientRect().height;
+        const height = svg.current.node().getBoundingClientRect().height;
 
         const leftMarginPct = 0.08;
         const rightMarginpct = 0.08;
@@ -37,22 +38,22 @@ const Hops = (props) => {
         const h = height - margins.top - margins.bottom;
         const extent = props.extent || [-1.0, 1.0];
 
-        const allocation = props.allocation || 0;
-        svg
+        svg.current
           .append("text")
+          .attr("id", "label")
           .attr("x", margins.left)
           .attr("y", margins.top)
           .attr("fill", "teal")
           .attr("class", "charttitle")
           .text(`Fund ${props.title}: ${allocation}%`);
 
-        const g = svg
+        const g = svg.current
           .append("g")
           .attr("transform", `translate(${margins.left},${margins.top})`);
 
         const xScale = d3.scaleLinear().range([0, w]).domain(extent);
 
-        let xAxis = svg
+        let xAxis = svg.current
           .append("g")
           .attr(
             "transform",
@@ -186,8 +187,12 @@ const Hops = (props) => {
             if the variables are valid, but we do not have to compare old props
             to next props to decide whether to rerender.
         */
-    [props.data, props.allocation]
+    [props.data]
   );
+
+  useEffect(() => {
+    svg.current.select("#label").text(`Fund ${props.title}: ${allocation}%`);
+  }, [props.allocation]);
 
   return (
     <div

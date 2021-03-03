@@ -41,7 +41,7 @@ const Task2Page = (props) => {
   const [left, setLeft] = useState("stocks");
   const [alert, setAlert] = useState(false);
   //vizTypes : hops,
-  const [visType, setVisType] = useState("barchart");
+  const [visType, setVisType] = useState("hopsdist");
 
   const divContainer = useRef(null);
 
@@ -154,10 +154,10 @@ const Task2Page = (props) => {
   useEffect(() => {
     async function fetchData() {
       //for dev, comment this for prod.
-      // const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
+      const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result = await axios.get("/api/data" + "?numsimulations=33");
       console.log(result.data.treatment);
-      setVisType(result.data.treatment);
+      // setVisType(result.data.treatment);
       let data = result.data.data;
       let stk = data.equities_sp.map((s, i) => {
         return { key: i, value: s };
@@ -231,7 +231,8 @@ const Task2Page = (props) => {
             {" "}
             maximize expected rate of return{" "}
           </span>{" "}
-          over a <span style={{ fontWeight: "bold" }}>
+          over a{" "}
+          <span style={{ fontWeight: "bold" }}>
             thirty (30) year period.
           </span>{" "}
           {/*planning horizon.*/}

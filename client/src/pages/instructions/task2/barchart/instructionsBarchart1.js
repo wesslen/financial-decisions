@@ -104,6 +104,8 @@ const InstructionsBarchart1 = (props) => {
     console.log(newPage);
     if (newPage < 4) {
       setPage(newPage);
+    } else {
+      history.push("/task2");
     }
   };
   // setExtent(extent);
