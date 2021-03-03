@@ -65,21 +65,21 @@ const Debrief = (props) => {
       });
   }, []);
 
-  function createData(
-    trial,
-    user_allocation,
-    simulated_returns,
-    simulated_percentile,
-    incentive
-  ) {
-    return {
-      trial,
-      user_allocation,
-      simulated_returns,
-      simulated_percentile,
-      incentive,
-    };
-  }
+  // function createData(
+  //   trial,
+  //   user_allocation,
+  //   simulated_returns,
+  //   simulated_percentile,
+  //   incentive
+  // ) {
+  //   return {
+  //     trial,
+  //     user_allocation,
+  //     simulated_returns,
+  //     simulated_percentile,
+  //     incentive,
+  //   };
+  // }
 
   // const terms = [
   //   createData("1", "34%", "24.4%", "78%", "$0.01"),
@@ -178,7 +178,7 @@ const Debrief = (props) => {
                     <TableCell>{row.stockAllocation}</TableCell>
                     <TableCell>{row.expReturns}</TableCell>
                     <TableCell>{row.percrank}</TableCell>
-                    <TableCell>{row.decile}</TableCell>
+                    <TableCell>{row.payment}</TableCell>
                   </TableRow>
                 );
               })}

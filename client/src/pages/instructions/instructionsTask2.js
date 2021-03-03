@@ -53,12 +53,12 @@ const InstructionsTask2 = (props) => {
   const [evalPeriod, setEvalPeriod] = useState(null);
   const [evalIndex, setEvalIndex] = useState(0);
 
-  const [visType, setVisType] = useState("barchart");
+  const [visType, setVisType] = useState("table");
 
 
   const [loadingOpacity, setLoadingOpacity] = useState(0);
   const [pageOpacity, setPageOpacity] = useState(1);
-  // const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
   const [allocation, setAllocation] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [allocationText, setAllocationText] = useState("");
@@ -73,10 +73,10 @@ const InstructionsTask2 = (props) => {
   useEffect(() => {
     async function fetchData() {
       const result = await axios.get("/api/changeround");
-      const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
+      //const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result2 = await axios.get("/api/data" + "?numsimulations=33");
       console.log(result2.data.treatment);
-      //setVisType(result2.data.treatment);
+      setVisType(result2.data.treatment);
       let data = result2.data.data;
 
       // simulate
@@ -141,21 +141,21 @@ const InstructionsTask2 = (props) => {
       {/*    Instructions will be provided before on how to interpret the new data visualization.*/}
       {/*  </li>*/}
       {/*</ul>*/}
-      <div
-        style={{
-          textAlign: "center",
-          paddingTop: "10px",
-          paddingBottom: "10px",
-        }}
-      >
-        <Button
-          style={{ backgroundColor: "gray", color: "black" }}
-          variant="contained"
-          onClick={handleConsent}
-        >
-          Continue
-        </Button>
-      </div>
+      {/*<div*/}
+      {/*  style={{*/}
+      {/*    textAlign: "center",*/}
+      {/*    paddingTop: "10px",*/}
+      {/*    paddingBottom: "10px",*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <Button*/}
+      {/*    style={{ backgroundColor: "gray", color: "black" }}*/}
+      {/*    variant="contained"*/}
+      {/*    onClick={handleConsent}*/}
+      {/*  >*/}
+      {/*    Continue*/}
+      {/*  </Button>*/}
+      {/*</div>*/}
     </Container>
   );
 };

@@ -9,7 +9,7 @@ const getReturns = require("../functions/generateDataset");
 const axios = require("axios");
 
 // get returns
-const gr = new getReturns("task1");
+// const gr = new getReturns("task1");
 
 const Response = mongoose.model("response", responseSchema);
 
@@ -163,7 +163,10 @@ router.get("/data", (req, res) => {
   console.log(req.query);
   let numSimulations = +req.query.numsimulations || 33;
   let evalPeriod = req.session.evalPeriods[req.session.evalPeriodIndex];
-  let gr = new getReturns("task1");
+
+  // create if then statement for task1 vs task2
+
+  let gr = new getReturns("task1_sample"); // modified
   let returns = gr.getReturns(evalPeriod, numSimulations);
   returns.then((result) => {
     res.json({
