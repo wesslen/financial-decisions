@@ -61,12 +61,12 @@ const InstructionsHops1 = (props) => {
         title: "What does each line stand for?",
         isRequired: true,
         choices: [
-          "Wrong answer 1",
-          "Wrong answer 2",
-          "Correct answer",
-          "Wrong answer 3",
+          "An investment year",
+          "An investable asset",
+          "A possible rate of return",
+          "The maximum rate of a return for the asset",
         ],
-        correctAnswer: "Correct answer",
+        correctAnswer: "A possible rate of return",
       },
     ],
   };
@@ -77,7 +77,7 @@ const InstructionsHops1 = (props) => {
 
   model.onValidateQuestion.add(function (s, options) {
    if (options.name == 'Hops_Instruction2') {
-       if(options.value != 'Correct answer') {
+       if(options.value != 'A possible rate of return') {
             options.error = "Your answer is not correct. Please try again.";
         }
     }
@@ -88,7 +88,7 @@ const InstructionsHops1 = (props) => {
   const handlePage = () => {
     let newPage = page + 1;
     console.log(newPage);
-    if (newPage < 4) {
+    if (newPage < 3) {
       setPage(newPage);
     } else {
       history.push("/task2");
@@ -127,28 +127,24 @@ const InstructionsHops1 = (props) => {
     return Math.random() * (max - min) + min;
   }
   
-
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <div style={{ height: "50%" }}>
         <div
-          style={{ display: page === 0 ? "" : "none" }}
+          style={{ display: page === 0 ? "" : "none", justifyContent: "center" }}
           className={classes.page}
         >
+          <Grid container spacing={3}>
+            <Grid item>
           <h3>Round 2 Instructions</h3>
           <ul>
             <li>You'll repeat the same task for new funds: C and D.</li>
-            <li>However, now you will view a <b>hypothetical outcome plot</b> of the returns.</li>
-            <li>
-              Your goal is to maximize your expected returns over a thirty (30)
-              year period.
-            </li>
+            <li>Now you will view a new visualization of the rates of return.</li>
+            <li>Each line represents a possible rate of rate.  </li>
           </ul>
-        </div>
-        <div
-          style={{ display: page === 1 ? "" : "none" }}
-          className={classes.page}
-        >
+              </Grid>
+            <Grid item>
+          <h3>Example</h3>
           <img
             src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
             //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
@@ -156,32 +152,42 @@ const InstructionsHops1 = (props) => {
             style={{ width: 400 }}
             className={classes.image}
           />
-                              <ul>
-            <li>[Add in description and change this plot for HOPs]</li>
-          </ul>
+            </Grid>
+          </Grid>
         </div>
-
 
         <div
           style={{
-            width: "100%",
+            width: "40%",
             // height: "60%",
             margin: "0 auto",
-            overflow: "auto",
+            //overflow: "auto",
             paddingTop: "30px",
             paddingBottom: "30px",
-            display: page === 2 ? "" : "none",
+            display: page === 1 ? "" : "none",
           }}
           className={classes.page}
         >
+          <h3>Example</h3>
+          <img
+            src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+            //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
+            alt=""
+            style={{ width: 400 }}
+            className={classes.image}
+          />
+
           <Survey.Survey model={model} /> {/*onComplete={onComplete}*/}
+
         </div>
-                                <div
-          style={{ display: page === 3 ? "" : "none" }}
+                        <div
+          style={{ display: page === 2 ? "" : "none" }}
           className={classes.page}
         >
           <h3>Round 2 Instructions</h3>
           <ul>
+            <li>Like Round 1, you will be provided returns across different evaluation periods.</li>
+            <li>And you will make your allocation decision based on a 30 year investment period.</li>
             <li>Press Next to proceed to Round 2</li>
           </ul>
         </div>

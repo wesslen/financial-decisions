@@ -53,7 +53,7 @@ const InstructionsTask2 = (props) => {
   const [evalPeriod, setEvalPeriod] = useState(null);
   const [evalIndex, setEvalIndex] = useState(0);
 
-  const [visType, setVisType] = useState("table");
+  const [visType, setVisType] = useState("hopsdist");
 
 
   const [loadingOpacity, setLoadingOpacity] = useState(0);
@@ -73,10 +73,10 @@ const InstructionsTask2 = (props) => {
   useEffect(() => {
     async function fetchData() {
       const result = await axios.get("/api/changeround");
-      //const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
+      const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result2 = await axios.get("/api/data" + "?numsimulations=33");
       console.log(result2.data.treatment);
-      setVisType(result2.data.treatment);
+      //setVisType(result2.data.treatment);
       let data = result2.data.data;
 
       // simulate

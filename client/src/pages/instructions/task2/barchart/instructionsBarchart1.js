@@ -235,10 +235,6 @@ const InstructionsBarchart1 = (props) => {
           <ul>
             <li>You'll repeat the same task for new funds: C and D.</li>
             <li>You will use the same <b>bar chart</b> as round 1.</li>
-            <li>
-              Your goal is to maximize your expected returns over a thirty (30)
-              year period.
-            </li>
           </ul>
         </div>
         {/*<div*/}
@@ -278,6 +274,8 @@ const InstructionsBarchart1 = (props) => {
         >
           <h3>Round 2 Instructions</h3>
           <ul>
+            <li>Like Round 1, you will be provided returns across different evaluation periods.</li>
+            <li>And you will make your allocation decision based on a 30 year investment period.</li>
             <li>Press Next to proceed to Round 2</li>
           </ul>
         </div>
