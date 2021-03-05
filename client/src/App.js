@@ -11,6 +11,7 @@ import MidSurvey2Page from "./pages/survey/mid2";
 import ConsentPage from "./pages/consent/consent";
 // import InstructionsMainPage from "./pages/instructions/instructionMain";
 import InstructionsCaptcha from "./pages/instructions/instructionsCaptcha";
+import InstructionsIntro from "./pages/instructions/instructionsIntro";
 import Instructions1Page from "./pages/instructions/instructions1";
 import Instructions2Page from "./pages/instructions/instructions2";
 import Instructions3Page from "./pages/instructions/instructions3";
@@ -87,12 +88,17 @@ class App extends React.Component {
                 }}
               />
               <Route path="/consent" component={ConsentPage}></Route>
-              <Route path="/pre" component={PreSurveyPage}></Route>
-              {/*<Route path="/instructions" component={InstructionsMainPage}></Route>*/}
-              <Route
+                            <Route
                 path="/instructionsCaptcha"
                 component={InstructionsCaptcha}
               ></Route>
+                            <Route
+                path="/InstructionsIntro"
+                component={InstructionsIntro}
+              ></Route>
+              <Route path="/pre" component={PreSurveyPage}></Route>
+              {/*<Route path="/instructions" component={InstructionsMainPage}></Route>*/}
+
               <Route
                 path="/instructions1"
                 component={Instructions1Page}

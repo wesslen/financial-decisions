@@ -30,7 +30,7 @@ const Consent = (props) => {
   const handleConsent = () => {
     axios.get("/api/consent").then((result) => {
       //   console.log(result.data);
-      history.push("/pre");
+      history.push("/instructionsCaptcha");
     });
   };
   const classes = useStyles();

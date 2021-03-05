@@ -45,41 +45,95 @@ const InstructionsIntro = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
+  const [bonds, setBonds] = useState([]);
+  const [stocks, setStocks] = useState([]);
+  const [extent, setExtent] = useState(null);
+  const [evalPeriod, setEvalPeriod] = useState(null);
   const handleConsent = () => {
-    history.push("/instructions1");
+    history.push("/pre");
   };
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const result = await axios.get("/api/data");
+  //     let data = result.data.data;
+  //     setEvalPeriod(result.data.evalPeriod);
+  //     let stk = data.equities_sp.map((s, i) => {
+  //       return { key: i, value: s };
+  //     });
+  //     let bnd = data.treasury_10yr.map((s, i) => {
+  //       return { key: i, value: s };
+  //     });
+  //     let extent = d3.extent([...data.treasury_10yr, ...data.equities_sp]);
+  //     console.log(extent, "this is the extent of both datasets");
+  //     setExtent(extent);
+  //     setStocks(stk);
+  //     setBonds(bnd);
+  //   }
+  //   fetchData();
+  // }, []);
+  //DEMONSTRATING DATA VISUALIZATION, creating random data
+  function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  const stks_sim1 = [];
+  const bnds_sim1 = [];
+  const stks_sim2 = [];
+  const bnds_sim2 = [];
+  for (let i = 0; i < 41; i++) {
+    stks_sim1.push({ key: i, value: getRandomArbitrary(-0.3, 0.3) });
+    bnds_sim1.push({ key: i, value: getRandomArbitrary(-0.08, 0.08) });
+    stks_sim2.push({ key: i, value: getRandomArbitrary(-0.1, 0.1) });
+    bnds_sim2.push({ key: i, value: getRandomArbitrary(-0.05, 0.05) });
+  }
+
+  let extent1 = d3.extent([
+    ...stks_sim1.map((d) => d.value),
+    ...bnds_sim1.map((d) => d.value),
+  ]);
+  let maxExtent1 = d3.max(extent1);
+
+  extent1 = [-maxExtent1, maxExtent1];
+  console.log(extent1, "Asdasd");
+
+  let extent2 = d3.extent([
+    ...stks_sim2.map((d) => d.value),
+    ...bnds_sim2.map((d) => d.value),
+  ]);
+  let maxExtent2 = d3.max(extent2);
+  extent2 = [-maxExtent2, maxExtent2];
 
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Instructions</h3>
       <p>
-        Please maximize your browser to your screen.
+        Welcome to this experiment!
       </p>
       <p>
-        Do <b>not</b> refresh your browser. If you do, you will need to restart the study.
+        To optimize your experience, we highly recommend using Google Chrome on a desktop computer. Do not use a mobile device to take the experiment.
       </p>
       <p>
         {" "}
-        Chrome browser on a desktop (not mobile) is highly encouraged. Using other browsers or mobile devices may lead to problems.
+        Please maximize the browser window to your screen.
       </p>
       <p>
-        Your goal is to <b>maximize</b> your <b>expected return</b> for <b>thirty (30) years</b>  when you plan to retire.
+        Do not refresh your browser. If you do, you may have to restart the experiment.
       </p>
-      {/*<img*/}
-      {/*  src={process.env.PUBLIC_URL + "/uncertainty1.gif"}*/}
-      {/*  alt=""*/}
-      {/*  className={classes.image}*/}
-      {/*/>*/}
+            <p>
+        Please click Next to proceed to the Pre-questionnaire questions followed by the experiment instructions.
+      </p>
+      <img
+        src={process.env.PUBLIC_URL + "/intro-table.png"}
+        alt=""
+        className={classes.image}
+      />
       {/*<p>*/}
       {/*  In the next animation, the user decides to put their allocation near an*/}
       {/*  even mix of 50% and 50%.*/}
       {/*</p>*/}
-      {/*<img*/}
-      {/*  src={process.env.PUBLIC_URL + "/uncertainty2.gif"}*/}
-      {/*  alt=""*/}
-      {/*  className={classes.image}*/}
-      {/*/>*/}
+
       <div
         style={{
           textAlign: "center",

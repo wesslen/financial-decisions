@@ -51,7 +51,7 @@ const InstructionsCaptcha = (props) => {
   const [extent, setExtent] = useState(null);
   const [evalPeriod, setEvalPeriod] = useState(null);
   const handleConsent = () => {
-    history.push("/instructions1");
+    history.push("/instructionsIntro");
   };
 
   // useEffect(() => {
