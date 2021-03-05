@@ -317,7 +317,7 @@ const Task1Page = (props) => {
         >
           <p>
             {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-            <span> Rates of returns </span> are averaged and annualized over a{" "}
+            <span> Rates of returns </span> are over a{" "}
             <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
             evaluation period.
           </p>

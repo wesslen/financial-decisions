@@ -156,29 +156,44 @@ const Instructions3 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-      <h3>Definitions:</h3>
-      <TableContainer>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Term</TableCell>
-              <TableCell>Definition</TableCell>
-              <TableCell>Examples</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {terms.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.term}
-                </TableCell>
-                <TableCell>{row.definition}</TableCell>
-                <TableCell>{row.examples}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {/*<h3>Definitions:</h3>*/}
+      {/*<TableContainer>*/}
+      {/*  <Table className={classes.table} aria-label="simple table">*/}
+      {/*    <TableHead>*/}
+      {/*      <TableRow>*/}
+      {/*        <TableCell>Term</TableCell>*/}
+      {/*        <TableCell>Definition</TableCell>*/}
+      {/*        <TableCell>Examples</TableCell>*/}
+      {/*      </TableRow>*/}
+      {/*    </TableHead>*/}
+      {/*    <TableBody>*/}
+      {/*      {terms.map((row) => (*/}
+      {/*        <TableRow key={row.name}>*/}
+      {/*          <TableCell component="th" scope="row">*/}
+      {/*            {row.term}*/}
+      {/*          </TableCell>*/}
+      {/*          <TableCell>{row.definition}</TableCell>*/}
+      {/*          <TableCell>{row.examples}</TableCell>*/}
+      {/*        </TableRow>*/}
+      {/*      ))}*/}
+      {/*    </TableBody>*/}
+      {/*  </Table>*/}
+      {/*</TableContainer>*/}
+      <h3>Compensation for Study Completion:</h3>
+      <p>
+            If you complete the study, you will receive <b>$1.00</b>.
+      </p>
+      <p>
+            You are eligible for <b>optional incentives of up to $3.50</b>{" "}
+            depending on your decisions.
+      </p>
+      <p>
+            For each decision, a model will simulate
+            hypothetical results.
+      </p>
+      <p>
+        You will receive up to $0.25 per task for better performance (i.e., higher/better simulated results).
+      </p>
       <div
         style={{
           textAlign: "center",

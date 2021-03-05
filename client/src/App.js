@@ -13,7 +13,7 @@ import ConsentPage from "./pages/consent/consent";
 import InstructionsCaptcha from "./pages/instructions/instructionsCaptcha";
 import Instructions1Page from "./pages/instructions/instructions1";
 import Instructions2Page from "./pages/instructions/instructions2";
-// import Instructions3Page from "./pages/instructions/instructions3";
+import Instructions3Page from "./pages/instructions/instructions3";
 import Instructions4Page from "./pages/instructions/instructions4";
 import Instructions5Page from "./pages/instructions/instructions5";
 import Instructions6Page from "./pages/instructions/instructions6";
@@ -101,7 +101,7 @@ class App extends React.Component {
                 path="/instructions2"
                 component={Instructions2Page}
               ></Route>
-              {/*<Route path="/instructions3" component={Instructions3Page}></Route>*/}
+              <Route path="/instructions3" component={Instructions3Page}></Route>
               <Route
                 path="/instructions4"
                 component={Instructions4Page}

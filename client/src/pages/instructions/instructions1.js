@@ -181,11 +181,7 @@ const Instructions1 = (props) => {
       {/*  In the next animation, the user decides to put their allocation near an*/}
       {/*  even mix of 50% and 50%.*/}
       {/*</p>*/}
-      {/*<img*/}
-      {/*  src={process.env.PUBLIC_URL + "/uncertainty2.gif"}*/}
-      {/*  alt=""*/}
-      {/*  className={classes.image}*/}
-      {/*/>*/}
+
       <div
         style={{
           textAlign: "center",
