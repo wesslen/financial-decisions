@@ -233,7 +233,7 @@ const Task2Page = (props) => {
           </span>{" "}
           over a{" "}
           <span style={{ fontWeight: "bold" }}>
-            thirty (30) year period.
+            thirty (30) year investment period.
           </span>{" "}
           {/*planning horizon.*/}
         </p>

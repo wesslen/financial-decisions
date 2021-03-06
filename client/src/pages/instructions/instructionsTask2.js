@@ -76,7 +76,7 @@ const InstructionsTask2 = (props) => {
       const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result2 = await axios.get("/api/data" + "?numsimulations=33");
       console.log(result2.data.treatment);
-      //setVisType(result2.data.treatment);
+      setVisType(result2.data.treatment);
       let data = result2.data.data;
 
       // simulate

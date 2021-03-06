@@ -79,7 +79,7 @@ const Instructions5 = (props) => {
       // setDisabledDecision(false);
       // setAllocation(newVal);
     } else {
-      alert("Try again. Hover your mouse over the largest bar. ");
+      alert("Try again. Hover your mouse over the bar that indicates the best possible return. ");
       // setDisabledDecision(true);
     }
     // setDisabledDecision(false);
@@ -189,7 +189,7 @@ const Instructions5 = (props) => {
             extent={extent}
             title="X"
             data={stocks}
-            allocation={allocation !== null ? " " : " "}
+            allocation={"33 possible returns as "}
           ></Barchart>{" "}
           {/*extent={extent}*/}
           {/* <Dotplot data={data}></Dotplot> */}
@@ -211,14 +211,14 @@ const Instructions5 = (props) => {
         }}
       >
         <p>
-          This chart shows the average rates of return for Fund X over thirty
-          years.
+          This chart shows rates of return for Fund X over a <b>one
+          year evaluation period</b>.
           {/*<span style={{ fontWeight: "bold" }}>Objective</span>:{" "}*/}
           {/*<span className={classes.emph}> maximize annual rate of return </span>{" "}*/}
           {/*over a thirty (30) years.*/}
         </p>
         <p>
-          Each bar represents a historical rate of return, ranked from worst
+          Each bar represents 1 of 33 possible rates of return, ranked from worst
           (left) to best (right).
           {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
           {/*<span> Rates of returns </span> are averaged and annualized over a{" "}*/}
@@ -226,8 +226,8 @@ const Instructions5 = (props) => {
           {/*period.*/}
         </p>
         <p>
-          You can hover your mouse to view the value. By hovering your mouse,
-          what is Fund X's best average rate of return value?
+          You can hover your mouse to view each bar's value. </p><p> By hovering your mouse,
+          what is Fund X's best possible rate of return?
         </p>
         <form className={classes.root} autoComplete="off">
           {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}

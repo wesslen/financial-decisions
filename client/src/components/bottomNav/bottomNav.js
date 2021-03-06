@@ -66,6 +66,7 @@ const BottomNav = (props) => {
         value="/instructions1" // need to pass instructions1 - instructions8.js
         className={classes.selected}
       />
+
       <BottomNavigationAction
         label="Round 1"
         value="/task1"

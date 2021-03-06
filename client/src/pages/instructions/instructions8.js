@@ -157,17 +157,24 @@ const Instructions8 = (props) => {
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h4>Round 1</h4>
+                  <img
+        src={process.env.PUBLIC_URL + "/eval-period.png"}
+        alt=""
+        className={classes.image}
+        style={{width: '70%'}}
+      />
       <ul>
         <li>
-          You'll have <b>seven</b> allocation decisions for two funds.
+          In round 1, you will make <b>seven</b> allocation decisions for two new funds: A and B.
         </li>
         <li>
-          Each time you will see funds' rate of returns framed as different
-          evaluation periods (e.g., one year period, thirty year period).
+          As a reminder, each decision will differ as the returns are framed in <b>different evaluation periods</b> (e.g., 1 year to 30 years).
         </li>
         <li>
-          Your goal is to maximize your expected returns over a thirty (30) year
-          period.
+          Assume for all decisions you will be investing over a <b>30 year investment period</b>.
+        </li>
+        <li>
+          Please click <b>Continue</b> to begin round 1.
         </li>
       </ul>
       <div

@@ -264,9 +264,7 @@ const Instructions6 = (props) => {
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
-                <p>
-          In this study, you'll be provided two funds (e.g., Fund Y and Z). You to decide how to allocate your retirement investment.
-        </p>
+
       <div
         style={{
           width: "90%",
@@ -277,11 +275,12 @@ const Instructions6 = (props) => {
           justifyContent: "center",
         }}
       >
+                        <p>
+          In this study, you'll be provided two funds (e.g., Fund Y and Z).
+        </p>
 
                 <p>
-          <span style={{ fontWeight: "bold" }}>Objective</span>:{" "}
-          <span className={classes.emph}> maximize expected annual rate of return </span>
-          over a thirty (30) years.
+                  You will decide how to allocate your retirement investment between these two funds to <b>maximize your expected investment</b> over a <b>thirty year investment period</b>.
         </p>
 
         <Grid
@@ -292,7 +291,7 @@ const Instructions6 = (props) => {
         >
           <Barchart
             // title={evalIndex < 4 ? "A" : "B"}
-            title="A"
+            title="X"
             extent={extent}
             allocation={
               allocationLeft !== null ? allocationLeft : "Insert a value in "
@@ -300,7 +299,7 @@ const Instructions6 = (props) => {
             data={left === "stocks" ? stocks : bonds}
           ></Barchart>
           <Barchart
-            title="B"
+            title="Y"
             extent={extent}
             allocation={
               allocationRight !== null ? allocationRight : "Insert a value in "
@@ -318,13 +317,13 @@ const Instructions6 = (props) => {
       >
         <p>
           {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-          In this example, rates of returns are now framed in <span style={{ fontWeight: "bold" }}>thirty (30) year</span> returns, averaged and annualized.
+          In this example, rates of returns are now framed using a <span style={{ fontWeight: "bold" }}>thirty (30) year</span> evaluation period.
         </p>
         <p>Between 0% and 100%, how much do you want to allocate to each fund?</p>
         <form className={classes.root} noValidate autoComplete="off">
             <TextField
               id="Practice1"
-              label="Fund A allocation %"
+              label="Fund X allocation %"
               type="number"
               color="secondary"
               value={allocationTextLeft}
@@ -335,7 +334,7 @@ const Instructions6 = (props) => {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <TextField
               id="Practice2"
-              label="Fund B allocation %"
+              label="Fund Y allocation %"
               type="number"
               color="secondary"
               value={allocationTextRight}

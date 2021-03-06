@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
   },
   image: {
-    width: "50%",
+    width: "100%",
     display: "block",
     margin: "auto",
   },
@@ -109,26 +109,16 @@ const InstructionsIntro = (props) => {
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Instructions</h3>
       <p>
-        Welcome to this experiment!
-      </p>
-      <p>
-        To optimize your experience, we highly recommend using Google Chrome on a desktop computer. Do not use a mobile device to take the experiment.
-      </p>
-      <p>
-        {" "}
-        Please maximize the browser window to your screen.
-      </p>
-      <p>
-        Do not refresh your browser. If you do, you may have to restart the experiment.
-      </p>
-            <p>
-        Please click Next to proceed to the Pre-questionnaire questions followed by the experiment instructions.
+        Welcome to this study! To optimize your experience, please now follow these steps:
       </p>
       <img
         src={process.env.PUBLIC_URL + "/intro-table.png"}
         alt=""
         className={classes.image}
       />
+                  <p>
+        Please click <b>Continue</b> to proceed to the pre-questionnaire followed by the study instructions.
+      </p>
       {/*<p>*/}
       {/*  In the next animation, the user decides to put their allocation near an*/}
       {/*  even mix of 50% and 50%.*/}
