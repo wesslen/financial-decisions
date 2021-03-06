@@ -6,7 +6,7 @@ const gmean = require("gmean");
 const jStat = require("jstat");
 
 function getReturns(seed) {
-  var rng = seedrandom("test");
+  var rng = seedrandom(seed);
   this.getReturns = async function (n_bootstrap, n_simul) {
     // make sure the csv file is in the same folder.
     let csvPath = path.join(__dirname, "returns.csv");

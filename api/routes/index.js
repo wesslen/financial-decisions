@@ -52,6 +52,7 @@ router.get("/debrief", (req, res) => {
 router.get("/changeround", (req, res) => {
   console.log(req.session.round);
   req.session.round = 2;
+  req.session.seed = "task2";
   // req.session.evalPeriods = getEvaluationPeriods();
   req.session.evalPeriodIndex = 0;
   console.log(req.session.round);
@@ -166,7 +167,7 @@ router.get("/data", (req, res) => {
 
   // create if then statement for task1 vs task2
 
-  let gr = new getReturns("task1_sample"); // modified
+  let gr = new getReturns(req.session.seed); // modified
   let returns = gr.getReturns(evalPeriod, numSimulations);
   returns.then((result) => {
     res.json({
@@ -179,6 +180,7 @@ router.get("/data", (req, res) => {
 
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {
+    req.session.seed = "task1";
     let usertoken = randomstring.generate(8);
     req.session.usertoken = usertoken;
     req.session.evalPeriods = getEvaluationPeriods();

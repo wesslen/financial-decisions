@@ -22,7 +22,6 @@ import Dotplot from "../../components/visualization/dotplot/dotplot";
 import * as d3 from "d3";
 import InstructionController from "../../components/instructions/task2instructionscontroller";
 
-
 const useStyles = makeStyles((theme) => ({
   emph: {
     fontWeight: "bold",
@@ -55,7 +54,6 @@ const InstructionsTask2 = (props) => {
 
   const [visType, setVisType] = useState("hopsdist");
 
-
   const [loadingOpacity, setLoadingOpacity] = useState(0);
   const [pageOpacity, setPageOpacity] = useState(1);
   const [data, setData] = useState([]);
@@ -68,12 +66,10 @@ const InstructionsTask2 = (props) => {
     history.push("/task2");
   };
 
-
-
   useEffect(() => {
     async function fetchData() {
       const result = await axios.get("/api/changeround");
-      const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
+      // const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result2 = await axios.get("/api/data" + "?numsimulations=33");
       console.log(result2.data.treatment);
       setVisType(result2.data.treatment);
@@ -97,7 +93,6 @@ const InstructionsTask2 = (props) => {
       extent1 = [-maxExtent1, maxExtent1];
       // console.log(extent1, "Asdasd");
 
-
       setExtent([-0.1, 0.1]);
       setEvalPeriod(1);
       setLoadingOpacity(0.8);
@@ -112,7 +107,6 @@ const InstructionsTask2 = (props) => {
         setLoadingOpacity(0);
         setPageOpacity(1);
       }, 1000);
-
     }
     fetchData();
   }, []);
@@ -124,11 +118,11 @@ const InstructionsTask2 = (props) => {
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <InstructionController
-          // title={evalIndex < 4 ? "A" : "B"}
-          vizType={visType}
-          stocks={stocks}
-          bonds={bonds}
-        ></InstructionController>
+        // title={evalIndex < 4 ? "A" : "B"}
+        vizType={visType}
+        stocks={stocks}
+        bonds={bonds}
+      ></InstructionController>
       {/*<h4>Round 2</h4>*/}
       {/*<ul>*/}
       {/*  <li>*/}

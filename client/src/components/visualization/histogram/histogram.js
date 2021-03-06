@@ -21,7 +21,7 @@ const Histogram = (props) => {
         const leftMarginPct = 0.1;
         const rightMarginPct = 0.08;
         const topMarginPct = 0.15;
-        const bottomMarginPct = 0.05;
+        const bottomMarginPct = 0.15;
 
         const margins = {
           left: width * leftMarginPct,
