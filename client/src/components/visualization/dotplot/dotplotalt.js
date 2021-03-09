@@ -33,8 +33,8 @@ const Dotplot = (props) => {
         const nbins = props.nBins || props.data.length;
         const leftMarginPct = 0.1;
         const rightMarginPct = 0.15;
-        const topMarginPct = 0.3;
-        const bottomMarginPct = 0.1;
+        const topMarginPct = 0.2;
+        const bottomMarginPct = 0.15;
         const allocation = props.allocation || 0;
         const margins = {
           left: width * leftMarginPct,
@@ -79,6 +79,9 @@ const Dotplot = (props) => {
             return d.Value;
           });
 
+        let tip = d3.select(".tooltip");
+        let formatPercent = d3.format(".1%");
+
         const bins = histogram(data).filter((d) => d.length > 0);
 
         let binContainer = dotplotContainer.selectAll(".gBin").data(bins);
@@ -114,6 +117,16 @@ const Dotplot = (props) => {
           .attr("r", 0)
           .attr("r", function (d) {
             return d.length == 0 ? 0 : d.radius;
+          })
+          .on("mousemove", function (d) {
+            tip.style("opacity", 1);
+            tip
+              .html(formatPercent(d.value.toFixed(3)))
+              .style("left", d3.event.pageX + "px")
+              .style("top", d3.event.pageY - 28 + "px");
+          })
+          .on("mouseout", function (d) {
+            tip.style("opacity", 0);
           });
 
         binContainerEnter
