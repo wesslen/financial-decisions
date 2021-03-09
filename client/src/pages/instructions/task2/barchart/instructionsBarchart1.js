@@ -76,7 +76,7 @@ const InstructionsBarchart1 = (props) => {
       },
     ],
   };
-
+  props.setDisabled();
   const model = new Survey.Model(json);
   model.showCompletedPage = false;
 

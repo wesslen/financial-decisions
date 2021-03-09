@@ -73,6 +73,10 @@ const InstructionsHops1 = (props) => {
   model.showCompletedPage = false;
   // model.showNavigationButtons = false;
 
+  const handleDisabled = () => {
+    props.setDisabled();
+  };
+
   model.onValidateQuestion.add(function (s, options) {
     if (options.name == "Hops_Instruction2") {
       if (options.value != "A possible rate of return") {
@@ -181,7 +185,8 @@ const InstructionsHops1 = (props) => {
             style={{ width: 400 }}
             className={classes.image}
           />
-          <Survey.Survey model={model} /> {/*onComplete={onComplete}*/}
+          <Survey.Survey model={model} onComplete={handleDisabled} />{" "}
+          {/*onComplete={onComplete}*/}
         </div>
         <div
           style={{ display: page === 2 ? "" : "none" }}

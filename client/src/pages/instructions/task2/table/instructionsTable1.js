@@ -71,6 +71,10 @@ const InstructionsTable1 = (props) => {
 
   const model = new Survey.Model(json);
   model.showCompletedPage = false;
+
+  const handleDisabled = () => {
+    props.setDisabled();
+  };
   // model.showNavigationButtons = false;
 
   model.onValidateQuestion.add(function (s, options) {
@@ -179,7 +183,7 @@ const InstructionsTable1 = (props) => {
             style={{ width: 400 }}
             className={classes.image}
           />
-          <Survey.Survey model={model} onComplete={props.setDisabled} />{" "}
+          <Survey.Survey model={model} onComplete={handleDisabled} />{" "}
           {/*onComplete={onComplete}*/}
         </div>
         <div
