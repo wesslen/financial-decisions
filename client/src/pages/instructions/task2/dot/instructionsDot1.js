@@ -83,6 +83,10 @@ const InstructionsDot1 = (props) => {
 
   const page = props.page;
 
+  const handleDisabled = () => {
+    props.setDisabled();
+  };
+
   // const [page, setPage] = useState(0);
 
   // const handlePage = () => {
@@ -180,7 +184,8 @@ const InstructionsDot1 = (props) => {
             style={{ width: 600 }}
             className={classes.image}
           />
-          <Survey.Survey model={model} /> {/*onComplete={onComplete}*/}
+          <Survey.Survey model={model} onComplete={handleDisabled} />{" "}
+          {/*onComplete={onComplete}*/}
         </div>
         <div
           style={{ display: page === 2 ? "" : "none" }}
