@@ -55,7 +55,6 @@ const Debrief = (props) => {
 
     // need to save incentives to mongo!!
     axios.post("/api/incentives", incentives2).then((incentives2) => {
-
       // history.push("/instructions");
     });
     // console.log("here we will post the user decision");
@@ -78,8 +77,6 @@ const Debrief = (props) => {
       .catch((error) => {
         console.log(error);
       });
-
-
   }, []);
 
   // function createData(
@@ -151,7 +148,8 @@ const Debrief = (props) => {
         holding all other factors constant.
       </p>
       <p>
-        Your MTurk code is <b>{token}</b>
+        Your MTurk code is <br></br>
+        <b>{token}</b>
       </p>
       <p>
         Please enter this code in the text box on Amazon MTurk as a proof of
