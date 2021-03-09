@@ -56,7 +56,7 @@ const Interval = (props) => {
           .append("g")
           .attr("transform", `translate(${margins.left},${h + margins.top})`)
           .call(
-            d3.axisBottom(xScale)
+            d3.axisBottom(xScale).tickFormat(d3.format(".0%"))
             //   .ticks(tickLabels.length - 1)
             //   .tickFormat((d, i) => tickLabels[i])
           )
@@ -64,8 +64,8 @@ const Interval = (props) => {
         let vals = props.data.map((d) => d.value);
         let mean = jStat.mean(vals);
         let stdev = jStat.stdev(vals);
-        let q_ci66 = jStat.quantiles(vals, [.17,.83]);
-        let q_xi95 = jStat.quantiles(vals, [.025,.975]);
+        let q_ci66 = jStat.quantiles(vals, [0.17, 0.83]);
+        let q_xi95 = jStat.quantiles(vals, [0.025, 0.975]);
         let ci50 = [mean - 0.67449 * stdev, mean + 0.67449 * stdev];
 
         let ci95 = [mean - 1.95996 * stdev, mean + 1.95996 * stdev];

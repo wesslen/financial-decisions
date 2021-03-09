@@ -20,7 +20,6 @@ import TextField from "@material-ui/core/TextField";
 import * as d3 from "d3";
 import * as Survey from "survey-react";
 
-
 Survey.StylesManager.applyTheme("darkblue");
 
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +51,6 @@ const InstructionsDensity1 = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
-
   const json = {
     questions: [
       {
@@ -76,24 +74,24 @@ const InstructionsDensity1 = (props) => {
   // model.showNavigationButtons = false;
 
   model.onValidateQuestion.add(function (s, options) {
-   if (options.name == 'Density_Instruction2') {
-       if(options.value != 'The distribution of possible rates of return') {
-            options.error = "Your answer is not correct. Please try again.";
-        }
+    if (options.name == "Density_Instruction2") {
+      if (options.value != "The distribution of possible rates of return") {
+        options.error = "Your answer is not correct. Please try again.";
+      }
     }
-});
+  });
 
-  const [page, setPage] = useState(0);
-
-  const handlePage = () => {
-    let newPage = page + 1;
-    console.log(newPage);
-    if (newPage < 3) {
-      setPage(newPage);
-    } else {
-      history.push("/task2");
-    }
-  };
+  // const [page, setPage] = useState(0);
+  const page = props.page;
+  // const handlePage = () => {
+  //   let newPage = page + 1;
+  //   console.log(newPage);
+  //   if (newPage < 3) {
+  //     setPage(newPage);
+  //   } else {
+  //     history.push("/task2");
+  //   }
+  // };
   //
   // const [bonds, setBonds] = useState([]);
   // const [stocks, setStocks] = useState([]);
@@ -126,33 +124,39 @@ const InstructionsDensity1 = (props) => {
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
-  
 
   return (
     <Container maxWidth="lg" className={classes.instructContainer}>
       <div style={{ height: "50%" }}>
         <div
-          style={{ display: page === 0 ? "" : "none", justifyContent: "center" }}
+          style={{
+            display: page === 0 ? "" : "none",
+            justifyContent: "center",
+          }}
           className={classes.page}
         >
           <Grid container spacing={3}>
             <Grid item>
-          <h3>Round 2 Instructions</h3>
-          <ul>
-            <li>You'll repeat the same task for new funds: C and D.</li>
-            <li>Now you will view a new visualization of the rates of return.</li>
-            <li>The lines shows the distribution of possible rates of returns.</li>
-          </ul>
-              </Grid>
+              <h3>Round 2 Instructions</h3>
+              <ul>
+                <li>You'll repeat the same task for new funds: C and D.</li>
+                <li>
+                  Now you will view a new visualization of the rates of return.
+                </li>
+                <li>
+                  The lines shows the distribution of possible rates of returns.
+                </li>
+              </ul>
+            </Grid>
             <Grid item>
-          <h3>Example</h3>
-          <img
-            src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
-            //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
-            alt=""
-            style={{ width: 400 }}
-            className={classes.image}
-          />
+              <h3>Example</h3>
+              <img
+                src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+                //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
+                alt=""
+                style={{ width: 400 }}
+                className={classes.image}
+              />
             </Grid>
           </Grid>
         </div>
@@ -177,29 +181,34 @@ const InstructionsDensity1 = (props) => {
             style={{ width: 400 }}
             className={classes.image}
           />
-
-          <Survey.Survey model={model} /> {/*onComplete={onComplete}*/}
-
+          <Survey.Survey model={model} onComplete={props.setDisabled} />{" "}
+          {/*onComplete={onComplete}*/}
         </div>
-                        <div
+        <div
           style={{ display: page === 2 ? "" : "none" }}
           className={classes.page}
         >
           <h3>Round 2 Instructions</h3>
           <ul>
-            <li>Like Round 1, you will be provided returns across different evaluation periods.</li>
-            <li>And you will make your allocation decision based on a 30 year investment period.</li>
+            <li>
+              Like Round 1, you will be provided returns across different
+              evaluation periods.
+            </li>
+            <li>
+              And you will make your allocation decision based on a 30 year
+              investment period.
+            </li>
             <li>Press Next to proceed to Round 2</li>
           </ul>
         </div>
       </div>
-      <Button
+      {/* <Button
         style={{ backgroundColor: "gray", color: "black" }}
         variant="contained"
         onClick={handlePage}
       >
         Next
-      </Button>
+      </Button> */}
     </Container>
   );
 };

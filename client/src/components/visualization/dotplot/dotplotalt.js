@@ -69,7 +69,7 @@ const Dotplot = (props) => {
           .append("g")
           .attr("class", "axis axis--x")
           .attr("transform", "translate(0," + h + ")")
-          .call(d3.axisBottom(x));
+          .call(d3.axisBottom(x).tickFormat(d3.format(".0%")));
 
         const histogram = d3
           .histogram()

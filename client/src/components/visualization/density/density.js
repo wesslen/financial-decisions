@@ -38,7 +38,7 @@ const Density = (props) => {
         const leftMarginPct = 0.1;
         const rightMarginPct = 0.15;
         const topMarginPct = 0.3;
-        const bottomMarginPct = 0.1;
+        const bottomMarginPct = 0.15;
         const allocation = props.allocation || 0;
         const margins = {
           left: width * leftMarginPct,
@@ -94,13 +94,13 @@ const Density = (props) => {
           .append("g")
           .attr("class", "axis axis--x")
           .attr("transform", "translate(0," + h + ")")
-          .call(d3.axisBottom(x));
+          .call(d3.axisBottom(x).tickFormat(d3.format(".0%")));
 
         densityplotcontainer
           .append("g")
           .attr("class", "axis axis--y")
           // .attr("transform", "translate(0," + h + ")")
-          .call(d3.axisLeft(y));
+          .call(d3.axisLeft(y).ticks(5));
 
         densityplotcontainer
           .append("path")

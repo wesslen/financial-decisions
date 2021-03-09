@@ -60,7 +60,7 @@ const Hops = (props) => {
             `translate(${margins.left},${h / 2 + margins.top})`
           )
           .call(
-            d3.axisBottom(xScale)
+            d3.axisBottom(xScale).tickFormat(d3.format(".0%"))
             //   .ticks(tickLabels.length - 1)
             //   .tickFormat((d, i) => tickLabels[i])
           )

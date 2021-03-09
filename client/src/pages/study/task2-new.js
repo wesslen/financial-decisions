@@ -41,7 +41,7 @@ const Task2Page = (props) => {
   const [left, setLeft] = useState("stocks");
   const [alert, setAlert] = useState(false);
   //vizTypes : hops,
-  const [visType, setVisType] = useState("table");
+  const [visType, setVisType] = useState("density");
 
   const divContainer = useRef(null);
 

@@ -81,12 +81,12 @@ const InstructionsBarchart1 = (props) => {
   model.showCompletedPage = false;
 
   model.onValidateQuestion.add(function (s, options) {
-   if (options.name == 'Barchart_Instruction2') {
-       if(options.value != 'Correct answer') {
-            options.error = "Your answer is not correct. Please try again.";
-        }
+    if (options.name == "Barchart_Instruction2") {
+      if (options.value != "Correct answer") {
+        options.error = "Your answer is not correct. Please try again.";
+      }
     }
-});
+  });
 
   // const [bonds, setBonds] = useState([]);
   // const [stocks, setStocks] = useState([]);
@@ -104,17 +104,17 @@ const InstructionsBarchart1 = (props) => {
   // const [left, setLeft] = useState("stocks");
   //const [densityExtent, setDensityExtent] = useState([0, 0.5]);
 
-  const [page, setPage] = useState(0);
-
-  const handlePage = () => {
-    let newPage = page + 1;
-    console.log(newPage);
-    if (newPage < 2) {
-      setPage(newPage);
-    } else {
-      history.push("/task2");
-    }
-  };
+  // const [page, setPage] = useState(0);
+  const page = props.page;
+  // const handlePage = () => {
+  //   let newPage = page + 1;
+  //   console.log(newPage);
+  //   if (newPage < 2) {
+  //     setPage(newPage);
+  //   } else {
+  //     history.push("/task2");
+  //   }
+  // };
   // setExtent(extent);
   // setEvalPeriod(30);
   // setLoadingOpacity(0.8);
@@ -234,7 +234,9 @@ const InstructionsBarchart1 = (props) => {
           <h3>Round 2 Instructions</h3>
           <ul>
             <li>You'll repeat the same task for new funds: C and D.</li>
-            <li>You will use the same <b>bar chart</b> as round 1.</li>
+            <li>
+              You will use the same <b>bar chart</b> as round 1.
+            </li>
           </ul>
         </div>
         {/*<div*/}
@@ -253,7 +255,6 @@ const InstructionsBarchart1 = (props) => {
         {/*  </ul>*/}
         {/*</div>*/}
 
-
         {/*<div*/}
         {/*  style={{*/}
         {/*    width: "100%",*/}
@@ -268,132 +269,137 @@ const InstructionsBarchart1 = (props) => {
         {/*>*/}
         {/*  <Survey.Survey model={model} /> /!*onComplete={onComplete}*!/*/}
         {/*</div>*/}
-                <div
+        <div
           style={{ display: page === 1 ? "" : "none" }}
           className={classes.page}
         >
           <h3>Round 2 Instructions</h3>
           <ul>
-            <li>Like Round 1, you will be provided returns across different evaluation periods.</li>
-            <li>And you will make your allocation decision based on a 30 year investment period.</li>
+            <li>
+              Like Round 1, you will be provided returns across different
+              evaluation periods.
+            </li>
+            <li>
+              And you will make your allocation decision based on a 30 year
+              investment period.
+            </li>
             <li>Press Next to proceed to Round 2</li>
           </ul>
         </div>
       </div>
-      <Button
+      {/* <Button
         style={{ backgroundColor: "gray", color: "black" }}
         variant="contained"
         onClick={handlePage}
       >
         Next
-      </Button>
+      </Button> */}
     </Container>
   );
 };
 
 export default InstructionsBarchart1;
 
-
-        // <div
-        //   style={{
-        //     width: "90%",
-        //     // paddingLeft: "50",
-        //     // height: "60%",
-        //     // margin: "0 auto",
-        //     alignItems: "center",
-        //     justifyContent: "center",
-        //     textAlign: "center",
-        //     display: page === 2 ? "" : "none",
-        //   }}
-        //   className={classes.page}
-        // >
-        //   <Grid container spacing={1} style={{ height: "60%" }}>
-        //     <BarChart
-        //       title="C"
-        //       extent={extent}
-        //       allocation={
-        //         allocationLeft !== null ? allocationLeft : "Insert a value in "
-        //       }
-        //       data={props.bonds}
-        //       page={page}
-        //     ></BarChart>
-        //     <BarChart
-        //       title="D"
-        //       extent={extent}
-        //       allocation={
-        //         allocationRight !== null
-        //           ? allocationRight
-        //           : "Insert a value in "
-        //       }
-        //       data={props.stocks}
-        //       page={page}
-        //     ></BarChart>
-        //   </Grid>
-        //   <div
-        //     style={{
-        //       justifyContent: "center",
-        //       alignItems: "center",
-        //       height: "10vh",
-        //       textAlign: "center",
-        //     }}
-        //   >
-        //     <p>
-        //       {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
-        //       <span> Rates of returns </span> are averaged and annualized over a{" "}
-        //       <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
-        //       evaluation period.
-        //     </p>
-        //     <p>
-        //       <span style={{ color: alert ? "red" : "black" }}>
-        //         Between 0% and 100%
-        //       </span>
-        //       , how much of your investment do you want to allocate to each
-        //       fund?
-        //     </p>
-        //     <form noValidate autoComplete="off">
-        //       {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
-        //       {/*<Input*/}
-        //       {/*  id="Practice1"*/}
-        //       {/*  type="number"*/}
-        //       {/*  placeholder="Fund A allocation %"*/}
-        //       {/*  onChange={handleAllocation}*/}
-        //       {/*></Input>*/}
-        //       <TextField
-        //         id="Task1"
-        //         label="Fund C allocation %"
-        //         type="number"
-        //         color="secondary"
-        //         value={allocationTextLeft}
-        //         style={{ width: 150 }}
-        //         InputProps={{
-        //           inputProps: {
-        //             max: 100,
-        //             min: 0,
-        //           },
-        //         }}
-        //         // InputProps={{ inputProps: { min: 0, max: 10 } }}
-        //         /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
-        //         onChange={handleAllocationLeft}
-        //       />
-        //       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        //       <TextField
-        //         id="Task2"
-        //         label="Fund D allocation %"
-        //         type="number"
-        //         color="secondary"
-        //         value={allocationTextRight}
-        //         style={{ width: 150 }}
-        //         /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
-        //         onChange={handleAllocationRight}
-        //       />{" "}
-        //       <p> </p>
-        //       {/*<Button*/}
-        //       {/*  disabled={disabled}*/}
-        //       {/*  variant="contained"*/}
-        //       {/*  onClick={handleDecision}*/}
-        //       {/*>*/}
-        //       {/*  Make Decision*/}
-        //       {/*</Button>*/}
-        //     </form>
-        //   </div>
-        // </div>
+// <div
+//   style={{
+//     width: "90%",
+//     // paddingLeft: "50",
+//     // height: "60%",
+//     // margin: "0 auto",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     textAlign: "center",
+//     display: page === 2 ? "" : "none",
+//   }}
+//   className={classes.page}
+// >
+//   <Grid container spacing={1} style={{ height: "60%" }}>
+//     <BarChart
+//       title="C"
+//       extent={extent}
+//       allocation={
+//         allocationLeft !== null ? allocationLeft : "Insert a value in "
+//       }
+//       data={props.bonds}
+//       page={page}
+//     ></BarChart>
+//     <BarChart
+//       title="D"
+//       extent={extent}
+//       allocation={
+//         allocationRight !== null
+//           ? allocationRight
+//           : "Insert a value in "
+//       }
+//       data={props.stocks}
+//       page={page}
+//     ></BarChart>
+//   </Grid>
+//   <div
+//     style={{
+//       justifyContent: "center",
+//       alignItems: "center",
+//       height: "10vh",
+//       textAlign: "center",
+//     }}
+//   >
+//     <p>
+//       {/*<span style={{ fontWeight: "bold" }}>Evaluation Period</span>:{" "}*/}
+//       <span> Rates of returns </span> are averaged and annualized over a{" "}
+//       <span style={{ fontWeight: "bold" }}>{evalPeriod} year</span>{" "}
+//       evaluation period.
+//     </p>
+//     <p>
+//       <span style={{ color: alert ? "red" : "black" }}>
+//         Between 0% and 100%
+//       </span>
+//       , how much of your investment do you want to allocate to each
+//       fund?
+//     </p>
+//     <form noValidate autoComplete="off">
+//       {/*<TextField id="standard-basic" error ={this.state.errorText.length === 0 ? false : true } label="Standard" />*/}
+//       {/*<Input*/}
+//       {/*  id="Practice1"*/}
+//       {/*  type="number"*/}
+//       {/*  placeholder="Fund A allocation %"*/}
+//       {/*  onChange={handleAllocation}*/}
+//       {/*></Input>*/}
+//       <TextField
+//         id="Task1"
+//         label="Fund C allocation %"
+//         type="number"
+//         color="secondary"
+//         value={allocationTextLeft}
+//         style={{ width: 150 }}
+//         InputProps={{
+//           inputProps: {
+//             max: 100,
+//             min: 0,
+//           },
+//         }}
+//         // InputProps={{ inputProps: { min: 0, max: 10 } }}
+//         /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+//         onChange={handleAllocationLeft}
+//       />
+//       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//       <TextField
+//         id="Task2"
+//         label="Fund D allocation %"
+//         type="number"
+//         color="secondary"
+//         value={allocationTextRight}
+//         style={{ width: 150 }}
+//         /*endAdornment={<InputAdornment position="end">%</InputAdornment>}*/
+//         onChange={handleAllocationRight}
+//       />{" "}
+//       <p> </p>
+//       {/*<Button*/}
+//       {/*  disabled={disabled}*/}
+//       {/*  variant="contained"*/}
+//       {/*  onClick={handleDecision}*/}
+//       {/*>*/}
+//       {/*  Make Decision*/}
+//       {/*</Button>*/}
+//     </form>
+//   </div>
+// </div>

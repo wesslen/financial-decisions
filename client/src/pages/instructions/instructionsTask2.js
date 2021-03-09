@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     margin: "0 auto",
     overflow: "auto",
+    overflowX: "hidden",
   },
   image: {
     width: "50%",
@@ -58,18 +59,35 @@ const InstructionsTask2 = (props) => {
   const [pageOpacity, setPageOpacity] = useState(1);
   const [data, setData] = useState([]);
   const [allocation, setAllocation] = useState(null);
-  const [disabled, setDisabled] = useState(true);
+  // const [disabled, setDisabled] = useState(true);
   const [allocationText, setAllocationText] = useState("");
   const [left, setLeft] = useState("stocks");
+  const [page, setPage] = useState(0);
+  const [disabled, setDisabled] = useState(false);
 
-  const handleConsent = () => {
-    history.push("/task2");
+  // const handleClick = () => {
+  //   history.push("/task2");
+  // };
+
+  const handleDisabled = () => {
+    setDisabled(false);
+  };
+
+  const handleClick = () => {
+    let newPage = page + 1;
+    console.log(newPage);
+    if (newPage < 2) {
+      setPage(newPage);
+      setDisabled(true);
+    } else {
+      history.push("/task2");
+    }
   };
 
   useEffect(() => {
     async function fetchData() {
       const result = await axios.get("/api/changeround");
-      // const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
+      const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result2 = await axios.get("/api/data" + "?numsimulations=33");
       console.log(result2.data.treatment);
       setVisType(result2.data.treatment);
@@ -116,12 +134,15 @@ const InstructionsTask2 = (props) => {
   }
 
   return (
-    <Container maxWidth="lg" className={classes.instructContainer}>
+    <Container maxWidth="lg">
       <InstructionController
         // title={evalIndex < 4 ? "A" : "B"}
+        style={{ overflowX: "hidden" }}
+        page={page}
         vizType={visType}
         stocks={stocks}
         bonds={bonds}
+        setDisabled={handleDisabled}
       ></InstructionController>
       {/*<h4>Round 2</h4>*/}
       {/*<ul>*/}
@@ -135,20 +156,26 @@ const InstructionsTask2 = (props) => {
       {/*    Instructions will be provided before on how to interpret the new data visualization.*/}
       {/*  </li>*/}
       {/*</ul>*/}
-      {/*<div*/}
-      {/*  style={{*/}
-      {/*    textAlign: "center",*/}
-      {/*    paddingTop: "10px",*/}
-      {/*    paddingBottom: "10px",*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <Button*/}
-      {/*    style={{ backgroundColor: "gray", color: "black" }}*/}
-      {/*    variant="contained"*/}
-      {/*    onClick={handleConsent}*/}
-      {/*  >*/}
-      {/*    Continue*/}
-      {/*  </Button>*/}
+      <hr></hr>
+      <div
+        style={{
+          textAlign: "center",
+          paddingTop: "10px",
+          paddingBottom: "10px",
+        }}
+      >
+        <Button
+          style={{
+            backgroundColor: disabled ? "lightgrey" : "gray",
+            color: "black",
+          }}
+          variant="contained"
+          onClick={handleClick}
+          disabled={disabled}
+        >
+          Continue
+        </Button>
+      </div>
       {/*</div>*/}
     </Container>
   );
