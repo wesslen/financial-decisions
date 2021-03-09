@@ -126,21 +126,29 @@ const Debrief = (props) => {
       <p>
         Thank you for your participation! For this study, the funds you observed
         were traditional asset benchmarks used commonly in retirement investment
-        decisions. Since this study's objective is to understand the effect of data
-        visualizations on investment decisions, the visualization that was
+        decisions. Since this study's objective is to understand the effect of
+        data visualizations on investment decisions, the visualization that was
         provided to you was assigned randomly from different data visualizations
         than what other participants viewed. We did this so we could better
         measure the effect of the data visualization on individual decisions,
         holding all other factors constant.
       </p>
       <p>
-        Your MTurk code is <b>{token}</b></p>
-        <p>Please enter this code in the text box
-        on Amazon MTurk as a proof of your completion of this study.
+        Your MTurk code is <b>{token}</b>
       </p>
       <p>
-        Your total compensation will be $1.00 (Base) + $[sum of trial incentive
-        column] (Bonus).
+        Please enter this code in the text box on Amazon MTurk as a proof of
+        your completion of this study.
+      </p>
+      <p>
+        Your total compensation will be $1.00 (Base) + $
+        {incentives.length > 0
+          ? incentives
+              .map((row) => parseFloat(row.payment.replace("$", "")))
+              .reduce((accumulator, currentValue) => accumulator + currentValue)
+              .toFixed(2)
+          : 0}{" "}
+        (Bonus).
       </p>
       <p>
         <TableContainer>

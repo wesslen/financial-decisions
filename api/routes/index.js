@@ -82,7 +82,14 @@ router.get("/getincentives", (req, res) => {
         )
         .then((response) => {
           let incentives = response.data;
-          res.json(incentives);
+          Response.findOneAndUpdate(
+            { usertoken: usertoken },
+            { incentives: incentives },
+            (err, doc) => {
+              if (err) req.status(404).send(err);
+              else res.status(200).json(incentives);
+            }
+          );
         });
     }
   );
