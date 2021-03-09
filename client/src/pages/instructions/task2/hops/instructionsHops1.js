@@ -155,7 +155,7 @@ const InstructionsHops1 = (props) => {
             <Grid item>
               <h3>Example</h3>
               <img
-                src={process.env.PUBLIC_URL + "/hops-instructions2.png"}
+                src={process.env.PUBLIC_URL + "/hops-instructions2.gif"}
                 //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
                 alt=""
                 style={{ width: 700 }}
@@ -179,7 +179,7 @@ const InstructionsHops1 = (props) => {
         >
           <h3>Example</h3>
           <img
-            src={process.env.PUBLIC_URL + "/hops-instructions2.png"}
+            src={process.env.PUBLIC_URL + "/hops-instructions2.gif"}
             //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
             alt=""
             style={{ width: 600 }}
