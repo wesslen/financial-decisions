@@ -153,10 +153,10 @@ const InstructionsTable1 = (props) => {
             <Grid item>
               <h3>Example</h3>
               <img
-                src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+                src={process.env.PUBLIC_URL + "/table-instructions2.png"}
                 //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
                 alt=""
-                style={{ width: 400 }}
+                style={{ width: 700 }}
                 className={classes.image}
               />
             </Grid>
@@ -177,10 +177,10 @@ const InstructionsTable1 = (props) => {
         >
           <h3>Example</h3>
           <img
-            src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+            src={process.env.PUBLIC_URL + "/table-instructions2.png"}
             //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
             alt=""
-            style={{ width: 400 }}
+            style={{ width: 600 }}
             className={classes.image}
           />
           <Survey.Survey model={model} onComplete={handleDisabled} />{" "}

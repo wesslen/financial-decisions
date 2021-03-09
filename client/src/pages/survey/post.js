@@ -119,7 +119,8 @@ const PostSurveyPage = (props) => {
                       name: "satisfaction",
                       title: "How satisfied are you with the study?",
                       minRateDescription: "Not Satisfied",
-                      maxRateDescription: "Completely satisfied"
+                      maxRateDescription: "Completely satisfied",
+                      isRequired: true
                   },
                   {
                       "type": "comment",

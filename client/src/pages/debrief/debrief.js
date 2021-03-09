@@ -47,6 +47,21 @@ const Debrief = (props) => {
   const [incentives, setIncentives] = useState([]);
   const [token, setToken] = useState(null);
 
+  const handleDecision = () => {
+    let incentives2 = {
+      incentives: incentives,
+      time: Date.now(),
+    };
+
+    // need to save incentives to mongo!!
+    axios.post("/api/incentives", incentives2).then((incentives2) => {
+
+      // history.push("/instructions");
+    });
+    // console.log("here we will post the user decision");
+    // console.log(evalIndex);
+  };
+
   useEffect(() => {
     axios.get("api/debrief").then((res) => {
       setToken(res.data.token);
@@ -63,6 +78,8 @@ const Debrief = (props) => {
       .catch((error) => {
         console.log(error);
       });
+
+
   }, []);
 
   // function createData(

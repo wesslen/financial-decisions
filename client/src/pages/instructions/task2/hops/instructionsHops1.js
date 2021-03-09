@@ -56,13 +56,13 @@ const InstructionsHops1 = (props) => {
       {
         type: "radiogroup",
         name: "Hops_Instruction2",
-        title: "What does each line stand for?",
+        title: "What does each orange line stand for?",
         isRequired: true,
         choices: [
           "An investment year",
           "An investable asset",
           "A possible rate of return",
-          "The maximum rate of a return for the asset",
+          "The maximum rate of a return for the fund",
         ],
         correctAnswer: "A possible rate of return",
       },
@@ -155,10 +155,10 @@ const InstructionsHops1 = (props) => {
             <Grid item>
               <h3>Example</h3>
               <img
-                src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+                src={process.env.PUBLIC_URL + "/hops-instructions2.png"}
                 //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
                 alt=""
-                style={{ width: 400 }}
+                style={{ width: 700 }}
                 className={classes.image}
               />
             </Grid>
@@ -179,10 +179,10 @@ const InstructionsHops1 = (props) => {
         >
           <h3>Example</h3>
           <img
-            src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+            src={process.env.PUBLIC_URL + "/hops-instructions2.png"}
             //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
             alt=""
-            style={{ width: 400 }}
+            style={{ width: 600 }}
             className={classes.image}
           />
           <Survey.Survey model={model} onComplete={handleDisabled} />{" "}

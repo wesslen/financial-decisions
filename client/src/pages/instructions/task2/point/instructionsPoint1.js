@@ -149,8 +149,8 @@ const InstructionsPoint1 = (props) => {
                   Now you will view a new visualization of the rates of return.
                 </li>
                 <li>
-                  The intervals represents the range for 95% (dark green) and
-                  66% (light green) of possible rates of return.
+                  The intervals represents the range for 95% (light green) and
+                  66% (dark green) of possible rates of return.
                 </li>
                 <li>The point represents the average rate of return.</li>
               </ul>
@@ -158,10 +158,10 @@ const InstructionsPoint1 = (props) => {
             <Grid item>
               <h3>Example</h3>
               <img
-                src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+                src={process.env.PUBLIC_URL + "/point-instructions2.png"}
                 //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
                 alt=""
-                style={{ width: 400 }}
+                style={{ width: 700 }}
                 className={classes.image}
               />
             </Grid>
@@ -182,10 +182,10 @@ const InstructionsPoint1 = (props) => {
         >
           <h3>Example</h3>
           <img
-            src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+            src={process.env.PUBLIC_URL + "/point-instructions2.png"}
             //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
             alt=""
-            style={{ width: 400 }}
+            style={{ width: 600 }}
             className={classes.image}
           />
           <Survey.Survey model={model} onComplete={handleDisabled} />{" "}
