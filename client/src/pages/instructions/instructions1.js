@@ -158,7 +158,7 @@ const Instructions1 = (props) => {
     <Container maxWidth="lg" className={classes.instructContainer}>
       <h3>Instructions</h3>
       <p>
-        Imagine you are investing for retirement. Your retirement account allows you to invest in one of two funds: Fund A and Fund B.
+        Imagine you are investing for retirement. Your retirement account allows you to invest in either of two funds.
       </p>
       <p>
         You will view data visualizations of <b>investment rates of return</b>{" "}
@@ -167,7 +167,7 @@ const Instructions1 = (props) => {
       <p>
         {" "}
         You will decide how to <b>allocate</b> your investment between
-        the two funds as a percentage from 0% to 100%.
+        two funds as a percentage from 0% to 100%.
       </p>
       <p>
         Your goal is to <b>maximize</b> your <b>expected return</b> for <b>thirty (30) years</b>  when you plan to retire.
