@@ -276,7 +276,7 @@ const Instructions6 = (props) => {
         }}
       >
                         <p>
-          In this study, you'll be provided two funds (e.g., Fund Y and Z).
+          In this study, you'll be provided two funds (e.g., Fund X and Y).
         </p>
 
                 <p>

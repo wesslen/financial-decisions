@@ -22,6 +22,7 @@ const responseSchema = new Schema({
   mid2: Schema.Types.Mixed,
   prequestionnaire: Schema.Types.Mixed,
   postquestionnaire: Schema.Types.Mixed,
+  incentives: Schema.Types.Mixed,
 });
 
 module.exports = responseSchema;

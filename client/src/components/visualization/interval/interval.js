@@ -69,6 +69,9 @@ const Interval = (props) => {
         let ci50 = [mean - 0.67449 * stdev, mean + 0.67449 * stdev];
 
         let ci95 = [mean - 1.95996 * stdev, mean + 1.95996 * stdev];
+        let tip = d3.select(".tooltip");
+        let formatPercent = d3.format(".1%");
+
         // console.log(p);
 
         // g.append("circle")

@@ -144,17 +144,17 @@ const InstructionsDensity1 = (props) => {
                   Now you will view a new visualization of the rates of return.
                 </li>
                 <li>
-                  The lines shows the distribution of possible rates of returns.
+                  The line shows the distribution of possible rates of returns.
                 </li>
               </ul>
             </Grid>
             <Grid item>
               <h3>Example</h3>
               <img
-                src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+                src={process.env.PUBLIC_URL + "/density-instructions2.png"}
                 //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
                 alt=""
-                style={{ width: 400 }}
+                style={{ width: 700 }}
                 className={classes.image}
               />
             </Grid>
@@ -175,10 +175,10 @@ const InstructionsDensity1 = (props) => {
         >
           <h3>Example</h3>
           <img
-            src={process.env.PUBLIC_URL + "/barchart-instructions2.png"}
+            src={process.env.PUBLIC_URL + "/density-instructions2.png"}
             //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
             alt=""
-            style={{ width: 400 }}
+            style={{ width: 600 }}
             className={classes.image}
           />
           <Survey.Survey model={model} onComplete={props.setDisabled} />{" "}

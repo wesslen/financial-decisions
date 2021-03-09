@@ -147,6 +147,18 @@ router.post("/learning1", (req, res) => {
   );
 });
 
+router.post("/incentives", (req, res) => {
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { incentives: req.body },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      else res.status(200).json(req.body);
+    }
+  );
+});
+
 router.post("/response", (req, res) => {
   let usertoken = req.session.usertoken;
   let resp = req.body;
@@ -187,7 +199,7 @@ router.get("/data", (req, res) => {
 
 router.get("/consent", (req, res) => {
   if (!req.session.consent) {
-    req.session.seed = "task1";
+    req.session.seed = "sample"; // examples for task 2 created by task1-example; actual uses "sample"
     let usertoken = randomstring.generate(8);
     req.session.usertoken = usertoken;
     req.session.evalPeriods = getEvaluationPeriods();

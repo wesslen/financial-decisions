@@ -68,6 +68,8 @@ const Point = (props) => {
         let ci50 = [mean - 0.67449 * stdev, mean + 0.67449 * stdev];
 
         let ci95 = [mean - 1.95996 * stdev, mean + 1.95996 * stdev];
+        let tip = d3.select(".tooltip");
+        let formatPercent = d3.format(".1%");
         // console.log(p);
 
         g.append("line")
@@ -91,6 +93,16 @@ const Point = (props) => {
           .attr("cy", h / 2 + margins.top)
           .attr("fill", "white")
           .attr("r", 6);
+          // .on("mousemove", function (d) {
+          //   tip.style("opacity", 1);
+          //   tip
+          //     .html(formatPercent(d.value.toFixed(3)))
+          //     .style("left", d3.event.pageX + "px")
+          //     .style("top", d3.event.pageY - 28 + "px");
+          // })
+          // .on("mouseout", function (d) {
+          //   tip.style("opacity", 0);
+          // });
         // let rect = g
         //   .append("rect")
         //   .attr("width", w)

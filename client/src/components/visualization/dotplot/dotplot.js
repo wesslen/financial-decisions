@@ -100,7 +100,8 @@ const Dotplot = (props) => {
         let formatter = d3.format(".0%");
         let xScale = d3.scaleLinear().domain(extent).rangeRound([0, w]).tickFormat(formatter).nice();
 
-
+        let tip = d3.select(".tooltip");
+        let formatPercent = d3.format(".1%");
 
         // let yScale = d3
         //   .scaleLinear()
@@ -146,6 +147,16 @@ const Dotplot = (props) => {
           .attr("cy", (d) => -d.idx * 2 * d.radius - d.radius)
           .attr("r", (d) => d.radius)
           .attr("fill-opacity", 1);
+          // .on("mousemove", function (d) {
+          //   tip.style("opacity", 1);
+          //   tip
+          //     .html(formatPercent(d.value.toFixed(3)))
+          //     .style("left", d3.event.pageX + "px")
+          //     .style("top", d3.event.pageY - 28 + "px");
+          // })
+          // .on("mouseout", function (d) {
+          //   tip.style("opacity", 0);
+          // });
 
       }
     },
@@ -167,7 +178,7 @@ const Dotplot = (props) => {
         width: width,
         height: height,
         margin: "0 auto",
-        marginBottom: "10px",
+        marginBottom: "20px",
       }}
     >
       <svg
