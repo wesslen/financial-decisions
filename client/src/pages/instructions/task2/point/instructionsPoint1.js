@@ -137,6 +137,7 @@ const InstructionsPoint1 = (props) => {
           style={{
             display: page === 0 ? "" : "none",
             justifyContent: "center",
+            margin: 0,
           }}
           className={classes.page}
         >

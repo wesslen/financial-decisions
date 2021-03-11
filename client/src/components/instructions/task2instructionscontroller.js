@@ -39,7 +39,12 @@ const InstructionController = (props) => {
     case "dotplot":
       // code block
       return (
-        <Grid container direction="column" justify="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          style={{ width: "100%" }}
+        >
           <InstructionsDot1
             page={props.page}
             setDisabled={props.setDisabled}
@@ -56,7 +61,12 @@ const InstructionController = (props) => {
       break;
     case "hops":
       return (
-        <Grid container direction="column" justify="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          style={{ width: "100%" }}
+        >
           <InstructionsHops1
             page={props.page}
             setDisabled={props.setDisabled}
@@ -73,7 +83,12 @@ const InstructionController = (props) => {
       break;
     case "hopsdist":
       return (
-        <Grid container direction="column" justify="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          style={{ width: "100%" }}
+        >
           <InstructionsHopsdist1
             page={props.page}
             setDisabled={props.setDisabled}
@@ -90,7 +105,12 @@ const InstructionController = (props) => {
       break;
     case "point":
       return (
-        <Grid container direction="column" justify="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          style={{ width: "100%" }}
+        >
           <InstructionsPoint1
             page={props.page}
             setDisabled={props.setDisabled}
@@ -106,7 +126,12 @@ const InstructionController = (props) => {
       break;
     case "interval":
       return (
-        <Grid container direction="column" justify="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          style={{ width: "100%" }}
+        >
           <InstructionsInterval1
             page={props.page}
             setDisabled={props.setDisabled}
@@ -122,7 +147,12 @@ const InstructionController = (props) => {
       break;
     case "density":
       return (
-        <Grid container direction="column" justify="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          style={{ width: "100%" }}
+        >
           <InstructionsDensity1
             page={props.page}
             setDisabled={props.setDisabled}
@@ -139,7 +169,12 @@ const InstructionController = (props) => {
       break;
     case "table":
       return (
-        <Grid container direction="column" justify="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          style={{ width: "100%" }}
+        >
           <InstructionsTable1
             page={props.page}
             setDisabled={props.setDisabled}

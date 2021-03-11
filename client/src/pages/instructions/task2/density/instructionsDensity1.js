@@ -131,7 +131,8 @@ const InstructionsDensity1 = (props) => {
         <div
           style={{
             display: page === 0 ? "" : "none",
-            justifyContent: "center",
+            // justifyContent: "center",
+            margin: 0,
           }}
           className={classes.page}
         >
