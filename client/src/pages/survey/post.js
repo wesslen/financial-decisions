@@ -16,7 +16,7 @@ const PostSurveyPage = (props) => {
                   {
                       type: "comment",
                       name: "explanation",
-                      title: "In at least five words, describe what you were asked to do in this study?",
+                      title: "In 1-2 sentences, describe what you were asked to do in this study?",
                       isRequired: true
                   }
               ],
