@@ -14,7 +14,7 @@ const responseSchema = new Schema({
   learning1: Schema.Types.Mixed,
   attention1: Schema.Types.Mixed,
   incentives: Schema.Types.Mixed,
-  date: {
+  startTime: {
     type: Date,
     default: Date.now,
   },
@@ -23,6 +23,7 @@ const responseSchema = new Schema({
   prequestionnaire: Schema.Types.Mixed,
   postquestionnaire: Schema.Types.Mixed,
   incentives: Schema.Types.Mixed,
+  endTime: Date,
 });
 
 module.exports = responseSchema;

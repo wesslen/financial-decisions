@@ -151,7 +151,7 @@ router.post("/incentives", (req, res) => {
   let usertoken = req.session.usertoken;
   Response.findOneAndUpdate(
     { usertoken: usertoken },
-    { incentives: req.body },
+    { incentives: req.body, endTime: Date.now() },
     (err, doc) => {
       if (err) req.status(404).send(err);
       else res.status(200).json(req.body);
