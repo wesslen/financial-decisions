@@ -154,7 +154,7 @@ const Task2Page = (props) => {
   useEffect(() => {
     async function fetchData() {
       //for dev, comment this for prod.
-      // const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
+      //const consent = evalIndex === 0 ? await axios.get("/api/consent") : null;
       const result = await axios.get("/api/data" + "?numsimulations=33");
       console.log(result.data.treatment);
       setVisType(result.data.treatment);

@@ -151,7 +151,7 @@ const InstructionsHopsdist1 = (props) => {
                 <li>
                   Now you will view a new visualization of the rates of return.
                 </li>
-                <li>Each line represents a possible rate of rate. </li>
+                <li>Each orange line represents a possible rate of return. </li>
                 <li>
                   The grey lines show the distribution of possible rates of
                   return.

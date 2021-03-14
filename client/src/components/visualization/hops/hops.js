@@ -6,7 +6,7 @@ const Hops = (props) => {
   const d3Container = useRef(null);
   const width = props.width || "75%";
   const height = props.height || "60%";
-  const hopSpeed = props.hopSpeed | 350;
+  const hopSpeed = props.hopSpeed | 450;
   const showDist = props.showDist;
   const svg = useRef(null);
   const allocation = props.allocation || 0;

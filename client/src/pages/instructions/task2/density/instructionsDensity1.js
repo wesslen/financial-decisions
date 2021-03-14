@@ -152,7 +152,7 @@ const InstructionsDensity1 = (props) => {
             <Grid item>
               <h3>Example</h3>
               <img
-                src={process.env.PUBLIC_URL + "/density-instructions2.png"}
+                src={process.env.PUBLIC_URL + "/density-instructions.png"}
                 //src={process.env.PUBLIC_URL + "/uncertainty2.gif"}
                 alt=""
                 style={{ width: 700 }}

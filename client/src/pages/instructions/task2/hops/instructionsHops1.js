@@ -150,7 +150,7 @@ const InstructionsHops1 = (props) => {
                 <li>
                   Now you will view a new visualization of the rates of return.
                 </li>
-                <li>Each line represents a possible rate of rate. </li>
+                <li>Each orange line represents a possible rate of return. </li>
               </ul>
             </Grid>
             <Grid item>
