@@ -40,13 +40,21 @@ router.post("/mid2", (req, res) => {
 });
 
 router.get("/debrief", (req, res) => {
-  if (req.session.completed) {
-    res.status(200).json({ token: req.session.usertoken });
-  } else {
-    res.status(200).send({
-      token: "you have skipped pages. Please complete the study first.",
-    });
-  }
+  let usertoken = req.session.usertoken;
+  Response.findOneAndUpdate(
+    { usertoken: usertoken },
+    { endTime: Date.now() },
+    (err, doc) => {
+      if (err) req.status(404).send(err);
+      if (req.session.completed) {
+        res.status(200).json({ token: usertoken });
+      } else {
+        res.status(200).send({
+          token: "you have skipped pages. Please complete the study first.",
+        });
+      }
+    }
+  );
 });
 
 router.get("/changeround", (req, res) => {
@@ -84,7 +92,7 @@ router.get("/getincentives", (req, res) => {
           let incentives = response.data;
           Response.findOneAndUpdate(
             { usertoken: usertoken },
-            { incentives: incentives, endTime: Date.now() },
+            { incentives: incentives },
             (err, doc) => {
               if (err) req.status(404).send(err);
               else res.status(200).json(incentives);
