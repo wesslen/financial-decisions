@@ -13,7 +13,6 @@ const responseSchema = new Schema({
   responses: Schema.Types.Mixed,
   learning1: Schema.Types.Mixed,
   attention1: Schema.Types.Mixed,
-  incentives: Schema.Types.Mixed,
   startTime: {
     type: Date,
     default: Date.now,
