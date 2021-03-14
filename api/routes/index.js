@@ -78,7 +78,7 @@ router.get("/getincentives", (req, res) => {
       let stockResponsesString = JSON.stringify(stockResponses);
       axios
         .get(
-          `http://rw-simulation.herokuapp.com/get_returns_array?stock_array=${stockResponsesString}`
+          `https://rw-simulation.herokuapp.com/get_returns_array?stock_array=${stockResponsesString}`
         )
         .then((response) => {
           let incentives = response.data;
