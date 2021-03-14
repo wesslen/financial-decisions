@@ -84,7 +84,7 @@ router.get("/getincentives", (req, res) => {
           let incentives = response.data;
           Response.findOneAndUpdate(
             { usertoken: usertoken },
-            { incentives: incentives },
+            { incentives: incentives, endTime: Date.now() },
             (err, doc) => {
               if (err) req.status(404).send(err);
               else res.status(200).json(incentives);
