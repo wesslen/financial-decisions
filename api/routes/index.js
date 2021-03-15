@@ -98,6 +98,10 @@ router.get("/getincentives", (req, res) => {
               else res.status(200).json(incentives);
             }
           );
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(404).json([]);
         });
     }
   );
