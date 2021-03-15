@@ -47,36 +47,36 @@ const Debrief = (props) => {
   const [incentives, setIncentives] = useState([]);
   const [token, setToken] = useState(null);
 
-  const handleDecision = () => {
-    let incentives2 = {
-      incentives: incentives,
-      time: Date.now(),
-    };
-
-    // need to save incentives to mongo!!
-    axios.post("/api/incentives", incentives2).then((incentives2) => {
-      // history.push("/instructions");
-    });
-    // console.log("here we will post the user decision");
-    // console.log(evalIndex);
-  };
+  // const handleDecision = () => {
+  //   let incentives2 = {
+  //     incentives: incentives,
+  //     time: Date.now(),
+  //   };
+  //
+  //   // need to save incentives to mongo!!
+  //   axios.post("/api/incentives", incentives2).then((incentives2) => {
+  //     // history.push("/instructions");
+  //   });
+  //   // console.log("here we will post the user decision");
+  //   // console.log(evalIndex);
+  // };
 
   useEffect(() => {
     axios.get("api/debrief").then((res) => {
       setToken(res.data.token);
       console.log(res);
     });
-    axios
-      .get("api/getincentives")
-      .then((res) => {
-        console.log(res);
-        let incentives = res.data;
-        setIncentives(incentives);
-        console.log(incentives);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .get("api/getincentives")
+    //   .then((res) => {
+    //     console.log(res);
+    //     let incentives = res.data;
+    //     setIncentives(incentives);
+    //     console.log(incentives);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }, []);
 
   // function createData(
@@ -155,61 +155,61 @@ const Debrief = (props) => {
         Please enter this code in the text box on Amazon MTurk as a proof of
         your completion of this study.
       </p>
-      <p>
-        Your total compensation will be $1.00 (Base) + $
-        {incentives.length > 0
-          ? incentives
-              .map((row) => parseFloat(row.payment.replace("$", "")))
-              .reduce((accumulator, currentValue) => accumulator + currentValue)
-              .toFixed(2)
-          : 0}{" "}
-        (Bonus).
-      </p>
-      <p>
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-label="simple table"
-            style={{ width: 400 }}
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell>Trial</TableCell>
-                <TableCell>User Allocation</TableCell>
-                <TableCell>Simulated Returns</TableCell>
-                <TableCell>Simulated Percentiles</TableCell>
-                <TableCell>Trial Incentive</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {/* {terms.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    {row.trial}
-                  </TableCell>
-                  <TableCell>{row.user_allocation}</TableCell>
-                  <TableCell>{row.simulated_returns}</TableCell>
-                  <TableCell>{row.simulated_percentile}</TableCell>
-                  <TableCell>{row.incentive}</TableCell>
-                </TableRow>
-              ))} */}
-              {incentives.map((row, i) => {
-                return (
-                  <TableRow key={`row-${i}`}>
-                    <TableCell component="th" scope="row">
-                      {i}
-                    </TableCell>
-                    <TableCell>{row.stockAllocation}</TableCell>
-                    <TableCell>{row.expReturns}</TableCell>
-                    <TableCell>{row.percrank}</TableCell>
-                    <TableCell>{row.payment}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </p>
+      {/*<p>*/}
+      {/*  Your total compensation will be $1.00 (Base) + $*/}
+      {/*  {incentives.length > 0*/}
+      {/*    ? incentives*/}
+      {/*        .map((row) => parseFloat(row.payment.replace("$", "")))*/}
+      {/*        .reduce((accumulator, currentValue) => accumulator + currentValue)*/}
+      {/*        .toFixed(2)*/}
+      {/*    : 0}{" "}*/}
+      {/*  (Bonus).*/}
+      {/*</p>*/}
+      {/*<p>*/}
+      {/*  <TableContainer>*/}
+      {/*    <Table*/}
+      {/*      className={classes.table}*/}
+      {/*      aria-label="simple table"*/}
+      {/*      style={{ width: 400 }}*/}
+      {/*    >*/}
+      {/*      <TableHead>*/}
+      {/*        <TableRow>*/}
+      {/*          <TableCell>Trial</TableCell>*/}
+      {/*          <TableCell>User Allocation</TableCell>*/}
+      {/*          <TableCell>Simulated Returns</TableCell>*/}
+      {/*          <TableCell>Simulated Percentiles</TableCell>*/}
+      {/*          <TableCell>Trial Incentive</TableCell>*/}
+      {/*        </TableRow>*/}
+      {/*      </TableHead>*/}
+      {/*      <TableBody>*/}
+      {/*        /!* {terms.map((row) => (*/}
+      {/*          <TableRow key={row.name}>*/}
+      {/*            <TableCell component="th" scope="row">*/}
+      {/*              {row.trial}*/}
+      {/*            </TableCell>*/}
+      {/*            <TableCell>{row.user_allocation}</TableCell>*/}
+      {/*            <TableCell>{row.simulated_returns}</TableCell>*/}
+      {/*            <TableCell>{row.simulated_percentile}</TableCell>*/}
+      {/*            <TableCell>{row.incentive}</TableCell>*/}
+      {/*          </TableRow>*/}
+      {/*        ))} *!/*/}
+      {/*        {incentives.map((row, i) => {*/}
+      {/*          return (*/}
+      {/*            <TableRow key={`row-${i}`}>*/}
+      {/*              <TableCell component="th" scope="row">*/}
+      {/*                {i}*/}
+      {/*              </TableCell>*/}
+      {/*              <TableCell>{row.stockAllocation}</TableCell>*/}
+      {/*              <TableCell>{row.expReturns}</TableCell>*/}
+      {/*              <TableCell>{row.percrank}</TableCell>*/}
+      {/*              <TableCell>{row.payment}</TableCell>*/}
+      {/*            </TableRow>*/}
+      {/*          );*/}
+      {/*        })}*/}
+      {/*      </TableBody>*/}
+      {/*    </Table>*/}
+      {/*  </TableContainer>*/}
+      {/*</p>*/}
       {/*      <p>*/}
       {/*  If your instructor has offered extra credits for this study, please*/}
       {/*  email them your unique token. We will confirm your participation by*/}
